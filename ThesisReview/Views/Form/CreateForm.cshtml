@@ -1,0 +1,50 @@
+﻿@model Form
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<h4>Form</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+			<form asp-controller="Form" asp-action="CreateForm" method="post" class="form-horizontal" role="form">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="form-group">
+					<label asp-for="Title" class="control-label"></label>
+					<input asp-for="Title" class="form-control" />
+					<span asp-validation-for="Title" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="ShortDescription" class="control-label"></label>
+					<input asp-for="ShortDescription" class="form-control" />
+					<span asp-validation-for="ShortDescription" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="StudentMail" class="control-label"></label>
+					<input asp-for="StudentMail" class="form-control" />
+					<span asp-validation-for="StudentMail" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="ReviewerName" class="control-label"></label>
+					<input asp-for="ReviewerName" class="form-control" />
+					<span asp-validation-for="ReviewerName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="GuardianName" class="control-label"></label>
+					<input asp-for="GuardianName" class="form-control" />
+					<span asp-validation-for="GuardianName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="CreateForm" class="btn btn-default" />
+				</div>
+			</form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

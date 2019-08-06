@@ -1,0 +1,47 @@
+﻿@model ThesisReview.Data.Models.Form
+
+@{
+    ViewData["Title"] = "CreationComplete";
+}
+
+<h2>CreationComplete</h2>
+
+<div>
+    <h4>Form</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ShortDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentMail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StudentMail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewerName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReviewerName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GuardianName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GuardianName)
+        </dd>
+    </dl>
+</div>
+<div>
+	@Html.ActionLink("Cofnij", "Index", "Home", null, new { @class = "btn btn-primary btn-large" })
+</div>
