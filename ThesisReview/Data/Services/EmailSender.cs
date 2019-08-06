@@ -23,7 +23,7 @@ namespace ThesisReview.Data.Services
       using (var client = new SmtpClient())
       {
         client.Connect("smtp.gmail.com", 587, false);
-        client.Authenticate("lagonamv@gmail.com", "D@wid1234");
+        client.Authenticate("lagonamv@gmail.com", "xxx");
         client.Send(message);
         client.Disconnect(true);
       }
