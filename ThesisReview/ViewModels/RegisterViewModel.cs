@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace ThesisReview.ViewModels
 {
-  public class LogInViewModel
+  public class RegisterViewModel
   {
+    [Required]
+    [Display(Name = "User Name")]
+    public string UserName { get; set; }
     [Required]
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; }

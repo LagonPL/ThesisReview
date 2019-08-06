@@ -41,7 +41,7 @@ namespace ThesisReview.Controllers
       if (!ModelState.IsValid)
         return View(logInViewModel);
 
-      var user = await _userManager.FindByNameAsync(logInViewModel.UserName);
+      var user = await _userManager.FindByEmailAsync(logInViewModel.Email);
 
       if(user != null)
       {
@@ -53,7 +53,7 @@ namespace ThesisReview.Controllers
           return Redirect(logInViewModel.ReturnUrl);
         }
       }
-      ModelState.AddModelError("", "Username/password not fount");
+      ModelState.AddModelError("", "Email/password not fount");
       return View(logInViewModel);
     }
 
@@ -64,34 +64,34 @@ namespace ThesisReview.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Register(LogInViewModel logInViewModel)
+    public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
     {
       string content;
       if (ModelState.IsValid)
       {
-        var user = new IdentityUser() { UserName = logInViewModel.UserName };
-        var result = await _userManager.CreateAsync(user, logInViewModel.Password);
+        var user = new IdentityUser() { UserName = registerViewModel.UserName, Email = registerViewModel.Email };
+        var result = await _userManager.CreateAsync(user, registerViewModel.Password);
 
         if (result.Succeeded)
         {
-          content = "Witaj " + logInViewModel.UserName + ", udało ci się pomyślnie zarejstrować w naszym serwisie.";
-          EmailSender.Send("dawid.sowala@gmail.com", "Pomyślna Rejestracja", content);
+          content = "Witaj " + registerViewModel.UserName + ", udało ci się pomyślnie zarejstrować w naszym serwisie.";
+          EmailSender.Send(registerViewModel.Email, "Pomyślna Rejestracja", content);
           return RedirectToAction("Index", "Home");
         }
         else
         {
-          ViewData["Message"] = "Your application description page."; ;
+          ViewData["Message"] = "Your application description page.";
         }
 
       }
-      return View(logInViewModel);
+      return View(registerViewModel);
     }
 
 
     public async Task<IActionResult> Logout()
     {
       await _signInManager.SignOutAsync();
-      return RedirectToAction("Index", "Home"); ;
+      return RedirectToAction("Index", "Home");
     }
 
   }
