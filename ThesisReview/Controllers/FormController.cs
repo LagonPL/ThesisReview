@@ -34,7 +34,40 @@ namespace ThesisReview.Controllers
       return View(form);
       
     }
-    
+
+    public IActionResult CreationComplete(string formId)
+    {
+      string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=ThesisReview;Trusted_Connection=True;MultipleActiveResultSets=true";
+      //List<Form> formList = new List<Form>();
+      string formularz = string.Empty;
+      string nazwa = string.Empty;
+      using (SqlConnection connection = new SqlConnection(connectionString))
+      {
+        //SqlDataReader
+        connection.Open();
+
+        string sql = "select * from Forms"; SqlCommand command = new SqlCommand(sql, connection);
+        using (SqlDataReader dataReader = command.ExecuteReader())
+        {
+          while (dataReader.Read())
+          {
+            Form form = new Form();
+            //form.FormId = Convert.ToInt32(dataReader["FormId"]);
+            //formularz = Convert.ToString(dataReader["FormId"]);
+            nazwa = Convert.ToString(dataReader["Title"]);
+          }
+        }
+        connection.Close();
+      }
+
+      var fdVM = new FormDetailViewModel
+      {
+        Title = nazwa
+      };
+
+      return View(fdVM);
+    }
+
 
   }
 }
