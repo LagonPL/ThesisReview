@@ -7,7 +7,7 @@
 			<input type="hidden" asp-for="ReturnUrl" />
 
 			<div class="form-group">
-				<label asp-for="Email" class="col-md-2 control-label"></label>
+				<label asp-for="Email" class="col-md-2 control-label">Email</label>
 				<div class="col-md-10">
 					<input asp-for="Email" class="form-control" />
 					<span asp-validation-for="Email" class="text-danger"></span>
@@ -15,13 +15,10 @@
 			</div>
 
 			<div class="form-group">
-				<label asp-for="Password" class="col-md-2 control-label"></label>
+				<label asp-for="Password" class="col-md-2 control-label">Hasło</label>
 				<div class="col-md-10">
 					<input asp-for="Password" class="form-control" />
 					<span asp-validation-for="Password" class="text-danger"></span>
-					<small id="passwordHelpBlock" class="form-text text-muted">
-						Hasło musi mieć minumum 8 znaków i posiadać minumum 1 liczbę.
-					</small>
 				</div>
 			</div>
 

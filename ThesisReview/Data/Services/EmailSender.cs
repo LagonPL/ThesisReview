@@ -12,7 +12,7 @@ namespace ThesisReview.Data.Services
     public static void Send(string receiver, string subject, string content)
     {
       var message = new MimeMessage();
-      message.From.Add(new MailboxAddress("Recenzje Prac", "lagonamv@gmail.com"));
+      message.From.Add(new MailboxAddress("Recenzje Prac", "recenzjeprac@gmail.com"));
       message.To.Add(new MailboxAddress(receiver, receiver));
       message.Subject = subject;
       message.Body = new TextPart("plain")
@@ -23,7 +23,7 @@ namespace ThesisReview.Data.Services
       using (var client = new SmtpClient())
       {
         client.Connect("smtp.gmail.com", 587, false);
-        client.Authenticate("lagonamv@gmail.com", "xxxx");
+        client.Authenticate("recenzjeprac@gmail.com", "Recenzj@2C#");
         client.Send(message);
         client.Disconnect(true);
       }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace ThesisReview.ViewModels
     [Required]
     [DataType(DataType.Password)]
     public string Password { get; set; }
+    public string Department { get; set; }
+    public SelectList Departments { get; set; }
     public string ReturnUrl { get; set; }
+    public bool IsAdmin { get; set; }
   }
 }

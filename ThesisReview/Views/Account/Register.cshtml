@@ -2,33 +2,48 @@
 
 <div class="row loginForm">
 	<div class="col-md-8 col-md-offset-2">
-		<h2>Register now at Dring&Go </h2>
+		<h2>Zarejestruj recenzenta:</h2>
 		<form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal" role="form">
-			<h4>Create a new account and order your first drink today!</h4>
+			<h4>Dodaj do bazy recenzenta. Możesz nadać mu uprawnienia admina.</h4>
 			<hr />
 			@if (ViewData["Message"] == null)
 			{
-				<div class="alert alert-info" role="alert">@ViewData["Message"]</div>
+				<div class="alert alert-info" role="alert">Test Alertu</div>
 			}
 			<div class="form-group">
-				<label asp-for="UserName" class="col-md-2 control-label"></label>
+				<label asp-for="UserName" class="col-md-2 control-label">Nazwa użytkownika</label>
 				<div class="col-md-10">
 					<input asp-for="UserName" class="form-control" />
 					<span asp-validation-for="UserName" class="text-danger"></span>
 				</div>
 			</div>
 			<div class="form-group">
-				<label asp-for="Email" class="col-md-2 control-label"></label>
+				<label asp-for="Email" class="col-md-2 control-label">Email</label>
 				<div class="col-md-10">
 					<input asp-for="Email" class="form-control" />
 					<span asp-validation-for="Email" class="text-danger"></span>
 				</div>
 			</div>
 			<div class="form-group">
-				<label asp-for="Password" class="col-md-2 control-label"></label>
+				<label asp-for="Department" class="col-md-2 control-label">Wydział</label>
+				<div class="col-md-10">
+					@Html.DropDownListFor(m=>m.Department,Model.Departments, new { @class = "dropdown-header col-md-12" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label asp-for="IsAdmin" class="col-md-2 control-label">Uprawnienia admina?</label>
+				<div class="col-md-10">
+					<input asp-for="IsAdmin" class="checkbox" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label asp-for="Password" class="col-md-2 control-label">Hasło</label>
 				<div class="col-md-10">
 					<input asp-for="Password" class="form-control" />
 					<span asp-validation-for="Password" class="text-danger"></span>
+					<small id="passwordHelpBlock" class="form-text text-muted">
+						Hasło musi mieć minumum 8 znaków i posiadać minumum 1 liczbę.
+					</small>
 				</div>
 			</div>
 			<div class="form-group pull-right formPullRightButton">
