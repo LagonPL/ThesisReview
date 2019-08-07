@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Identity.EntityFrameworkCore
 
-@inject SignInManager<IdentityUser> SignInManager
+@inject SignInManager<ApplicationUser> SignInManager
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -12,12 +12,15 @@
 			<li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
 		</ul>
 	</form>
-	<li><a id="registerLink" asp-controller="Account" asp-action="Register"> Register </a></li>
+	<li><a id="registerLink" asp-controller="Account" asp-action="Register"> Recenzje </a></li>
+	@if (User.IsInRole("Admin"))
+	{
+		<li><a id="registerLink" asp-controller="Account" asp-action="Register"> Register </a></li>
+	}
 }
 else
 {
 	<ul class="nav navbar-nav navbar-right">
-		<li><a id="registerLink" asp-controller="Account" asp-action="Register"> Register </a></li>
 		<li><a id="loginLink" asp-controller="Account" asp-action="Login"> Log in </a></li>
 	</ul>
 }

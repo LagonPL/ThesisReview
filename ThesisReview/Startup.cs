@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ThesisReview.Data;
+using ThesisReview.Data.Models;
 
 namespace ThesisReview
 {
@@ -56,14 +57,14 @@ namespace ThesisReview
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
 
-      services.AddIdentity<IdentityUser, IdentityRole>()
+      services.AddIdentity<ApplicationUser, IdentityRole>()
         .AddEntityFrameworkStores<AppDbContext>();
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
       app.UseHttpsRedirection();
       app.UseStaticFiles();
@@ -75,6 +76,9 @@ namespace ThesisReview
                   name: "default",
                   template: "{controller=Home}/{action=Index}/{id?}");
       });
+
+      DbInitializer.Seed(userManager, roleManager);
+
     }
   }
 }
