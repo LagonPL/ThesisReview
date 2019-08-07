@@ -1,5 +1,4 @@
-﻿@model ThesisReview.Data.Models.Form
-
+﻿@model FormDetailViewModel
 @{
     ViewData["Title"] = "CreationComplete";
 }
@@ -15,30 +14,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ShortDescription)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StudentMail)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StudentMail)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ReviewerName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ReviewerName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.GuardianName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.GuardianName)
         </dd>
     </dl>
 </div>
