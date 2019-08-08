@@ -5,24 +5,39 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ThesisReview.Data.Models;
 using ThesisReview.Data.Services;
 using ThesisReview.ViewModels;
 
 namespace ThesisReview.Controllers
 {
-    public class FormController : Controller
+  public class FormController : Controller
+  {
+
+
+    public IActionResult Create()
     {
+      var fVM = new FormViewModel
+      {
+        ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller())
+      };
 
-
-        public IActionResult CreateForm()
-        {
-            return View();
-        }
+      return View(fVM);
+    }
 
     [HttpPost]
-    public IActionResult CreateForm(Form form)
+    public IActionResult Create(FormViewModel fVM)
     {
+      Form form = new Form
+      {
+        Title = fVM.Title,
+        ReviewType = fVM.ReviewType,
+        ShortDescription = fVM.ShortDescription,
+        StudentMail = fVM.StudentMail,
+        ReviewerName = fVM.ReviewerName,
+        GuardianName = fVM.GuardianName
+      };
       string content, url;
       Guid guid = Guid.NewGuid();
       var uri = new UriBuilder
@@ -35,16 +50,16 @@ namespace ThesisReview.Controllers
       if (ModelState.IsValid)
       {
         DatabaseAdder.AddForm(form, guid.ToString());
-        
+
         content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
         EmailSender.Send(form.StudentMail, "Stworzyłeś formularz", content);
         return RedirectToAction("Index", "Home");
       }
       return View(form);
-      
+
     }
 
-    public ActionResult CreationComplete(string id)
+    public ActionResult Details(string id)
     {
       Form form = new Form();
       form = DatabaseAdder.ReadForm(id);

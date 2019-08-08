@@ -13,6 +13,8 @@ namespace ThesisReview.Data.Models
     [StringLength(10)]
     public string Title { get; set; }
     [Required]
+    public string ReviewType { get; set; }
+    [Required]
     [StringLength(10)]
     public string ShortDescription { get; set; }
     [Required]
