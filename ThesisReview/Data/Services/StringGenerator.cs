@@ -52,6 +52,18 @@ namespace ThesisReview.Data.Services
       return items;
     }
 
+    public static List<string> ReviewTypesFiller()
+    {
+      var items = new List<string>
+      {
+        "Praca Inżynierska",
+        "Praca Licencjacka",
+        "Praca Magisterska",
+        "Praca Doktorska"
+      };
+      return items;
+    }
+
     public static string LinkGenerator(UriBuilder uri, string gid)
     {
       string url;

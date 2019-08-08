@@ -12,8 +12,7 @@
 			<li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
 		</ul>
 	</form>
-	<li><a id="registerLink" asp-controller="Account" asp-action="Register"> Recenzje </a></li>
-	<li><a id="registerLink" asp-controller="List" asp-action="Index"> Lista </a></li>
+	<li><a id="registerLink" asp-controller="List" asp-action="Index"> Recenzje </a></li>
 	@if (User.IsInRole("Admin"))
 	{
 		<li><a id="registerLink" asp-controller="Account" asp-action="Register"> Register </a></li>
