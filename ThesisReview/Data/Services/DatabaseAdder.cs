@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using ThesisReview.Data.Models;
 
 namespace ThesisReview.Data.Services
 {
@@ -24,6 +25,30 @@ namespace ThesisReview.Data.Services
           connection.Close();
         }
       }
+    }
+
+    public static Form ReadForm()
+    {
+      Form form = new Form();
+      using (SqlConnection connection = new SqlConnection(connectionString))
+      {
+        //SqlDataReader
+        connection.Open();
+
+        string sql = "select * from Forms where FormId = " + id;
+        SqlCommand command = new SqlCommand(sql, connection);
+        using (SqlDataReader dataReader = command.ExecuteReader())
+        {
+          while (dataReader.Read())
+          {
+            
+            form.FormId = Convert.ToInt32(dataReader["FormId"]);
+            form.Title = Convert.ToString(dataReader["Title"]);
+          }
+        }
+        connection.Close();
+      }
+      return form;
     }
 
 
