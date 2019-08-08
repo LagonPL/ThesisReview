@@ -10,8 +10,8 @@ using ThesisReview.Data;
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190807100743_AppUserInitialFix")]
-    partial class AppUserInitialFix
+    [Migration("20190808084111_FormID")]
+    partial class FormID
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -189,6 +189,8 @@ namespace ThesisReview.Migrations
                     b.Property<int>("FormId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FormURL");
 
                     b.Property<string>("GuardianName")
                         .IsRequired();

@@ -66,8 +66,10 @@ namespace ThesisReview.Controllers
     [Authorize(Roles = "Admin")]
     public ActionResult Register()
     {
-      var rVM = new RegisterViewModel();
-      rVM.Departments = new SelectList(ListFiller.DepartmentFiller());
+      var rVM = new RegisterViewModel
+      {
+        Departments = new SelectList(StringGenerator.DepartmentFiller())
+      };
       return View(rVM);
     }
 
