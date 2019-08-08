@@ -34,7 +34,7 @@ namespace ThesisReview.Controllers
       url = StringGenerator.LinkGenerator(uri, guid.ToString());
       if (ModelState.IsValid)
       {
-        DatabaseAdder.AddForm("",form.Title, form.ShortDescription, form.StudentMail, form.ReviewerName, form.GuardianName, guid.ToString());
+        DatabaseAdder.AddForm(form, guid.ToString());
         
         content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
         EmailSender.Send(form.StudentMail, "Stworzyłeś formularz", content);
