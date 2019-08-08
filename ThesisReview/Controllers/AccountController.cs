@@ -46,7 +46,6 @@ namespace ThesisReview.Controllers
         return View(logInViewModel);
 
       var user = await _userManager.FindByEmailAsync(logInViewModel.Email);
-
       if(user != null)
       {
         var result = await _signInManager.PasswordSignInAsync(user, logInViewModel.Password, false, false);

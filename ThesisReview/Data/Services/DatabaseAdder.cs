@@ -13,12 +13,13 @@ namespace ThesisReview.Data.Services
 
     private readonly static string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=ThesisReview;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-    public static void AddForm(string type, string title, string shortdesc, string studentmail, string reviewer, string guardian, string url)
+    public static void AddForm(Form form, string url)
     {
 
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        string sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL) Values ('{title}', '{shortdesc}','{studentmail}','{reviewer}','{guardian}','{url}')"; using (SqlCommand command = new SqlCommand(sql, connection))
+        string sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{url}')";
+        using (SqlCommand command = new SqlCommand(sql, connection))
         {
           command.CommandType = CommandType.Text;
           connection.Open();

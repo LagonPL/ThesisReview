@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ThesisReview.Data;
+using ThesisReview.Data.Interface;
 using ThesisReview.Data.Models;
 
 namespace ThesisReview
@@ -59,6 +60,8 @@ namespace ThesisReview
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
         .AddEntityFrameworkStores<AppDbContext>();
+
+      services.AddTransient<IListRepository, ListRepository>();
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
     }
