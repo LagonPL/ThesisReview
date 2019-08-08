@@ -23,11 +23,20 @@ namespace ThesisReview.Controllers
     [HttpPost]
     public IActionResult CreateForm(Form form)
     {
-      string content;
+      string content, url;
+      Guid guid = Guid.NewGuid();
+      var uri = new UriBuilder
+      {
+        Scheme = Request.Scheme,
+        Host = Request.Host.ToString(),
+        Path = "/Form/CreationComplete/"
+      };
+      url = StringGenerator.LinkGenerator(uri, guid.ToString());
       if (ModelState.IsValid)
       {
-        DatabaseAdder.AddForm("",form.Title, form.ShortDescription, form.StudentMail, form.ReviewerName, form.GuardianName);
-        content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie.";
+        DatabaseAdder.AddForm("",form.Title, form.ShortDescription, form.StudentMail, form.ReviewerName, form.GuardianName, guid.ToString());
+        
+        content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
         EmailSender.Send(form.StudentMail, "Stworzyłeś formularz", content);
         return RedirectToAction("Index", "Home");
       }
@@ -37,33 +46,13 @@ namespace ThesisReview.Controllers
 
     public ActionResult CreationComplete(string id)
     {
-      string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=ThesisReview;Trusted_Connection=True;MultipleActiveResultSets=true";
-      //List<Form> formList = new List<Form>();
-      string formularz = string.Empty;
-      string nazwa = string.Empty;
-      using (SqlConnection connection = new SqlConnection(connectionString))
-      {
-        //SqlDataReader
-        connection.Open();
-
-        string sql = "select * from Forms where FormId = " + id;
-        SqlCommand command = new SqlCommand(sql, connection);
-        using (SqlDataReader dataReader = command.ExecuteReader())
-        {
-          while (dataReader.Read())
-          {
-            Form form = new Form();
-            //form.FormId = Convert.ToInt32(dataReader["FormId"]);
-            //formularz = Convert.ToString(dataReader["FormId"]);
-            nazwa = Convert.ToString(dataReader["Title"]);
-          }
-        }
-        connection.Close();
-      }
+      Form form = new Form();
+      form = DatabaseAdder.ReadForm(id);
 
       var fdVM = new FormDetailViewModel
       {
-        Title = nazwa
+        Title = form.Title,
+        FormURL = form.FormURL
       };
 
       return View(fdVM);

@@ -19,13 +19,14 @@ namespace ThesisReview.Data.Models
     [DataType(DataType.EmailAddress)]
     public string StudentMail { get; set; }
     [Required]
-    //[DataType(DataType.EmailAddress)]
+    [DataType(DataType.EmailAddress)]
     //[StringLength(10)]
     public string ReviewerName { get; set; }
     [Required]
     //[DataType(DataType.EmailAddress)]
     //[StringLength(10)]
     public string GuardianName { get; set; }
+    public string FormURL { get; set; }
     
 
   }

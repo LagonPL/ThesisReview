@@ -188,6 +188,8 @@ namespace ThesisReview.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("FormURL");
+
                     b.Property<string>("GuardianName")
                         .IsRequired();
 
