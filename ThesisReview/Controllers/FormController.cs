@@ -35,7 +35,7 @@ namespace ThesisReview.Controllers
       
     }
 
-    public IActionResult CreationComplete(string formId)
+    public ActionResult CreationComplete(string id)
     {
       string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=ThesisReview;Trusted_Connection=True;MultipleActiveResultSets=true";
       //List<Form> formList = new List<Form>();
@@ -46,7 +46,8 @@ namespace ThesisReview.Controllers
         //SqlDataReader
         connection.Open();
 
-        string sql = "select * from Forms"; SqlCommand command = new SqlCommand(sql, connection);
+        string sql = "select * from Forms where FormId = " + id;
+        SqlCommand command = new SqlCommand(sql, connection);
         using (SqlDataReader dataReader = command.ExecuteReader())
         {
           while (dataReader.Read())
