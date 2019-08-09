@@ -51,6 +51,25 @@ namespace ThesisReview.Data.Services
       };
       return items;
     }
+    public static List<string> SuperAdvance()
+    {
+
+      var items = new List<string>
+      {
+        "Sformułowanie celu (ów) pracy",
+        "Układ i struktura pracy",
+        "Sformułowanie problemu i hipotez",
+        "Trafność doboru metod i narzędzi badawczych",
+        "Nowatorstwo i oryginalność ujęcia problemu",
+        "Dobór i liczebność wykorzystanej literatury",
+        "Zakres wykorzystanych informacji (np. zakres empirycznych  badań własnych)",
+        "Poprawność językowa i technika pisania",
+        "Redakcja przypisów i odsyłaczy",
+        "Poprawność spisów treści, wykorzystanej literatury, graficznej prezentacji danych itp.",
+
+      };
+      return items;
+    }
 
     public static List<string> ReviewTypesFiller()
     {
