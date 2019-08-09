@@ -2,22 +2,22 @@
 
 namespace ThesisReview.Migrations
 {
-    public partial class statusandfixes2 : Migration
+    public partial class questionsfix2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Status",
-                table: "Forms",
+                name: "FormURL",
+                table: "Questions",
                 nullable: true,
-                oldClrType: typeof(string));
+                oldClrType: typeof(int));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Status",
-                table: "Forms",
+            migrationBuilder.AlterColumn<int>(
+                name: "FormURL",
+                table: "Questions",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldNullable: true);

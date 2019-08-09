@@ -50,7 +50,7 @@ namespace ThesisReview.Controllers
       url = StringGenerator.LinkGenerator(uri, guid.ToString());
       if (ModelState.IsValid)
       {
-        DatabaseAdder.AddForm(form, guid.ToString());
+        DatabaseAction.AddForm(form, guid.ToString());
 
         content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
         EmailSender.Send(form.StudentMail, "Stworzyłeś formularz", content);
@@ -63,15 +63,45 @@ namespace ThesisReview.Controllers
     public ActionResult Details(string id)
     {
       Form form = new Form();
-      form = DatabaseAdder.ReadForm(id);
+      form = DatabaseAction.ReadForm(id);
 
       var fdVM = new FormDetailViewModel
       {
-        Title = form.Title,
-        FormURL = form.FormURL
+        Form = form
       };
 
       return View(fdVM);
+    }
+
+    public ActionResult Detale(string id)
+    {
+      Form form = new Form();
+      form = DatabaseAction.ReadForm(id);
+
+      var fdVM = new FormDetailViewModel
+      {
+        Form = form
+      };
+
+      return View(fdVM);
+    }
+
+    [HttpPost]
+    public IActionResult UpdateForm(FormDetailViewModel fdVM)
+    {
+      Questions questions = new Questions
+      {
+        Question1 = fdVM.Form.Questions.Question1,
+        Question2 = fdVM.Form.Questions.Question2,
+        Question3 = fdVM.Form.Questions.Question3,
+        Question4 = fdVM.Form.Questions.Question4,
+        Question5 = fdVM.Form.Questions.Question5,
+        Question6 = fdVM.Form.Questions.Question6,
+        Question7 = fdVM.Form.Questions.Question7,
+        Question8 = fdVM.Form.Questions.Question8
+      };
+      DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL);
+      return RedirectToAction("Index", "List");
     }
 
 

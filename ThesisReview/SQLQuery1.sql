@@ -1,1 +1,2 @@
-﻿select * from Forms where FormURL = '512a9ec2-bde7-4991-b106-a621db3fc0d5'
+﻿Update Questions SET Question1='Test', Question2=''   Where FormURL= '0a600ff0-43dd-4916-9f2d-f73c19aeecea'
+select * from Forms, Questions where Forms.FormURL = 'f1be2a0f-3687-4526-9a05-621e7bb873e2' And Questions.FormURL = 'f1be2a0f-3687-4526-9a05-621e7bb873e2'
