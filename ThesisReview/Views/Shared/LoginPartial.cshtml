@@ -6,13 +6,13 @@
 	<form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
 				method="post" class="navbar-right">
 		<ul class="nav navbar-nav navbar-right mr-auto">
-			<li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span>Log off</a></li>
+			<li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span> Log off</a></li>
 		</ul>
 	</form>
-	<li><a id="registerLink" asp-controller="List" asp-action="Index"><span class="glyphicon glyphicon-list-alt"></span> Recenzje </a></li>
+	<li><a id="registerLink" asp-controller="List" asp-action="Index"><span class="glyphicon glyphicon-list-alt"></span> Recenzje</a></li>
 	@if (User.IsInRole("Admin"))
 	{
-		<li><a id="registerLink" asp-controller="Account" asp-action="Register"><span class="glyphicon glyphicon-user"></span> Rejestruj </a></li>
+		<li><a id="registerLink" asp-controller="Account" asp-action="Register"><span class="glyphicon glyphicon-user"></span> Rejestruj</a></li>
 	}
 }
 else

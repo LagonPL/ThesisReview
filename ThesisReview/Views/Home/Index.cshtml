@@ -3,27 +3,15 @@
 }
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/logopl.png" alt="Politechnika" class="img-responsive"  style="height: 300px"/>
-            <div class="carousel-caption" role="option">
-            </div>
-        </div>
-    </div>
+<img src="~/images/logo.png" alt="Politechnika" class="img-responsive center-block"/>
 </div>
 
-<div class="row">
+<div class="row col-md-6 col-md-offset-3">
 
 	<h1 class="text-center">Wybierz czynność:</h1>
 
-	<div class="col-md-12 col-md-offset-5">
-		@Html.ActionLink("Zaloguj się", "Login", "Account", null, new { @class = "btn btn-primary btn-large" })
-		@Html.ActionLink("Wyślij recenzje", "Create", "Form", null, new { @class = "btn btn-primary btn-large" })
-	</div>
+		@Html.ActionLink("Zaloguj się", "Login", "Account", null, new { @class = "btn btn-primary center-block" })
+		<hr />
+		@Html.ActionLink("Wyślij recenzje", "Create", "Form", null, new { @class = "btn btn-primary center-block" })
 
 </div>
