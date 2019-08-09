@@ -35,8 +35,9 @@ namespace ThesisReview.Controllers
         ReviewType = fVM.ReviewType,
         ShortDescription = fVM.ShortDescription,
         StudentMail = fVM.StudentMail,
+        Status = "Nowa",
         ReviewerName = fVM.ReviewerName,
-        GuardianName = fVM.GuardianName
+        GuardianName = fVM.GuardianName        
       };
       string content, url;
       Guid guid = Guid.NewGuid();
@@ -44,7 +45,7 @@ namespace ThesisReview.Controllers
       {
         Scheme = Request.Scheme,
         Host = Request.Host.ToString(),
-        Path = "/Form/CreationComplete/"
+        Path = "/Form/Details/"
       };
       url = StringGenerator.LinkGenerator(uri, guid.ToString());
       if (ModelState.IsValid)

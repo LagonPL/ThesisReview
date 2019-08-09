@@ -28,11 +28,11 @@ namespace ThesisReview.Controllers
     {
 
       string mail = await GetCurrentUser();
-      var items = _listRepository.GetYourForms(mail);
-
+      var revieweritems = _listRepository.GetReviewerForms(mail).Concat(_listRepository.GetGuardianForms(mail));
+      //var guardianitems = _listRepository.GetGuardianForms(mail);
       var fLVM = new ListViewModel
       {
-        Forms = items
+        Forms = revieweritems
       };
 
       return View(fLVM);

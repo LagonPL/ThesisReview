@@ -17,7 +17,9 @@ namespace ThesisReview.Data
       _appDbContext = appDbContext;
     }
 
-    public IEnumerable<Form> GetYourForms(string mail) => _appDbContext.Forms.Where(p => p.ReviewerName == mail);
+    public IEnumerable<Form> GetReviewerForms(string mail) => _appDbContext.Forms.Where(p => p.ReviewerName == mail);
+
+    public IEnumerable<Form> GetGuardianForms(string mail) => _appDbContext.Forms.Where(p => p.GuardianName == mail);
 
     public Form GetFormById(int formId) => _appDbContext.Forms.FirstOrDefault(p => p.FormId == formId);
   }

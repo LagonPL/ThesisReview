@@ -1,25 +1,30 @@
 ﻿@model FormDetailViewModel
 
 <h2>@Html.DisplayFor(model => model.Title)</h2>
+@inject SignInManager<ApplicationUser> SignInManager
 
 <div>
-    <h4>Form</h4>
-    <hr />
-		<dl class="dl-horizontal">
-			<dt>
-				@Html.DisplayNameFor(model => model.Title)
-			</dt>
-			<dd>
-				@Html.DisplayFor(model => model.Title)
-			</dd>
-			<dt>
-				@Html.DisplayNameFor(model => model.FormURL)
-			</dt>
-			<dd>
-				@Html.DisplayFor(model => model.FormURL)
-			</dd>
-		</dl>
+	<h4>Form</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Title)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Title)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.FormURL)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.FormURL)
+		</dd>
+	</dl>
 </div>
-<div>
-	@Html.ActionLink("Cofnij", "Index", "Home", null, new { @class = "btn btn-primary btn-large" })
-</div>
+@if (SignInManager.IsSignedIn(User))
+{
+	<div>
+		@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
+	</div>
+}
+

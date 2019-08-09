@@ -8,7 +8,8 @@ namespace ThesisReview.Data.Interface
 {
   public interface IListRepository
   {
-    IEnumerable<Form> GetYourForms(string mail);
+    IEnumerable<Form> GetReviewerForms(string mail);
+    IEnumerable<Form> GetGuardianForms(string mail);
     Form GetFormById(int formId);
   }
 }

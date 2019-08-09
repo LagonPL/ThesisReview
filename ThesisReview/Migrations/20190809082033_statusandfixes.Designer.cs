@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThesisReview.Data;
 
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190809082033_statusandfixes")]
+    partial class statusandfixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,7 +204,8 @@ namespace ThesisReview.Migrations
                     b.Property<string>("ShortDescription")
                         .IsRequired();
 
-                    b.Property<string>("Status");
+                    b.Property<string>("Status")
+                        .IsRequired();
 
                     b.Property<string>("StudentMail")
                         .IsRequired();
