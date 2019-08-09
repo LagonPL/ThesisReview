@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ThesisReview.Data.Models;
 
 namespace ThesisReview.Data.Services
 {
@@ -18,19 +19,19 @@ namespace ThesisReview.Data.Services
       return items;
     }
 
-    public static List<string> BasicQuestion()
+    public static Questions BasicQuestion()
     {
 
-      var items = new List<string>
+      var items = new Questions
       {
-        "Czy treść pracy odpowiada tematowy określonemu w tytule?",
-        "Ocena układu pracy, struktury podziału treści kolejnych rozdziałów",
-        "Merytoryczna ocena pracy",
-        "Czy i w jakim zakresie praca stanowi nowe ujęcie problemu",
-        "Charakterystyka doboru i wykorzystania źródeł",
-        "Ocena formalnej strony pracy (poprawność języka, opanowanie techniki pisania pracy, spis rzeczy, odsyłacze)",
-        "Sposób wykorzystania pracy (publikacja, udostępnienie instytucjom, materiał źródłowy)",
-        "Ocena pracy"
+        Question1 = "Czy treść pracy odpowiada tematowy określonemu w tytule?",
+        Question2 = "Ocena układu pracy, struktury podziału treści kolejnych rozdziałów",
+        Question3 = "Merytoryczna ocena pracy",
+        Question4 = "Czy i w jakim zakresie praca stanowi nowe ujęcie problemu",
+        Question5 = "Charakterystyka doboru i wykorzystania źródeł",
+        Question6 = "Ocena formalnej strony pracy (poprawność języka, opanowanie techniki pisania pracy, spis rzeczy, odsyłacze)",
+        Question7 = "Sposób wykorzystania pracy (publikacja, udostępnienie instytucjom, materiał źródłowy)",
+        Question8 = "Ocena pracy"
       };
       return items;
     }

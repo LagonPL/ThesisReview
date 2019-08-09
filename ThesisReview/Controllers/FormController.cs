@@ -64,12 +64,12 @@ namespace ThesisReview.Controllers
     {
       Form form = new Form();
       form = DatabaseAction.ReadForm(id);
-
+      var questions = StringGenerator.BasicQuestion();
       var fdVM = new FormDetailViewModel
       {
         Form = form,
-        ReviewType = form.ReviewType
-
+        ReviewType = form.ReviewType,
+        QuestionList = questions
       };
 
       return View(fdVM);

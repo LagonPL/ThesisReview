@@ -33,7 +33,7 @@
 	@*@if (User.Identity.Name.Equals(Model.Form.ReviewerName))
 	{*@
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-12">
 				<form asp-controller="Form" asp-action="UpdateForm" method="post" class="form-horizontal" role="form">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<input type="hidden" asp-for="Form.FormId" />
@@ -48,41 +48,41 @@
 						<span asp-validation-for="Form.Title" class="text-danger"></span>
 					</div>
 					<div class="form-group">
-						<label asp-for="Form.Questions.Question1" class="control-label"></label>
-						<input asp-for="Form.Questions.Question1" class="form-control" />
+						<label asp-for="Form.Questions.Question1" class="control-label">@Model.QuestionList.Question1</label>
+						<textarea asp-for="Form.Questions.Question1" class="form-control"></textarea>
 						<span asp-validation-for="Form.Questions.Question1" class="text-danger"></span>
 					</div>
 					<div class="form-group">
-						<label asp-for="Form.Questions.Question2" class="control-label"></label>
-						<input asp-for="Form.Questions.Question2" class="form-control" />
+						<label asp-for="Form.Questions.Question2" class="control-label">@Model.QuestionList.Question2</label>
+						<textarea asp-for="Form.Questions.Question2" class="form-control"></textarea>
 						<span asp-validation-for="Form.Questions.Question2" class="text-danger"></span>
 					</div>
 					<div class="form-group">
-						<label asp-for="Form.Questions.Question3" class="control-label"></label>
-						<input asp-for="Form.Questions.Question3" class="form-control" />
+						<label asp-for="Form.Questions.Question3" class="control-label">@Model.QuestionList.Question3</label>
+						<textarea asp-for="Form.Questions.Question3" class="form-control"></textarea>
 						<span asp-validation-for="Form.Questions.Question3" class="text-danger"></span>
 					</div>
 					<div class="form-group">
-						<label asp-for="Form.Questions.Question4" class="control-label"></label>
-						<input asp-for="Form.Questions.Question4" class="form-control" />
+						<label asp-for="Form.Questions.Question4" class="control-label">@Model.QuestionList.Question4</label>
+						<textarea asp-for="Form.Questions.Question4" class="form-control"></textarea>
 						<span asp-validation-for="Form.Questions.Question4" class="text-danger"></span>
 					</div>
 					<div class="form-group">
-						<label asp-for="Form.Questions.Question5" class="control-label"></label>
-						<input asp-for="Form.Questions.Question5" class="form-control" />
+						<label asp-for="Form.Questions.Question5" class="control-label">@Model.QuestionList.Question5</label>
+						<textarea asp-for="Form.Questions.Question5" class="form-control"></textarea>
 						<span asp-validation-for="Form.Questions.Question5" class="text-danger"></span>
 					</div>
 					<div class="form-group">
-						<label asp-for="Form.Questions.Question6" class="control-label"></label>
-						<input asp-for="Form.Questions.Question6" class="form-control" />
+						<label asp-for="Form.Questions.Question6" class="control-label">@Model.QuestionList.Question6</label>
+						<textarea asp-for="Form.Questions.Question6" class="form-control"></textarea>
 						<span asp-validation-for="Form.Questions.Question6" class="text-danger"></span>
 					</div><div class="form-group">
-						<label asp-for="Form.Questions.Question7" class="control-label"></label>
-						<input asp-for="Form.Questions.Question7" class="form-control" />
+						<label asp-for="Form.Questions.Question7" class="control-label">@Model.QuestionList.Question7</label>
+						<textarea asp-for="Form.Questions.Question7" class="form-control"></textarea>
 						<span asp-validation-for="Form.Questions.Question7" class="text-danger"></span>
 					</div><div class="form-group">
-						<label asp-for="Form.Questions.Question8" class="control-label"></label>
-						<input asp-for="Form.Questions.Question8" class="form-control" />
+						<label asp-for="Form.Questions.Question8" class="control-label">@Model.QuestionList.Question8</label>
+						<textarea asp-for="Form.Questions.Question8" class="form-control"></textarea>
 						<span asp-validation-for="Form.Questions.Question8" class="text-danger"></span>
 					</div>
 					<div class="form-group">

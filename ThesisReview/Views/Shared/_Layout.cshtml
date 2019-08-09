@@ -26,13 +26,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ThesisReview</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Recenzje Prac</a>
             </div>
             <div class="navbar-collapse collapse">
 							<ul class="nav navbar-nav">
-								<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-								<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-								<li><a asp-area="" asp-controller="Home" asp-action="Default">Default</a></li>
+								<li><a asp-area="" asp-controller="Home" asp-action="Index">Strona Główna</a></li>
+								<li><a asp-area="" asp-controller="Home" asp-action="About">Autor</a></li>
+								<li><a asp-area="" asp-controller="Home" asp-action="Default"><span class="glyphicon glyphicon-info-sign"></span></a></li>
 								@await Html.PartialAsync("LoginPartial")
 							</ul>
             </div>
@@ -43,10 +43,6 @@
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2019 - ThesisReview</p>
-        </footer>
     </div>
 
     <environment include="Development">
