@@ -45,6 +45,21 @@ namespace ThesisReview.Data.Services
       }
     }
 
+    public static void UpdateStatus(string status, string url)
+    {
+
+      using (SqlConnection connection = new SqlConnection(connectionString))
+      {
+        string sql = $"Update Forms SET Status='{status}'  Where FormURL='{url}'";
+        using (SqlCommand command = new SqlCommand(sql, connection))
+        {
+          connection.Open();
+          command.ExecuteNonQuery();
+          connection.Close();
+        }
+      }
+    }
+
 
     public static Form ReadForm(string id)
     {
@@ -65,6 +80,7 @@ namespace ThesisReview.Data.Services
             form.Title = Convert.ToString(dataReader["Title"]);
             form.ReviewerName = Convert.ToString(dataReader["ReviewerName"]);
             form.GuardianName = Convert.ToString(dataReader["GuardianName"]);
+            form.ReviewType = Convert.ToString(dataReader["ReviewType"]);
             questions.Question1 = Convert.ToString(dataReader["Question1"]);
             questions.Question2 = Convert.ToString(dataReader["Question2"]);
             questions.Question3 = Convert.ToString(dataReader["Question3"]);

@@ -1,1 +1,11 @@
-﻿@Html.Partial("BasicForm")
+﻿@model FormDetailViewModel
+
+@if (Model.ReviewType.Equals("Praca Inzynierska") || Model.ReviewType.Equals("Praca Licencjacka"))
+{
+	@Html.Partial("BasicForm")
+}
+
+@if (Model.ReviewType.Equals("Praca Magisterska") || Model.ReviewType.Equals("Praca Doktorska"))
+{
+<h4>Work In Progress</h4>
+}

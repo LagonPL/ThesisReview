@@ -10,8 +10,8 @@ using ThesisReview.Data;
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190809103036_questionsfix2")]
-    partial class questionsfix2
+    [Migration("20190809140814_Clear")]
+    partial class Clear
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -194,8 +194,6 @@ namespace ThesisReview.Migrations
 
                     b.Property<string>("GuardianName")
                         .IsRequired();
-
-                    b.Property<int>("QuestionId");
 
                     b.Property<int?>("QuestionsId");
 
