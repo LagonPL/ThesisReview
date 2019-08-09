@@ -67,20 +67,9 @@ namespace ThesisReview.Controllers
 
       var fdVM = new FormDetailViewModel
       {
-        Form = form
-      };
+        Form = form,
+        ReviewType = form.ReviewType
 
-      return View(fdVM);
-    }
-
-    public ActionResult Detale(string id)
-    {
-      Form form = new Form();
-      form = DatabaseAction.ReadForm(id);
-
-      var fdVM = new FormDetailViewModel
-      {
-        Form = form
       };
 
       return View(fdVM);
@@ -101,6 +90,7 @@ namespace ThesisReview.Controllers
         Question8 = fdVM.Form.Questions.Question8
       };
       DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL);
+      DatabaseAction.UpdateStatus("Otwarta",fdVM.Form.FormURL);
       return RedirectToAction("Index", "List");
     }
 

@@ -9,5 +9,6 @@ namespace ThesisReview.ViewModels
   public class FormDetailViewModel
   {
     public Form Form { get; set; }
+    public string ReviewType { get; set; }
   }
 }

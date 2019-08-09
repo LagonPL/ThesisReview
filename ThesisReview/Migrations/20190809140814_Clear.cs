@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class questionsfix : Migration
+    public partial class Clear : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,7 +54,7 @@ namespace ThesisReview.Migrations
                 {
                     QuestionsId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FormURL = table.Column<int>(nullable: false),
+                    FormURL = table.Column<string>(nullable: true),
                     Question1 = table.Column<string>(nullable: true),
                     Question2 = table.Column<string>(nullable: true),
                     Question3 = table.Column<string>(nullable: true),
@@ -191,7 +191,6 @@ namespace ThesisReview.Migrations
                     ReviewerName = table.Column<string>(nullable: false),
                     GuardianName = table.Column<string>(nullable: false),
                     FormURL = table.Column<string>(nullable: true),
-                    QuestionId = table.Column<int>(nullable: false),
                     QuestionsId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
