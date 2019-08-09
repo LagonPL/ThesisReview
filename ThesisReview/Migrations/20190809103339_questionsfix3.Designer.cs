@@ -10,8 +10,8 @@ using ThesisReview.Data;
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190808145917_ReviewType")]
-    partial class ReviewType
+    [Migration("20190809103339_questionsfix3")]
+    partial class questionsfix3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -195,6 +195,8 @@ namespace ThesisReview.Migrations
                     b.Property<string>("GuardianName")
                         .IsRequired();
 
+                    b.Property<int?>("QuestionsId");
+
                     b.Property<string>("ReviewType")
                         .IsRequired();
 
@@ -202,19 +204,55 @@ namespace ThesisReview.Migrations
                         .IsRequired();
 
                     b.Property<string>("ShortDescription")
-                        .IsRequired()
-                        .HasMaxLength(10);
+                        .IsRequired();
+
+                    b.Property<string>("Status");
 
                     b.Property<string>("StudentMail")
                         .IsRequired();
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(10);
+                        .HasMaxLength(200);
 
                     b.HasKey("FormId");
 
+                    b.HasIndex("QuestionsId");
+
                     b.ToTable("Forms");
+                });
+
+            modelBuilder.Entity("ThesisReview.Data.Models.Questions", b =>
+                {
+                    b.Property<int>("QuestionsId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FormURL");
+
+                    b.Property<string>("Grade");
+
+                    b.Property<string>("LongReview");
+
+                    b.Property<string>("Question1");
+
+                    b.Property<string>("Question2");
+
+                    b.Property<string>("Question3");
+
+                    b.Property<string>("Question4");
+
+                    b.Property<string>("Question5");
+
+                    b.Property<string>("Question6");
+
+                    b.Property<string>("Question7");
+
+                    b.Property<string>("Question8");
+
+                    b.HasKey("QuestionsId");
+
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -260,6 +298,13 @@ namespace ThesisReview.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ThesisReview.Data.Models.Form", b =>
+                {
+                    b.HasOne("ThesisReview.Data.Models.Questions", "Questions")
+                        .WithMany()
+                        .HasForeignKey("QuestionsId");
                 });
 #pragma warning restore 612, 618
         }

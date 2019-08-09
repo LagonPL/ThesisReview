@@ -12,9 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Form\CreationComplete - kopiować.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Views\Home\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

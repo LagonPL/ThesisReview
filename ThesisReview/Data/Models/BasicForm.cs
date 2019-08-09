@@ -8,7 +8,7 @@ namespace ThesisReview.Data.Models
   public class BasicForm : Form
   {
 
-    public Questions Questions { get; set; }
+    
 
   }
 }

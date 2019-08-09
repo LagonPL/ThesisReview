@@ -8,6 +8,7 @@ namespace ThesisReview.Data.Models
   public class AdvanceForm
   {
 
+    public int AdvanceFormId { get; set; }
 
 
   }
