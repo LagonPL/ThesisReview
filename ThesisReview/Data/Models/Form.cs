@@ -10,13 +10,13 @@ namespace ThesisReview.Data.Models
   {
     public int FormId { get; set; }
     [Required]
-    [StringLength(10)]
+    [StringLength(200)]
     public string Title { get; set; }
     [Required]
     public string ReviewType { get; set; }
     [Required]
-    [StringLength(10)]
     public string ShortDescription { get; set; }
+    public string Status { get; set; }
     [Required]
     [DataType(DataType.EmailAddress)]
     public string StudentMail { get; set; }

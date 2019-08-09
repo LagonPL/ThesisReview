@@ -18,7 +18,7 @@ namespace ThesisReview.Data.Services
 
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        string sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL, ReviewType) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{url}','{form.ReviewType}')";
+        string sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL, ReviewType, Status) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{url}','{form.ReviewType}','{form.Status}')";
         using (SqlCommand command = new SqlCommand(sql, connection))
         {
           command.CommandType = CommandType.Text;
