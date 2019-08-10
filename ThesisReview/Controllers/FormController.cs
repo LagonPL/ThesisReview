@@ -64,12 +64,13 @@ namespace ThesisReview.Controllers
     {
       Form form = new Form();
       form = DatabaseAction.ReadForm(id);
-      var questions = StringGenerator.BasicQuestion();
+      var questions = StringGenerator.GetQuestions(form.ReviewType);
       var fdVM = new FormDetailViewModel
       {
         Form = form,
         ReviewType = form.ReviewType,
-        QuestionList = questions
+        QuestionList = questions,
+        Answers = StringGenerator.AnswersGenerator()
       };
 
       return View(fdVM);
@@ -87,7 +88,9 @@ namespace ThesisReview.Controllers
         Question5 = fdVM.Form.Questions.Question5,
         Question6 = fdVM.Form.Questions.Question6,
         Question7 = fdVM.Form.Questions.Question7,
-        Question8 = fdVM.Form.Questions.Question8
+        Question8 = fdVM.Form.Questions.Question8,
+        LongReview = fdVM.Form.Questions.LongReview,
+        Grade = fdVM.Form.Questions.Grade
       };
       DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL);
       DatabaseAction.UpdateStatus("Otwarta",fdVM.Form.FormURL);
