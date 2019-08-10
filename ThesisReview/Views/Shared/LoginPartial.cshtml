@@ -2,7 +2,9 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-
+	<ul class="nav navbar-nav mr-auto">
+		<li><a>@User.Identity.Name</a></li>
+	</ul>
 	<form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
 				method="post" class="navbar-right">
 		<ul class="nav navbar-nav navbar-right mr-auto">
@@ -21,6 +23,3 @@ else
 		<li><a id="loginLink" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 	</ul>
 }
-<ul class="nav navbar-nav mr-auto">
-	<li><a> Witaj @User.Identity.Name </a></li>
-</ul>

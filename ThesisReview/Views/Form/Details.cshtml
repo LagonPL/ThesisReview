@@ -4,8 +4,11 @@
 {
 	@Html.Partial("BasicForm")
 }
-
-@if (Model.ReviewType.Equals("Praca Magisterska") || Model.ReviewType.Equals("Praca Doktorska"))
+@if (Model.ReviewType.Equals("Praca Doktorska"))
 {
 	@Html.Partial("AdvanceForm")
+}
+@if(Model.ReviewType.Equals("Praca Magisterska"))
+{
+	@Html.Partial("MasterForm")
 }

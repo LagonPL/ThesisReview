@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class mailquestions : Migration
+    public partial class additionalquestionPOINTS : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,6 +64,9 @@ namespace ThesisReview.Migrations
                     Question6 = table.Column<string>(nullable: true),
                     Question7 = table.Column<string>(nullable: true),
                     Question8 = table.Column<string>(nullable: true),
+                    Question9 = table.Column<string>(nullable: true),
+                    Question0 = table.Column<string>(nullable: true),
+                    Points = table.Column<int>(nullable: false),
                     LongReview = table.Column<string>(nullable: true),
                     Grade = table.Column<string>(nullable: true)
                 },
