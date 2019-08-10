@@ -8,6 +8,7 @@ namespace ThesisReview.Data.Models
   public class Questions
   {
     public int QuestionsId { get; set; }
+    public string Mail { get; set; }
     public string FormURL { get; set; }
     public string Question1 { get; set; }
     public string Question2 { get; set; }
@@ -20,4 +21,5 @@ namespace ThesisReview.Data.Models
     public string LongReview { get; set; }
     public string Grade { get; set; }
   }
+
 }

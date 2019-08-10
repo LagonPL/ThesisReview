@@ -18,7 +18,7 @@ namespace ThesisReview.Data.Services
 
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        string sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL, ReviewType, Status) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{url}','{form.ReviewType}','{form.Status}'); Insert Into Questions (FormURL) Values ('{url}')";
+        string sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL, ReviewType, Status) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{url}','{form.ReviewType}','{form.Status}'); Insert Into Questions (FormURL, Mail) Values ('{url}', '{form.ReviewerName}'); Insert Into Questions (FormURL, Mail) Values ('{url}', '{form.GuardianName}')";
         using (SqlCommand command = new SqlCommand(sql, connection))
         {
           command.CommandType = CommandType.Text;
@@ -34,8 +34,7 @@ namespace ThesisReview.Data.Services
 
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        //string sql = $"Update Questions SET Question1='{questions.Question1}', Question2='{questions.Question2}', Question3='{questions.Question3}', Question4='{questions.Question4}', Question5='{questions.Question5}', Question6='{questions.Question6}', Question7='{questions.Question7}', Question8='{questions.Question8}'  Where FormURL='url'";
-        string sql = $"Update Questions SET Question1='{questions.Question1}', Question2='{questions.Question2}', Question3='{questions.Question3}', Question4='{questions.Question4}', Question5='{questions.Question5}', Question6='{questions.Question6}', Question7='{questions.Question7}', Question8='{questions.Question8}'  Where FormURL='{url}'";
+        string sql = $"Update Questions SET Question1='{questions.Question1}', Question2='{questions.Question2}', Question3='{questions.Question3}', Question4='{questions.Question4}', Question5='{questions.Question5}', Question6='{questions.Question6}', Question7='{questions.Question7}', Question8='{questions.Question8}', LongReview='{questions.LongReview}', Grade='{questions.Grade}'  Where FormURL='{url}'";
         using (SqlCommand command = new SqlCommand(sql, connection))
         {
           connection.Open();
@@ -78,6 +77,7 @@ namespace ThesisReview.Data.Services
           {
             form.FormURL = Convert.ToString(dataReader["FormURL"]);
             form.Title = Convert.ToString(dataReader["Title"]);
+            form.StudentMail = Convert.ToString(dataReader["StudentMail"])
             form.ReviewerName = Convert.ToString(dataReader["ReviewerName"]);
             form.GuardianName = Convert.ToString(dataReader["GuardianName"]);
             form.ReviewType = Convert.ToString(dataReader["ReviewType"]);
@@ -89,6 +89,8 @@ namespace ThesisReview.Data.Services
             questions.Question6 = Convert.ToString(dataReader["Question6"]);
             questions.Question7 = Convert.ToString(dataReader["Question7"]);
             questions.Question8 = Convert.ToString(dataReader["Question8"]);
+            questions.LongReview = Convert.ToString(dataReader["LongReview"]);
+            questions.Grade = Convert.ToString(dataReader["Grade"]);
             form.Questions = questions;
           }
         }

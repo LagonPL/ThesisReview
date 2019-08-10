@@ -232,6 +232,8 @@ namespace ThesisReview.Migrations
 
                     b.Property<string>("LongReview");
 
+                    b.Property<string>("Mail");
+
                     b.Property<string>("Question1");
 
                     b.Property<string>("Question2");

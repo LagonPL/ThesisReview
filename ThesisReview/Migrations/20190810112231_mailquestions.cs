@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class Clear : Migration
+    public partial class mailquestions : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,6 +54,7 @@ namespace ThesisReview.Migrations
                 {
                     QuestionsId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Mail = table.Column<string>(nullable: true),
                     FormURL = table.Column<string>(nullable: true),
                     Question1 = table.Column<string>(nullable: true),
                     Question2 = table.Column<string>(nullable: true),

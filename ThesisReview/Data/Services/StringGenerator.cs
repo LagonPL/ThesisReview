@@ -36,19 +36,20 @@ namespace ThesisReview.Data.Services
       return items;
     }
 
-    public static List<string> AdvanceQuestion()
+    public static Questions AdvanceQuestion()
     {
 
-      var items = new List<string>
+      var items = new Questions
       {
-        "Czy treść pracy jest zgodna z tematem określonym w tytule?	",
-        "Czy praca jest zgodna z zakresem tematycznym studiów?",
-        "Czy cel określony w pracy został zrealizowany?",
-        "Czy układ pracy i struktura podziału treści są prawidłowe?",
-        "Czy praca zawiera spis treści i prawidłowe odsyłacze do źródeł?",
-        "Czy praca jest napisana poprawnym językiem?	",
-        "Czy dobór źródeł i ich wykorzystanie są prawidłowe?",
-        "Czy zostały osiągnięte założone efekty kształcenia dla pracy końcowej?"
+        Question1 = "Czy treść pracy jest zgodna z tematem określonym w tytule?	",
+        Question2 = "Czy praca jest zgodna z zakresem tematycznym studiów?",
+        Question3 = "Czy cel określony w pracy został zrealizowany?",
+        Question4 = "Czy układ pracy i struktura podziału treści są prawidłowe?",
+        Question5 = "Czy praca zawiera spis treści i prawidłowe odsyłacze do źródeł?",
+        Question6 = "Czy praca jest napisana poprawnym językiem?	",
+        Question7 = "Czy dobór źródeł i ich wykorzystanie są prawidłowe?",
+        Question8 = "Czy zostały osiągnięte założone efekty kształcenia dla pracy końcowej?",
+        LongReview = "Krótka ocena merytoryczna: "
       };
       return items;
     }
@@ -84,6 +85,20 @@ namespace ThesisReview.Data.Services
       return items;
     }
 
+    public static List<Answers> AnswersGenerator()
+    {
+      var answers = new List<Answers>
+      {
+        new Answers{Answer = "W PELNI"},
+        new Answers{Answer = "CZESCIOWO"},
+        new Answers{Answer = "NIE"},
+        new Answers{Answer = "NIE DOTYCZY"},
+        new Answers{Answer = ""}
+      };
+
+      return answers;
+    }
+
     public static string LinkGenerator(UriBuilder uri, string gid)
     {
       string url;
@@ -95,6 +110,24 @@ namespace ThesisReview.Data.Services
       url = "https://" + url;
 
       return url;
+    }
+
+    public static Questions GetQuestions(string reviewtype)
+    {
+      if(reviewtype.Equals("Praca Inzynierska") || reviewtype.Equals("Praca Licencjacka"))
+      {
+        var items = StringGenerator.BasicQuestion();
+        return items;
+      }
+      else if(reviewtype.Equals("Praca Magisterska"))
+      {
+        var items = StringGenerator.AdvanceQuestion();
+        return items;
+      }
+      else
+      {
+        return new Questions();
+      }
     }
 
 

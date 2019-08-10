@@ -11,5 +11,6 @@ namespace ThesisReview.ViewModels
     public Form Form { get; set; }
     public string ReviewType { get; set; }
     public Questions QuestionList { get; set; }
+    public IEnumerable<Answers> Answers { get; set; }
   }
 }
