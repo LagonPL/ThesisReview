@@ -10,8 +10,8 @@ using ThesisReview.Data;
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190810112231_mailquestions")]
-    partial class mailquestions
+    [Migration("20190810142242_additionalquestionPOINTS")]
+    partial class additionalquestionPOINTS
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -236,6 +236,10 @@ namespace ThesisReview.Migrations
 
                     b.Property<string>("Mail");
 
+                    b.Property<int>("Points");
+
+                    b.Property<string>("Question0");
+
                     b.Property<string>("Question1");
 
                     b.Property<string>("Question2");
@@ -251,6 +255,8 @@ namespace ThesisReview.Migrations
                     b.Property<string>("Question7");
 
                     b.Property<string>("Question8");
+
+                    b.Property<string>("Question9");
 
                     b.HasKey("QuestionsId");
 

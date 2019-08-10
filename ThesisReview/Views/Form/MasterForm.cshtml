@@ -1,0 +1,166 @@
+﻿@model FormDetailViewModel
+
+<form asp-controller="Form" asp-action="UpdateForm" method="post" class="form-horizontal" role="form">
+	<div class="form-group hidden">
+		<label asp-for="Form.FormURL" class="control-label"></label>
+		<input asp-for="Form.FormURL" class="form-control" readonly />
+	</div>
+	<div class="form-group">
+		<label asp-for="Form.Title" class="control-label disabled"></label>
+		<input asp-for="Form.Title" class="form-control" readonly />
+	</div>
+	<div class="form-group">
+		<label asp-for="Form.StudentMail" class="control-label disabled"></label>
+		<input asp-for="Form.StudentMail" class="form-control" readonly />
+	</div>
+	<hr />
+	<div class="col-lg-8 col-lg-offset-2">
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>I. Ocena Koncepcji Pracy</th>
+					<th>Ocena</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="text-left">@Model.QuestionList.Question1</td>
+					<td><input type="number" asp-for="Form.Questions.Question1" class="form-control" id="q1" oninput="Counter()" /></td>
+				</tr>
+				<tr>
+					<td class="text-left">@Model.QuestionList.Question2</td>
+					<td><input type="number" asp-for="Form.Questions.Question2" class="form-control" id="q2" oninput="Counter()" /></td>
+				</tr>
+				<tr>
+					<td class="text-left" colspan="1">@Model.QuestionList.Question3</td>
+					<td><input type="number" asp-for="Form.Questions.Question3" class="form-control" id="q3" oninput="Counter()" /></td>
+				</tr>
+				<tr>
+					<td class="text-left">@Model.QuestionList.Question4</td>
+					<td><input type="number" asp-for="Form.Questions.Question4" class="form-control" id="q4" oninput="Counter()" /></td>
+				</tr>
+				<tr>
+					<td class="text-left">@Model.QuestionList.Question5</td>
+					<td><input type="number" asp-for="Form.Questions.Question5" class="form-control" id="q5" oninput="Counter()" /></td>
+				</tr>
+			</tbody>
+			<tfoot>
+			<td class="text-right">Suma (Max 40 pkt.):</td>
+			<td class="text-right"><p id="suma1">@Model.Sum.Sum1</p> </td>
+			</tfoot>
+		</table>
+
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>II. Ocena Źródeł Informacji</th>
+					<th>Ocena</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="text-left">@Model.QuestionList.Question6</td>
+					<td><input type="number" asp-for="Form.Questions.Question6" class="form-control" id="q6" oninput="Counter()" /></td>
+				</tr>
+				<tr>
+					<td class="text-left">@Model.QuestionList.Question7</td>
+					<td><input type="number" asp-for="Form.Questions.Question7" class="form-control" id="q7" oninput="Counter()" /></td>
+				</tr>
+			</tbody>
+			<tfoot>
+			<td class="text-right">Suma (Max 35 pkt.):</td>
+			<td class="text-right"><p id="suma2">@Model.Sum.Sum2</p> </td>
+			</tfoot>
+		</table>
+
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>III. Ocena Redakcji Pracy</th>
+					<th>Ocena</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="text-left">@Model.QuestionList.Question8</td>
+					<td><input type="number" asp-for="Form.Questions.Question8" class="form-control" id="q8" oninput="Counter()" /></td>
+				</tr>
+				<tr>
+					<td class="text-left">@Model.QuestionList.Question9</td>
+					<td><input type="number" asp-for="Form.Questions.Question9" class="form-control" id="q9" oninput="Counter()" /></td>
+				</tr>
+				<tr>
+					<td class="text-left">@Model.QuestionList.Question0</td>
+					<td><input type="number" asp-for="Form.Questions.Question0" class="form-control" id="q0" oninput="Counter()" /></td>
+				</tr>
+			</tbody>
+			<tfoot>
+			<td class="text-right">Suma (Max 20 pkt.):</td>
+			<td class="text-right"><p id="suma3">@Model.Sum.Sum3</p></td>
+			</tfoot>
+		</table>
+
+		<div class="col-lg-6 col-lg-offset-6">
+			<table class="table table-condensed table-striped">
+				<thead>
+					<tr>
+						<th>Suma punktów I - III</th>
+						<th><p id="sumaFinal">@Model.Sum.SumFinal</p></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>100-95</td>
+						<td>Cel</td>
+					</tr>
+				<td>94-88</td>
+				<td>Bdb</td>
+				</tr>
+				<tr>
+					<td>87-81</td>
+					<td>Db pl</td>
+				</tr>
+				<tr>
+					<td>80-67</td>
+					<td>Db</td>
+				</tr>
+				<tr>
+					<td>66-61</td>
+					<td>Dst pl</td>
+				</tr>
+				<tr>
+					<td>60-51</td>
+					<td>Dst</td>
+				</tr>
+				<tr>
+					<td>50-0</td>
+					<td>Nd</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="form-group">
+			<label asp-for="Form.Questions.LongReview" class="control-label">IV. Uzasadnienie i inne uwagi oceniające pracę</label>
+			<textarea asp-for="Form.Questions.LongReview" class="form-control"></textarea>
+		</div>
+		<div class="form-group">
+			<label asp-for="Form.Questions.Grade" class="control-label">V. Ocena Końcowa ( cel, bdb, db pl, db, dst pl, dst, nd )</label>
+			<input asp-for="Form.Questions.Grade" class="form-control">
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Save" class="btn btn-success" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
+		</div>
+	</div>
+</form>
+
+<script>
+	function Counter() {
+		var suma3 = parseInt(document.getElementById("q0").value) + parseInt(document.getElementById("q9").value) + parseInt(document.getElementById("q8").value)
+		var suma2 = parseInt(document.getElementById("q6").value) + parseInt(document.getElementById("q7").value)
+		var suma1 = parseInt(document.getElementById("q1").value) + parseInt(document.getElementById("q2").value) + parseInt(document.getElementById("q3").value) + parseInt(document.getElementById("q4").value) + parseInt(document.getElementById("q5").value)
+		document.getElementById("suma3").innerHTML = suma3;
+		document.getElementById("suma2").innerHTML = suma2;
+		document.getElementById("suma1").innerHTML = suma1;
+		document.getElementById("sumaFinal").innerHTML = suma3 + suma2 + suma1;
+	}
+</script>

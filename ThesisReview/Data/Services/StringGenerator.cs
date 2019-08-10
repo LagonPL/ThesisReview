@@ -53,21 +53,21 @@ namespace ThesisReview.Data.Services
       };
       return items;
     }
-    public static List<string> SuperAdvance()
+    public static Questions MasterQuestion()
     {
 
-      var items = new List<string>
+      var items = new Questions
       {
-        "Sformułowanie celu (ów) pracy",
-        "Układ i struktura pracy",
-        "Sformułowanie problemu i hipotez",
-        "Trafność doboru metod i narzędzi badawczych",
-        "Nowatorstwo i oryginalność ujęcia problemu",
-        "Dobór i liczebność wykorzystanej literatury",
-        "Zakres wykorzystanych informacji (np. zakres empirycznych  badań własnych)",
-        "Poprawność językowa i technika pisania",
-        "Redakcja przypisów i odsyłaczy",
-        "Poprawność spisów treści, wykorzystanej literatury, graficznej prezentacji danych itp.",
+        Question1 = "1. Sformułowanie celu (ów) pracy",
+        Question2 = "2. Układ i struktura pracy",
+        Question3 = "3. Sformułowanie problemu i hipotez",
+        Question4 = "4. Trafność doboru metod i narzędzi badawczych",
+        Question5 = "5. Nowatorstwo i oryginalność ujęcia problemu",
+        Question6 = "1. Dobór i liczebność wykorzystanej literatury",
+        Question7 = "2. Zakres wykorzystanych informacji (np. zakres empirycznych  badań własnych)",
+        Question8 = "1. Poprawność językowa i technika pisania",
+        Question9 = "2. Redakcja przypisów i odsyłaczy",
+        Question0 = "3. Poprawność spisów treści, wykorzystanej literatury, graficznej prezentacji danych itp.",
 
       };
       return items;
@@ -121,12 +121,13 @@ namespace ThesisReview.Data.Services
       }
       else if(reviewtype.Equals("Praca Magisterska"))
       {
-        var items = StringGenerator.AdvanceQuestion();
+        var items = StringGenerator.MasterQuestion();
         return items;
       }
       else
       {
-        return new Questions();
+        var items = StringGenerator.AdvanceQuestion();
+        return items;
       }
     }
 

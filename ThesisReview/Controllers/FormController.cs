@@ -50,7 +50,7 @@ namespace ThesisReview.Controllers
       url = StringGenerator.LinkGenerator(uri, guid.ToString());
       if (ModelState.IsValid)
       {
-        DatabaseAction.AddForm(form, guid.ToString());
+        DatabaseAction.AddForm(form, guid.ToString(), "0");
 
         content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
         EmailSender.Send(form.StudentMail, "Stworzyłeś formularz", content);
@@ -64,13 +64,17 @@ namespace ThesisReview.Controllers
     {
       Form form = new Form();
       form = DatabaseAction.ReadForm(id);
+      var suma = new Sum();
       var questions = StringGenerator.GetQuestions(form.ReviewType);
+      if (form.ReviewType.Equals("Praca Magisterska"))
+        suma = Util.Sum(form);
       var fdVM = new FormDetailViewModel
       {
         Form = form,
         ReviewType = form.ReviewType,
         QuestionList = questions,
-        Answers = StringGenerator.AnswersGenerator()
+        Answers = StringGenerator.AnswersGenerator(),
+        Sum = suma
       };
 
       return View(fdVM);
@@ -89,6 +93,8 @@ namespace ThesisReview.Controllers
         Question6 = fdVM.Form.Questions.Question6,
         Question7 = fdVM.Form.Questions.Question7,
         Question8 = fdVM.Form.Questions.Question8,
+        Question9 = fdVM.Form.Questions.Question9,
+        Question0 = fdVM.Form.Questions.Question0,
         LongReview = fdVM.Form.Questions.LongReview,
         Grade = fdVM.Form.Questions.Grade
       };
