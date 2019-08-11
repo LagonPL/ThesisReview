@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ThesisReview.Data;
 using ThesisReview.Data.Interface;
 using ThesisReview.Data.Models;
+using ThesisReview.Data.Repositories;
 
 namespace ThesisReview
 {
@@ -62,6 +63,8 @@ namespace ThesisReview
         .AddEntityFrameworkStores<AppDbContext>();
 
       services.AddTransient<IListRepository, ListRepository>();
+      services.AddTransient<IFormRepository, FormRepository>();
+      services.AddTransient<IAdminRepository, AdminRepository>();
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
     }
@@ -84,6 +87,12 @@ namespace ThesisReview
         routes.MapRoute(
                   name: "FormView",
                   template: "Form/{action}/{id}/{password}", defaults: new { Controller = "Form", action = "View", id = "", password = "" });
+        routes.MapRoute(
+                  name: "UserDelete",
+                  template: "Admin/{action}/{id}", defaults: new { Controller = "Admin", action = "Delete", id = ""});
+        routes.MapRoute(
+                  name: "UserEdit",
+                  template: "Admin/{action}/{id}", defaults: new { Controller = "Admin", action = "Edit", id = ""});
       });
 
       DbInitializer.Seed(userManager, roleManager);

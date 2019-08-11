@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ThesisReview.Data.Interface;
 using ThesisReview.Data.Models;
 using ThesisReview.Data.Services;
 using ThesisReview.ViewModels;
@@ -17,17 +18,20 @@ namespace ThesisReview.Controllers
   public class FormController : Controller
   {
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IFormRepository _formRepository;
 
-    public FormController( UserManager<ApplicationUser> userManager)
+    public FormController( UserManager<ApplicationUser> userManager, IFormRepository formRepository)
     {
       _userManager = userManager;
+      _formRepository = formRepository;
     }
 
     public IActionResult Create()
     {
       var fVM = new FormViewModel
       {
-        ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller())
+        ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller()),
+        EmailExist = true
       };
 
       return View(fVM);
@@ -46,6 +50,12 @@ namespace ThesisReview.Controllers
         ReviewerName = fVM.ReviewerName,
         GuardianName = fVM.GuardianName        
       };
+      if (!EmailExist(fVM.ReviewerName, fVM.GuardianName))
+      {
+        fVM.EmailExist = false;
+        fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
+        return View(fVM);
+      }
       string content, url;
       var guid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
       var password = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
@@ -149,5 +159,22 @@ namespace ThesisReview.Controllers
       return mail;
     }
 
+    public bool EmailExist(string mail1, string mail2)
+    {
+      ApplicationUser user1 = _formRepository.GetUser(mail1);
+      ApplicationUser user2 = _formRepository.GetUser(mail2);
+      try
+      {
+        if (String.IsNullOrEmpty(user1.Email) && String.IsNullOrEmpty(user2.Email))
+        {
+          return false;
+        }
+      }
+      catch (NullReferenceException)
+      {
+        return false;
+      }
+      return true;
+    }
   }
 }
