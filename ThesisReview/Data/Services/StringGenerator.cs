@@ -99,7 +99,7 @@ namespace ThesisReview.Data.Services
       return answers;
     }
 
-    public static string LinkGenerator(UriBuilder uri, string gid)
+    public static string LinkGenerator(UriBuilder uri, string gid, string pass)
     {
       string url;
 
@@ -107,7 +107,7 @@ namespace ThesisReview.Data.Services
       url = url.Replace("]", "");
       url = url + uri.Path;
       url = url + gid;
-      url = "https://" + url;
+      url = "https://" + url + "/" + pass;
 
       return url;
     }

@@ -1,0 +1,109 @@
+﻿@model FormDetailViewModel
+
+<div class="form-group">
+	<label asp-for="Form.FormURL" class="control-label disabled"></label>
+	<input asp-for="Form.FormURL" class="form-control" readonly />
+	<span asp-validation-for="Form.Title" class="text-danger"></span>
+</div>
+<div class="form-group">
+	<label asp-for="Form.Title" class="control-label disabled"></label>
+	<input asp-for="Form.Title" class="form-control" readonly />
+	<span asp-validation-for="Form.Title" class="text-danger"></span>
+</div>
+<p>
+	<a class="btn btn-primary" data-toggle="collapse" href="#Reviewer" role="button" aria-expanded="false" aria-controls="Reviewer">Formularz Recenzenta</a>
+	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#Guardian" aria-expanded="false" aria-controls="Guardian">Formularz Opiekuna</button>
+</p>
+
+<div class="row">
+	<div class="col-md-12 collapse multi-collapse" id="Reviewer">
+		<form asp-controller="Form" asp-action="UpdateForm" method="post" class="form-horizontal" role="form">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="Form.FormId" />
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question1" class="control-label">Mail Recenzenta</label>
+				<input asp-for="Form.ReviewerName" class="form-control" readonly>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question1" class="control-label">@Model.QuestionList.Question1</label>
+				<textarea asp-for="Form.Questions.Question1" class="form-control" readonly></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question2" class="control-label">@Model.QuestionList.Question2</label>
+				<textarea asp-for="Form.Questions.Question2" class="form-control" readonly></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question3" class="control-label">@Model.QuestionList.Question3</label>
+				<textarea asp-for="Form.Questions.Question3" class="form-control" readonly></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question4" class="control-label">@Model.QuestionList.Question4</label>
+				<textarea asp-for="Form.Questions.Question4" class="form-control" readonly></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question5" class="control-label">@Model.QuestionList.Question5</label>
+				<textarea asp-for="Form.Questions.Question5" class="form-control" readonly></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question6" class="control-label">@Model.QuestionList.Question6</label>
+				<textarea asp-for="Form.Questions.Question6" class="form-control" readonly></textarea>
+			</div><div class="form-group">
+				<label asp-for="Form.Questions.Question7" class="control-label">@Model.QuestionList.Question7</label>
+				<textarea asp-for="Form.Questions.Question7" class="form-control" readonly></textarea>
+			</div><div class="form-group">
+				<label asp-for="Form.Questions.Question8" class="control-label">@Model.QuestionList.Question8</label>
+				<textarea asp-for="Form.Questions.Question8" class="form-control" readonly></textarea>
+			</div>
+		</form>
+		<hr />
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-md-12 collapse multi-collapse" id="Guardian">
+		<form asp-controller="Form" asp-action="UpdateForm" method="post" class="form-horizontal" role="form">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="Form.FormId" />
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question1" class="control-label">Mail Opiekuna</label>
+				<input asp-for="Form.GuardianName" class="form-control" readonly>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question1" class="control-label">@Model.QuestionList.Question1</label>
+				<textarea asp-for="Form.QuestionsGuardian.Question1" class="form-control" readonly></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question2" class="control-label">@Model.QuestionList.Question2</label>
+				<textarea asp-for="Form.QuestionsGuardian.Question2" class="form-control" readonly></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question3" class="control-label">@Model.QuestionList.Question3</label>
+				<textarea asp-for="Form.QuestionsGuardian.Question3" class="form-control" readonly></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question4" class="control-label">@Model.QuestionList.Question4</label>
+				<textarea asp-for="Form.QuestionsGuardian.Question4" class="form-control" readonly></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question5" class="control-label">@Model.QuestionList.Question5</label>
+				<textarea asp-for="Form.QuestionsGuardian.Question5" class="form-control" readonly></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Form.Questions.Question6" class="control-label">@Model.QuestionList.Question6</label>
+				<textarea asp-for="Form.QuestionsGuardian.Question6" class="form-control" readonly></textarea>
+			</div><div class="form-group">
+				<label asp-for="Form.Questions.Question7" class="control-label">@Model.QuestionList.Question7</label>
+				<textarea asp-for="Form.QuestionsGuardian.Question7" class="form-control" readonly></textarea>
+			</div><div class="form-group">
+				<label asp-for="Form.Questions.Question8" class="control-label">@Model.QuestionList.Question8</label>
+				<textarea asp-for="Form.QuestionsGuardian.Question8" class="form-control" readonly></textarea>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+
+

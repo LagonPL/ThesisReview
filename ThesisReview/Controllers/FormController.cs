@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ThesisReview.Data.Models;
@@ -14,7 +16,12 @@ namespace ThesisReview.Controllers
 {
   public class FormController : Controller
   {
+    private readonly UserManager<ApplicationUser> _userManager;
 
+    public FormController( UserManager<ApplicationUser> userManager)
+    {
+      _userManager = userManager;
+    }
 
     public IActionResult Create()
     {
@@ -40,17 +47,18 @@ namespace ThesisReview.Controllers
         GuardianName = fVM.GuardianName        
       };
       string content, url;
-      Guid guid = Guid.NewGuid();
+      var guid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
+      var password = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
       var uri = new UriBuilder
       {
         Scheme = Request.Scheme,
         Host = Request.Host.ToString(),
-        Path = "/Form/Details/"
+        Path = "/Form/View/"
       };
-      url = StringGenerator.LinkGenerator(uri, guid.ToString());
+      url = StringGenerator.LinkGenerator(uri, guid.ToString(), password.ToString());
       if (ModelState.IsValid)
       {
-        DatabaseAction.AddForm(form, guid.ToString(), "0");
+        DatabaseAction.AddForm(form, guid.ToString(), "0", password.ToString());
 
         content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
         EmailSender.Send(form.StudentMail, "Stworzyłeś formularz", content);
@@ -60,10 +68,11 @@ namespace ThesisReview.Controllers
 
     }
 
-    public ActionResult Details(string id)
+    public async Task<ActionResult> Edit(string id)
     {
       Form form = new Form();
-      form = DatabaseAction.ReadForm(id);
+      var mail = await GetCurrentUser();
+      form = DatabaseAction.ReadForm(id, mail);
       var suma = new Sum();
       var questions = StringGenerator.GetQuestions(form.ReviewType);
       if (form.ReviewType.Equals("Praca Magisterska"))
@@ -80,9 +89,38 @@ namespace ThesisReview.Controllers
       return View(fdVM);
     }
 
-    [HttpPost]
-    public IActionResult UpdateForm(FormDetailViewModel fdVM)
+    public ActionResult View(string id, string password)
     {
+      Form form = new Form();
+      form = DatabaseAction.ReadFormView(id, password);
+      if(String.IsNullOrEmpty(form.FormURL))
+        return RedirectToAction("Error", "Error");
+      var suma = new Sum();
+      var sumaGuardian = new Sum();
+      var questions = StringGenerator.GetQuestions(form.ReviewType);
+      if (form.ReviewType.Equals("Praca Magisterska"))
+      {
+        suma = Util.Sum(form);
+        sumaGuardian = Util.SumGuardian(form);
+      }
+        
+      var fdVM = new FormDetailViewModel
+      {
+        Form = form,
+        ReviewType = form.ReviewType,
+        QuestionList = questions,
+        Answers = StringGenerator.AnswersGenerator(),
+        Sum = suma,
+        SumGuardian = sumaGuardian
+      };
+
+      return View(fdVM);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateForm(FormDetailViewModel fdVM)
+    {
+      var mail = await GetCurrentUser();
       Questions questions = new Questions
       {
         Question1 = fdVM.Form.Questions.Question1,
@@ -98,11 +136,18 @@ namespace ThesisReview.Controllers
         LongReview = fdVM.Form.Questions.LongReview,
         Grade = fdVM.Form.Questions.Grade
       };
-      DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL);
+      DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL, mail);
       DatabaseAction.UpdateStatus("Otwarta",fdVM.Form.FormURL);
       return RedirectToAction("Index", "List");
     }
 
+    private async Task<string> GetCurrentUser()
+    {
+      var user = await _userManager.GetUserAsync(HttpContext.User);
+      var email = _userManager.GetEmailAsync(user);
+      string mail = user.Email;
+      return mail;
+    }
 
   }
 }
