@@ -23,7 +23,11 @@ namespace ThesisReview.Controllers
 
     public ActionResult Account()
     {
-      return View();
+      var sVM = new SettingViewModel
+      {
+        AnyError = false
+      };
+      return View(sVM);
     }
 
     [HttpPost]
@@ -36,6 +40,11 @@ namespace ThesisReview.Controllers
         {
           await _userManager.ChangePasswordAsync(user, settingViewModel.OldPassword, settingViewModel.NewPassword);
         }
+      }
+      else
+      {
+        settingViewModel.AnyError = true;
+        return View(settingViewModel);
       }
       return View();
     }
