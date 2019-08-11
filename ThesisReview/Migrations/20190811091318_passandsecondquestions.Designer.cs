@@ -10,8 +10,8 @@ using ThesisReview.Data;
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190810142242_additionalquestionPOINTS")]
-    partial class additionalquestionPOINTS
+    [Migration("20190811091318_passandsecondquestions")]
+    partial class passandsecondquestions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -195,6 +195,10 @@ namespace ThesisReview.Migrations
                     b.Property<string>("GuardianName")
                         .IsRequired();
 
+                    b.Property<string>("Password");
+
+                    b.Property<int?>("QuestionsGuardianQuestionsId");
+
                     b.Property<int?>("QuestionsId");
 
                     b.Property<string>("ReviewType")
@@ -216,6 +220,8 @@ namespace ThesisReview.Migrations
                         .HasMaxLength(200);
 
                     b.HasKey("FormId");
+
+                    b.HasIndex("QuestionsGuardianQuestionsId");
 
                     b.HasIndex("QuestionsId");
 
@@ -261,6 +267,20 @@ namespace ThesisReview.Migrations
                     b.HasKey("QuestionsId");
 
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("ThesisReview.Data.Models.UserList", b =>
+                {
+                    b.Property<string>("UserListId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Mail");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("UserListId");
+
+                    b.ToTable("UserLists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -310,6 +330,10 @@ namespace ThesisReview.Migrations
 
             modelBuilder.Entity("ThesisReview.Data.Models.Form", b =>
                 {
+                    b.HasOne("ThesisReview.Data.Models.Questions", "QuestionsGuardian")
+                        .WithMany()
+                        .HasForeignKey("QuestionsGuardianQuestionsId");
+
                     b.HasOne("ThesisReview.Data.Models.Questions", "Questions")
                         .WithMany()
                         .HasForeignKey("QuestionsId");

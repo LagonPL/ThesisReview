@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class additionalquestionPOINTS : Migration
+    public partial class passandsecondquestions : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -73,6 +73,19 @@ namespace ThesisReview.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.QuestionsId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserLists",
+                columns: table => new
+                {
+                    UserListId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Mail = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLists", x => x.UserListId);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,11 +208,19 @@ namespace ThesisReview.Migrations
                     ReviewerName = table.Column<string>(nullable: false),
                     GuardianName = table.Column<string>(nullable: false),
                     FormURL = table.Column<string>(nullable: true),
-                    QuestionsId = table.Column<int>(nullable: true)
+                    Password = table.Column<string>(nullable: true),
+                    QuestionsId = table.Column<int>(nullable: true),
+                    QuestionsGuardianQuestionsId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Forms", x => x.FormId);
+                    table.ForeignKey(
+                        name: "FK_Forms_Questions_QuestionsGuardianQuestionsId",
+                        column: x => x.QuestionsGuardianQuestionsId,
+                        principalTable: "Questions",
+                        principalColumn: "QuestionsId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Forms_Questions_QuestionsId",
                         column: x => x.QuestionsId,
@@ -248,6 +269,11 @@ namespace ThesisReview.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Forms_QuestionsGuardianQuestionsId",
+                table: "Forms",
+                column: "QuestionsGuardianQuestionsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Forms_QuestionsId",
                 table: "Forms",
                 column: "QuestionsId");
@@ -272,6 +298,9 @@ namespace ThesisReview.Migrations
 
             migrationBuilder.DropTable(
                 name: "Forms");
+
+            migrationBuilder.DropTable(
+                name: "UserLists");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

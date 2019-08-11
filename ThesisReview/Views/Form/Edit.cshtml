@@ -1,0 +1,14 @@
+﻿@model FormDetailViewModel
+
+@if (Model.ReviewType.Equals("Praca Inzynierska") || Model.ReviewType.Equals("Praca Licencjacka"))
+{
+	@Html.Partial("Edits/BasicForm")
+}
+@if (Model.ReviewType.Equals("Praca Doktorska"))
+{
+	@Html.Partial("Edits/AdvanceForm")
+}
+@if(Model.ReviewType.Equals("Praca Magisterska"))
+{
+	@Html.Partial("Edits/MasterForm")
+}

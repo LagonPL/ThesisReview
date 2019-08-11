@@ -2,13 +2,13 @@
 
 @if (Model.ReviewType.Equals("Praca Inzynierska") || Model.ReviewType.Equals("Praca Licencjacka"))
 {
-	@Html.Partial("BasicForm")
+	@Html.Partial("View/BasicView")
 }
 @if (Model.ReviewType.Equals("Praca Doktorska"))
 {
-	@Html.Partial("AdvanceForm")
+	@Html.Partial("View/AdvanceView")
 }
-@if(Model.ReviewType.Equals("Praca Magisterska"))
+@if (Model.ReviewType.Equals("Praca Magisterska"))
 {
-	@Html.Partial("MasterForm")
+	@Html.Partial("View/MasterView")
 }
