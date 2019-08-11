@@ -41,7 +41,8 @@ namespace ThesisReview.Data
         ApplicationUser user = new ApplicationUser
         {
           UserName = "admin",
-          Email = "recenzjeprac@gmail.com"
+          Email = "recenzjeprac@gmail.com",
+          Department = "Adminstrator"
         };
 
         IdentityResult result = userManager.CreateAsync(user, "admin").Result;

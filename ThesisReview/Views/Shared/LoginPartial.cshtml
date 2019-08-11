@@ -15,6 +15,7 @@
 	@if (User.IsInRole("Admin"))
 	{
 		<li><a id="registerLink" asp-controller="Account" asp-action="Register"><span class="glyphicon glyphicon-user"></span> Rejestruj</a></li>
+		<li><a id="registerLink" asp-controller="Admin" asp-action="Index"><span class="glyphicon glyphicon-list"></span> Lista Użytkowników</a></li>
 	}
 }
 else
