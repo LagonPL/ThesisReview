@@ -6,10 +6,10 @@
 		<form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal" role="form">
 			<h4>Dodaj do bazy recenzenta. Możesz nadać mu uprawnienia admina.</h4>
 			<hr />
-			@if (ViewData["Message"] == null)
+			@*@if (ViewData["Message"] != null)
 			{
 				<div class="alert alert-info" role="alert">Test Alertu</div>
-			}
+			}*@
 			<div class="form-group">
 				<label asp-for="UserName" class="col-md-2 control-label">Nazwa użytkownika</label>
 				<div class="col-md-10">
