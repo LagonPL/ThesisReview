@@ -1,5 +1,7 @@
 ﻿@model FormDetailViewModel
-
+@{
+	ViewData["Title"] = Model.Form.Title;
+}
 @if (Model.ReviewType.Equals("Praca Inzynierska") || Model.ReviewType.Equals("Praca Licencjacka"))
 {
 	@Html.Partial("Edits/BasicForm")
@@ -8,7 +10,7 @@
 {
 	@Html.Partial("Edits/AdvanceForm")
 }
-@if(Model.ReviewType.Equals("Praca Magisterska"))
+@if (Model.ReviewType.Equals("Praca Magisterska"))
 {
 	@Html.Partial("Edits/MasterForm")
 }

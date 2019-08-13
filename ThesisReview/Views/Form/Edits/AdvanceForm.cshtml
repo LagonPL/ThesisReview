@@ -1,5 +1,7 @@
 ﻿@model FormDetailViewModel
-
+@{
+	ViewData["Title"] = "Edycja";
+}
 
 <form asp-controller="Form" method="post" class="form-horizontal" role="form">
 	<div class="form-group hidden">
@@ -13,6 +15,10 @@
 	<div class="form-group">
 		<label asp-for="Form.StudentMail" class="control-label disabled"></label>
 		<input asp-for="Form.StudentMail" class="form-control" readonly />
+	</div>
+	<div class="form-group">
+		<label asp-for="Form.ShortDescription" class="control-label disabled"></label>
+		<textarea asp-for="Form.ShortDescription" class="form-control" readonly></textarea>
 	</div>
 	<hr />
 	<table class="table table-bordered table-striped">
@@ -98,18 +104,19 @@
 	@if (!Model.Form.Questions.Finished)
 	{
 		<input type="submit" value="Save" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
-		<input type="submit" value="Zakończ ocenianie" class="btn btn-success" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
+		@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
+		<input type="submit" value="Zakończ ocenianie" class="btn btn-success pull-right" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
 	}
 </form>
 
 
 @if (!Model.Form.Questions.Finished)
 {
-<script>
-	readygo();
-	function readygo() {
-		document.getElementById("g").readOnly = false;
-		document.getElementById("lr").readOnly = false;
-	}
-</script>
+	<script>
+		readygo();
+		function readygo() {
+			document.getElementById("g").readOnly = false;
+			document.getElementById("lr").readOnly = false;
+		}
+	</script>
 }

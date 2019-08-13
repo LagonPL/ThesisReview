@@ -1,5 +1,7 @@
 ﻿@model FormDetailViewModel
-
+@{
+	ViewData["Title"] = Model.Form.Title;
+}
 @if (Model.ReviewType.Equals("Praca Inzynierska") || Model.ReviewType.Equals("Praca Licencjacka"))
 {
 	@Html.Partial("View/BasicView")

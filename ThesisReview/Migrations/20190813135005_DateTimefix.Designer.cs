@@ -10,8 +10,8 @@ using ThesisReview.Data;
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190813113058_links")]
-    partial class links
+    [Migration("20190813135005_DateTimefix")]
+    partial class DateTimefix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

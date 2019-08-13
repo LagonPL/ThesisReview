@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class links : Migration
+    public partial class DateTimefix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

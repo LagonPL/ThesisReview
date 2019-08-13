@@ -3,12 +3,12 @@
 @if (SignInManager.IsSignedIn(User))
 {
 	<ul class="nav navbar-nav mr-auto">
-		<li><a asp-controller="Settings" asp-action="Account">@User.Identity.Name</a></li>
+		<li><a asp-controller="Settings" asp-action="Account">Ustawienia <span class="glyphicon glyphicon-cog"></span></a></li>
 	</ul>
 	<form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
 				method="post" class="navbar-right">
 		<ul class="nav navbar-nav navbar-right mr-auto">
-			<li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span> Log off</a></li>
+			<li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span> Wyloguj się</a></li>
 		</ul>
 	</form>
 	<li><a id="registerLink" asp-controller="List" asp-action="Index"><span class="glyphicon glyphicon-list-alt"></span> Recenzje</a></li>
@@ -21,6 +21,6 @@
 else
 {
 	<ul class="nav navbar-nav navbar-right">
-		<li><a id="loginLink" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		<li><a id="loginLink" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in"></span> Zaloguj się</a></li>
 	</ul>
 }
