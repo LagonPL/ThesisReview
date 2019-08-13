@@ -13,6 +13,10 @@
 		<label asp-for="Form.StudentMail" class="control-label disabled"></label>
 		<input asp-for="Form.StudentMail" class="form-control" readonly />
 	</div>
+	<div class="form-group">
+		<label asp-for="Form.ShortDescription" class="control-label disabled"></label>
+		<textarea asp-for="Form.ShortDescription" class="form-control" readonly></textarea>
+	</div>
 	<hr />
 	<div class="col-lg-8 col-lg-offset-2">
 		<table class="table table-bordered table-striped">
@@ -151,13 +155,16 @@
 		{
 			<div class="form-group">
 				<input type="submit" value="Zapisz" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
+				@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
+
 			</div>
-			<div class="form-group">
+			<div class="form-group pull-right">
 				<input type="submit" value="Zakończ ocenianie" class="btn btn-success" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
 			</div>
 		}
-		</div>
+	</div>
 </form>
+
 
 <script>
 	function Counter() {
@@ -170,7 +177,7 @@
 		document.getElementById("sumaFinal").innerHTML = suma3 + suma2 + suma1;
 	}
 </script>
-	
+
 
 @if (!Model.Form.Questions.Finished)
 {

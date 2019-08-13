@@ -24,11 +24,12 @@ namespace ThesisReview.Controllers
     }
 
     [Authorize(Roles = "Admin")]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
+      string user = await GetCurrentUser();
       var aVM = new AdminViewModel
       {
-        UsersList = _adminRepository.GetAllUser()
+        UsersList = _adminRepository.GetAllUserNoYou(user)
       };
       return View(aVM);
     }
@@ -41,6 +42,23 @@ namespace ThesisReview.Controllers
         UsersList = _adminRepository.GetAllUser()
       };
       return RedirectToAction("Index", "Admin");
+    }
+
+    private async Task<string> GetCurrentUser()
+    {
+      var user = await _userManager.GetUserAsync(HttpContext.User);
+      var email = _userManager.GetEmailAsync(user);
+      string mail = "";
+      try
+      {
+        mail = user.Email;
+      }
+      catch (NullReferenceException)
+      {
+        return mail;
+      }
+
+      return mail;
     }
   }
 }

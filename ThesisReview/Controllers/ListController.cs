@@ -24,15 +24,33 @@ namespace ThesisReview.Controllers
       _userManager = userManager;
     }
 
-    public async Task<ActionResult> Index()
+    public async Task<ActionResult> Index(string sortOrder, string currentOrder)
     {
-
+      
       string mail = await GetCurrentUser();
+      ViewData["CurrentSort"] = sortOrder;
+      ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Date" : "";
       var revieweritems = _listRepository.GetReviewerForms(mail).Concat(_listRepository.GetGuardianForms(mail));
-      //var guardianitems = _listRepository.GetGuardianForms(mail);
+      switch (sortOrder)
+      {
+        case "Date":
+          revieweritems = revieweritems.OrderBy(p => p.DateTime);
+          break;
+
+        default:
+          revieweritems = revieweritems.OrderByDescending(p => p.DateTime);
+          break;
+
+      }
+      
+
+
+      var finished = revieweritems.Where(p => p.Status == "Zakonczono");
+      revieweritems = revieweritems.Where(p => p.Status != "Zakonczono");
       var fLVM = new ListViewModel
       {
-        Forms = revieweritems
+        Forms = revieweritems,
+        ArchiveForms = finished
       };
 
       return View(fLVM);

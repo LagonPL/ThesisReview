@@ -42,6 +42,8 @@ namespace ThesisReview.Data.Models
 
     public Questions Questions { get; set; }
 
+    public DateTime DateTime { get; set; }
+
     public Questions QuestionsGuardian { get; set; }
   }
 }

@@ -13,5 +13,6 @@ namespace ThesisReview.Data.Interface
     void EditUser(string useId);
 
     IEnumerable<ApplicationUser> GetAllUser();
+    IEnumerable<ApplicationUser> GetAllUserNoYou(string user);
   }
 }

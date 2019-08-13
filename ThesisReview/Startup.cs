@@ -93,6 +93,9 @@ namespace ThesisReview
         routes.MapRoute(
                   name: "UserEdit",
                   template: "Admin/{action}/{id}", defaults: new { Controller = "Admin", action = "Edit", id = ""});
+        routes.MapRoute(
+                  name: "OrderList",
+                  template: "List/{id}", defaults: new { Controller = "List", id = "" });
       });
 
       DbInitializer.Seed(userManager, roleManager);

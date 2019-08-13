@@ -1,5 +1,7 @@
 ﻿@model SettingViewModel
-
+@{
+	ViewData["Title"] = "Ustawienia";
+}
 @if (Model.AnyError)
 {
 	<div class="alert alert-info" role="alert">Nieprawidłowe obecne hasło, lub pola nie zgadzają się</div>
@@ -7,7 +9,7 @@
 
 <div class="row loginForm">
 	<div class="col-md-8 col-md-offset-2">
-		<h2>Zaloguj się aby przejrzeć/ocenić recenzję:</h2>
+		<h2>Zmień hasło:</h2>
 		<form asp-controller="Settings" asp-action="Account" method="post" class="form-horizontal" role="form">
 			<div class="form-group">
 				<label asp-for="OldPassword" class="col-md-2 control-label">Stare hasło</label>
@@ -30,11 +32,12 @@
 					<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
 				</div>
 			</div>
-			<div class="form-group pull-right formPullRightButton">
+			<div class="form-group">
 				<div class="col-md-offset-2 col-md-10">
-					<input type="submit" class="btn btn-success" value="Log in" />
+					<input type="submit" class="btn btn-success" value="Zmień hasło" />
 				</div>
 			</div>
+			<hr />
 		</form>
 		<form asp-controller="Settings" asp-action="Account" method="post" class="form-horizontal" role="form">
 			<div class="form-group">
