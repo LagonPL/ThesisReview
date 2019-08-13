@@ -58,7 +58,7 @@ namespace ThesisReview.Controllers
           return Redirect(logInViewModel.ReturnUrl);
         }
       }
-      ModelState.AddModelError("", "Email/password not fount");
+      ModelState.AddModelError("wrongform", "Nieprawidłowy email lub hasło");
       return View(logInViewModel);
     }
 
@@ -103,6 +103,8 @@ namespace ThesisReview.Controllers
         }
 
       }
+      registerViewModel.Departments = new SelectList(StringGenerator.DepartmentFiller());
+      ModelState.AddModelError("wrongform", "Źle wprowadzone dane");
       return View(registerViewModel);
     }
 

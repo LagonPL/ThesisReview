@@ -1,13 +1,19 @@
 ﻿@model LogInViewModel
 
+
 <div class="row loginForm">
 	<div class="col-md-8 col-md-offset-2">
 		<h2>Zaloguj się aby przejrzeć/ocenić recenzję:</h2>
+		@if (!ViewData.ModelState.IsValid)
+		{
+		<div class="alert alert-danger" role="alert">@Html.ValidationMessage("wrongform")</div>
+		}
+
 		<form asp-controller="Account" asp-action="Login" method="post" class="form-horizontal" role="form">
 			<input type="hidden" asp-for="ReturnUrl" />
 
 			<div class="form-group">
-				<label asp-for="Email" class="col-md-2 control-label">Email</label>
+				<label asp-for="Email" class="col-md-2 control-label">E-mail</label>
 				<div class="col-md-10">
 					<input asp-for="Email" class="form-control" />
 					<span asp-validation-for="Email" class="text-danger"></span>
@@ -24,7 +30,7 @@
 
 			<div class="form-group pull-right formPullRightButton">
 				<div class="col-md-offset-2 col-md-10">
-					<input type="submit" class="btn btn-success" value="Log in" />
+					<input type="submit" class="btn btn-success" value="Zaloguj się" />
 				</div>
 			</div>
 		</form>
