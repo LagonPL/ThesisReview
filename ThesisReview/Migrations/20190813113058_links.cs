@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class passandsecondquestions : Migration
+    public partial class links : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,7 +68,8 @@ namespace ThesisReview.Migrations
                     Question0 = table.Column<string>(nullable: true),
                     Points = table.Column<int>(nullable: false),
                     LongReview = table.Column<string>(nullable: true),
-                    Grade = table.Column<string>(nullable: true)
+                    Grade = table.Column<string>(nullable: true),
+                    Finished = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -208,6 +209,7 @@ namespace ThesisReview.Migrations
                     ReviewerName = table.Column<string>(nullable: false),
                     GuardianName = table.Column<string>(nullable: false),
                     FormURL = table.Column<string>(nullable: true),
+                    Link = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     QuestionsId = table.Column<int>(nullable: true),
                     QuestionsGuardianQuestionsId = table.Column<int>(nullable: true)

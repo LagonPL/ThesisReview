@@ -36,6 +36,8 @@ namespace ThesisReview.Data.Models
 
     public string FormURL { get; set; }
 
+    public string Link { get; set; }
+
     public string Password { get; set; }
 
     public Questions Questions { get; set; }

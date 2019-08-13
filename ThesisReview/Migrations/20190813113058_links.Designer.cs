@@ -10,8 +10,8 @@ using ThesisReview.Data;
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190811091318_passandsecondquestions")]
-    partial class passandsecondquestions
+    [Migration("20190813113058_links")]
+    partial class links
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -195,6 +195,8 @@ namespace ThesisReview.Migrations
                     b.Property<string>("GuardianName")
                         .IsRequired();
 
+                    b.Property<string>("Link");
+
                     b.Property<string>("Password");
 
                     b.Property<int?>("QuestionsGuardianQuestionsId");
@@ -233,6 +235,8 @@ namespace ThesisReview.Migrations
                     b.Property<int>("QuestionsId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Finished");
 
                     b.Property<string>("FormURL");
 

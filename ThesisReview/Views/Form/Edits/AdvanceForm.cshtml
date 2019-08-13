@@ -1,9 +1,7 @@
 ﻿@model FormDetailViewModel
 
-@if (SignInManager.IsSignedIn(User))
-{
 
-<form asp-controller="Form" asp-action="UpdateForm" method="post" class="form-horizontal" role="form">
+<form asp-controller="Form" method="post" class="form-horizontal" role="form">
 	<div class="form-group hidden">
 		<label asp-for="Form.FormURL" class="control-label"></label>
 		<input asp-for="Form.FormURL" class="form-control" readonly />
@@ -89,103 +87,29 @@
 	</table>
 	<div class="form-group col-md-12">
 		<label asp-for="Form.Questions.LongReview" class="control-label">@Model.QuestionList.LongReview</label>
-		<textarea asp-for="Form.Questions.LongReview" class="form-control"></textarea>
+		<textarea asp-for="Form.Questions.LongReview" class="form-control" id="lr" readonly></textarea>
 		<span asp-validation-for="Form.Questions.LongReview" class="text-danger"></span>
 	</div>
 	<div class="form-group col-md-12">
 		<label asp-for="Form.Questions.Grade" class="control-label">@Model.QuestionList.Grade</label>
-		<input asp-for="Form.Questions.Grade" class="form-control">
+		<input asp-for="Form.Questions.Grade" class="form-control" id="g" readonly>
 		<h6 class="text-info">Należy stosować następującą skalę ocen: 5,0 – pięć, 4,5 – cztery i pół, 4,0 – cztery, 3,5 – trzy i pół, 3,0 – trzy, 2,0 – dwa.</h6>
 	</div>
-	<input type="submit" value="Save" class="btn btn-success" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
+	@if (!Model.Form.Questions.Finished)
+	{
+		<input type="submit" value="Save" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
+		<input type="submit" value="Zakończ ocenianie" class="btn btn-success" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
+	}
 </form>
-}
-else
+
+
+@if (!Model.Form.Questions.Finished)
 {
-	<form asp-controller="Form" asp-action="UpdateForm" method="post" class="form-horizontal" role="form">
-		<div class="form-group">
-			<label asp-for="Form.FormURL" class="control-label disabled"></label>
-			<input asp-for="Form.FormURL" class="form-control" readonly />
-		</div>
-		<div class="form-group">
-			<label asp-for="Form.Title" class="control-label disabled"></label>
-			<input asp-for="Form.Title" class="form-control" readonly />
-		</div>
-		<hr />
-		<table class="table table-bordered table-striped">
-			<thead>
-				<tr>
-					<th>Pytanie</th>
-					<th>W Pełni</th>
-					<th>Częściowo</th>
-					<th>Nie</th>
-					<th>Nie dotyczy</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question1</td>
-					@foreach (var item in Model.Answers)
-					{
-						<td class="text-center"><input type="radio" value="@item.Answer" asp-for="Form.Questions.Question1" disabled></td>
-					}
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question2</td>
-					@foreach (var item in Model.Answers)
-					{
-						<td class="text-center"><input type="radio" value="@item.Answer" asp-for="Form.Questions.Question2" disabled></td>
-					}
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question3</td>
-					@foreach (var item in Model.Answers)
-					{
-						<td class="text-center"><input type="radio" value="@item.Answer" asp-for="Form.Questions.Question3" disabled></td>
-					}
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question4</td>
-					@foreach (var item in Model.Answers)
-					{
-						<td class="text-center"><input type="radio" value="@item.Answer" asp-for="Form.Questions.Question4" disabled></td>
-					}
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question5</td>
-					@foreach (var item in Model.Answers)
-					{
-						<td class="text-center"><input type="radio" value="@item.Answer" asp-for="Form.Questions.Question5" disabled></td>
-					}
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question6</td>
-					@foreach (var item in Model.Answers)
-					{
-						<td class="text-center"><input type="radio" value="@item.Answer" asp-for="Form.Questions.Question6" disabled></td>
-					}
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question7</td>
-					@foreach (var item in Model.Answers)
-					{
-						<td class="text-center"><input type="radio" value="@item.Answer" asp-for="Form.Questions.Question7" disabled></td>
-					}
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question8</td>
-					@foreach (var item in Model.Answers)
-					{
-						<td class="text-center"><input type="radio" value="@item.Answer" asp-for="Form.Questions.Question8" disabled></td>
-					}
-				</tr>
-			</tbody>
-		</table>
-		<div class="form-group col-md-12">
-			<label asp-for="Form.Questions.LongReview" class="control-label">@Model.QuestionList.LongReview</label>
-			<textarea asp-for="Form.Questions.LongReview" class="form-control" readonly></textarea>
-			<span asp-validation-for="Form.Questions.LongReview" class="text-danger"></span>
-		</div>
-	</form>
+<script>
+	readygo();
+	function readygo() {
+		document.getElementById("g").readOnly = false;
+		document.getElementById("lr").readOnly = false;
+	}
+</script>
 }

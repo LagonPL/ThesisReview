@@ -120,5 +120,10 @@ namespace ThesisReview.Data.Services
       return suma;
     }
 
+    public static bool QuestionsChecker(Questions questions)
+    {
+      return true;
+    }
+
   }
 }
