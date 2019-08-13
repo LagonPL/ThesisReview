@@ -12,7 +12,8 @@ namespace ThesisReview.ViewModels
   {
 
     public SelectList ReviewTypeList { get; set; }
-    public bool EmailExist { get; set; }
+    public bool NoError { get; set; }
+    public string ErrorMessage { get; set; }
 
   }
 }
