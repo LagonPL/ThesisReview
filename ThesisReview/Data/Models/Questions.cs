@@ -23,6 +23,7 @@ namespace ThesisReview.Data.Models
     public int Points { get; set; }
     public string LongReview { get; set; }
     public string Grade { get; set; }
+    public bool Finished { get; set; }
   }
 
 }

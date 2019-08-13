@@ -13,16 +13,16 @@ namespace ThesisReview.Data.Services
 
     private readonly static string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=ThesisReview;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-    public static void AddForm(Form form, string url, string zero, string password)
+    public static void AddForm(Form form, string id, string zero, string password, string link)
     {
       string sql;
       if(form.ReviewType.Equals("Praca Magisterska"))
       {
-        sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL, ReviewType, Status, Password) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{url}','{form.ReviewType}','{form.Status}','{password}');  Insert Into Questions (FormURL, Mail, Question0, Question1, Question2, Question3, Question4, Question5, Question6, Question7, Question8, Question9, Points) Values ('{url}', '{form.ReviewerName}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}'); Insert Into Questions (FormURL, Mail, Question0, Question1, Question2, Question3, Question4, Question5, Question6, Question7, Question8, Question9, Points) Values ('{url}', '{form.GuardianName}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}')";
+        sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL, ReviewType, Status, Password, Link) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{id}','{form.ReviewType}','{form.Status}','{password}','{link}');  Insert Into Questions (FormURL, Mail, Question0, Question1, Question2, Question3, Question4, Question5, Question6, Question7, Question8, Question9, Points, Finished) Values ('{id}', '{form.ReviewerName}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{false}'); Insert Into Questions (FormURL, Mail, Question0, Question1, Question2, Question3, Question4, Question5, Question6, Question7, Question8, Question9, Points, Finished) Values ('{id}', '{form.GuardianName}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{false}')";
       }
       else
       {
-        sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL, ReviewType, Status, Password) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{url}','{form.ReviewType}','{form.Status}','{password}'); Insert Into Questions (FormURL, Mail, Points) Values ('{url}', '{form.ReviewerName}', '{zero}'); Insert Into Questions (FormURL, Mail, Points) Values ('{url}', '{form.GuardianName}', '{zero}')";
+        sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL, ReviewType, Status, Password, Link) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{id}','{form.ReviewType}','{form.Status}','{password}','{link}'); Insert Into Questions (FormURL, Mail, Points, Finished) Values ('{id}', '{form.ReviewerName}', '{zero}', '{false}'); Insert Into Questions (FormURL, Mail, Points, Finished) Values ('{id}', '{form.GuardianName}', '{zero}', '{false}')";
       }
       
       using (SqlConnection connection = new SqlConnection(connectionString))
@@ -38,12 +38,42 @@ namespace ThesisReview.Data.Services
       }
     }
 
-    public static void UpdateForm(Questions questions, string url, string mail)
+    public static void UpdateForm(Questions questions, string id, string mail, bool isFinish)
+    {
+      string sql;
+      if (isFinish)
+      {
+        sql = $"Update Questions SET Question1='{questions.Question1}', Question2='{questions.Question2}', Question3='{questions.Question3}', Question4='{questions.Question4}', Question5='{questions.Question5}', Question6='{questions.Question6}', Question7='{questions.Question7}', Question8='{questions.Question8}', Question9='{questions.Question9}', Question0='{questions.Question0}', LongReview='{questions.LongReview}', Grade='{questions.Grade}', Finished='{true}'  Where FormURL='{id}'  And Mail = '{mail}'";
+      }
+      else
+      {
+        sql = $"Update Questions SET Question1='{questions.Question1}', Question2='{questions.Question2}', Question3='{questions.Question3}', Question4='{questions.Question4}', Question5='{questions.Question5}', Question6='{questions.Question6}', Question7='{questions.Question7}', Question8='{questions.Question8}', Question9='{questions.Question9}', Question0='{questions.Question0}', LongReview='{questions.LongReview}', Grade='{questions.Grade}'  Where FormURL='{id}'  And Mail = '{mail}'";
+      }
+
+      using (SqlConnection connection = new SqlConnection(connectionString))
+      {
+        using (SqlCommand command = new SqlCommand(sql, connection))
+        {
+          connection.Open();
+          command.ExecuteNonQuery();
+          connection.Close();
+        }
+      }
+      if (isFinish)
+        ReadStatus(id);
+      else
+      {
+        UpdateStatus("Otwarta", id);
+      }
+
+    }
+
+    public static void UpdateStatus(string status, string id)
     {
 
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        string sql = $"Update Questions SET Question1='{questions.Question1}', Question2='{questions.Question2}', Question3='{questions.Question3}', Question4='{questions.Question4}', Question5='{questions.Question5}', Question6='{questions.Question6}', Question7='{questions.Question7}', Question8='{questions.Question8}', Question9='{questions.Question9}', Question0='{questions.Question0}', LongReview='{questions.LongReview}', Grade='{questions.Grade}'  Where FormURL='{url}'  And Mail = '{mail}'";
+        string sql = $"Update Forms SET Status='{status}'  Where FormURL='{id}'";
         using (SqlCommand command = new SqlCommand(sql, connection))
         {
           connection.Open();
@@ -52,22 +82,59 @@ namespace ThesisReview.Data.Services
         }
       }
     }
-
-    public static void UpdateStatus(string status, string url)
+    public static void ReadStatus(string id)
     {
-
+      string reviewer = String.Empty;
+      string guardian = reviewer;
+      string mail = reviewer;
+      string url = reviewer;
+      bool statusReviewer = true;
+      bool statusGuardian = false;
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        string sql = $"Update Forms SET Status='{status}'  Where FormURL='{url}'";
-        using (SqlCommand command = new SqlCommand(sql, connection))
+        //SqlDataReader
+        connection.Open();
+        
+        string sql = "select * from Forms where Forms.FormURL = '" + id + "'";
+        SqlCommand command = new SqlCommand(sql, connection);
+        using (SqlDataReader dataReader = command.ExecuteReader())
         {
-          connection.Open();
-          command.ExecuteNonQuery();
-          connection.Close();
+          while (dataReader.Read())
+          {
+            reviewer = Convert.ToString(dataReader["ReviewerName"]);
+            guardian = Convert.ToString(dataReader["GuardianName"]);
+            mail = Convert.ToString(dataReader["StudentMail"]);
+            url = Convert.ToString(dataReader["Link"]);
+          }
         }
-      }
-    }
+        sql = "select * from Questions where Questions.FormURL = '" + id + "' And Questions.Mail = '" + reviewer + "'";
+        command = new SqlCommand(sql, connection);
+        using (SqlDataReader dataReader = command.ExecuteReader())
+        {
+          while (dataReader.Read())
+          {
+            statusReviewer = Convert.ToBoolean(dataReader["Finished"]);
+          }
+        }
+        sql = "select * from Questions where  Questions.FormURL = '" + id + "' And  Questions.Mail = '" + guardian + "'";
+        command = new SqlCommand(sql, connection);
+        using (SqlDataReader dataReader = command.ExecuteReader())
+        {
+          while (dataReader.Read())
+          {
+            statusGuardian = Convert.ToBoolean(dataReader["Finished"]);
+          }
+        }
 
+        connection.Close();
+      }
+      if (statusGuardian == statusReviewer)
+      {
+        UpdateStatus("Zakończono", id);
+        EmailSender.Send(mail, "Zakończono Oceniania", "Zakończono Ocenianie twojego zgłoszenia\nLink: " + url);
+      }
+
+    }
 
     public static Form ReadForm(string id, string mail)
     {
@@ -90,6 +157,7 @@ namespace ThesisReview.Data.Services
             form.ReviewerName = Convert.ToString(dataReader["ReviewerName"]);
             form.GuardianName = Convert.ToString(dataReader["GuardianName"]);
             form.ReviewType = Convert.ToString(dataReader["ReviewType"]);
+            form.ShortDescription = Convert.ToString(dataReader["ShortDescription"]);
             questions.Question1 = Convert.ToString(dataReader["Question1"]);
             questions.Question2 = Convert.ToString(dataReader["Question2"]);
             questions.Question3 = Convert.ToString(dataReader["Question3"]);
@@ -101,6 +169,7 @@ namespace ThesisReview.Data.Services
             questions.Question9 = Convert.ToString(dataReader["Question9"]);
             questions.Question0 = Convert.ToString(dataReader["Question0"]);
             questions.LongReview = Convert.ToString(dataReader["LongReview"]);
+            questions.Finished = Convert.ToBoolean(dataReader["Finished"]);
             questions.Grade = Convert.ToString(dataReader["Grade"]);
             form.Questions = questions;
           }

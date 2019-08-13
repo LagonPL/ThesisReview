@@ -1,6 +1,6 @@
 ﻿@model FormDetailViewModel
 
-<form asp-controller="Form" asp-action="UpdateForm" method="post" class="form-horizontal" role="form">
+<form asp-controller="Form" method="post" class="form-horizontal" role="form">
 	<div class="form-group hidden">
 		<label asp-for="Form.FormURL" class="control-label"></label>
 		<input asp-for="Form.FormURL" class="form-control" readonly />
@@ -25,23 +25,23 @@
 			<tbody>
 				<tr>
 					<td class="text-left">@Model.QuestionList.Question1</td>
-					<td><input type="number" asp-for="Form.Questions.Question1" class="form-control" id="q1" oninput="Counter()" /></td>
+					<td><input type="number" asp-for="Form.Questions.Question1" class="form-control" id="q1" oninput="Counter()" readonly /></td>
 				</tr>
 				<tr>
 					<td class="text-left">@Model.QuestionList.Question2</td>
-					<td><input type="number" asp-for="Form.Questions.Question2" class="form-control" id="q2" oninput="Counter()" /></td>
+					<td><input type="number" asp-for="Form.Questions.Question2" class="form-control" id="q2" oninput="Counter()" readonly /></td>
 				</tr>
 				<tr>
 					<td class="text-left" colspan="1">@Model.QuestionList.Question3</td>
-					<td><input type="number" asp-for="Form.Questions.Question3" class="form-control" id="q3" oninput="Counter()" /></td>
+					<td><input type="number" asp-for="Form.Questions.Question3" class="form-control" id="q3" oninput="Counter()" readonly /></td>
 				</tr>
 				<tr>
 					<td class="text-left">@Model.QuestionList.Question4</td>
-					<td><input type="number" asp-for="Form.Questions.Question4" class="form-control" id="q4" oninput="Counter()" /></td>
+					<td><input type="number" asp-for="Form.Questions.Question4" class="form-control" id="q4" oninput="Counter()" readonly /></td>
 				</tr>
 				<tr>
 					<td class="text-left">@Model.QuestionList.Question5</td>
-					<td><input type="number" asp-for="Form.Questions.Question5" class="form-control" id="q5" oninput="Counter()" /></td>
+					<td><input type="number" asp-for="Form.Questions.Question5" class="form-control" id="q5" oninput="Counter()" readonly /></td>
 				</tr>
 			</tbody>
 			<tfoot>
@@ -60,11 +60,11 @@
 			<tbody>
 				<tr>
 					<td class="text-left">@Model.QuestionList.Question6</td>
-					<td><input type="number" asp-for="Form.Questions.Question6" class="form-control" id="q6" oninput="Counter()" /></td>
+					<td><input type="number" asp-for="Form.Questions.Question6" class="form-control" id="q6" oninput="Counter()" readonly /></td>
 				</tr>
 				<tr>
 					<td class="text-left">@Model.QuestionList.Question7</td>
-					<td><input type="number" asp-for="Form.Questions.Question7" class="form-control" id="q7" oninput="Counter()" /></td>
+					<td><input type="number" asp-for="Form.Questions.Question7" class="form-control" id="q7" oninput="Counter()" readonly /></td>
 				</tr>
 			</tbody>
 			<tfoot>
@@ -83,15 +83,15 @@
 			<tbody>
 				<tr>
 					<td class="text-left">@Model.QuestionList.Question8</td>
-					<td><input type="number" asp-for="Form.Questions.Question8" class="form-control" id="q8" oninput="Counter()" /></td>
+					<td><input type="number" asp-for="Form.Questions.Question8" class="form-control" id="q8" oninput="Counter()" readonly /></td>
 				</tr>
 				<tr>
 					<td class="text-left">@Model.QuestionList.Question9</td>
-					<td><input type="number" asp-for="Form.Questions.Question9" class="form-control" id="q9" oninput="Counter()" /></td>
+					<td><input type="number" asp-for="Form.Questions.Question9" class="form-control" id="q9" oninput="Counter()" readonly /></td>
 				</tr>
 				<tr>
 					<td class="text-left">@Model.QuestionList.Question0</td>
-					<td><input type="number" asp-for="Form.Questions.Question0" class="form-control" id="q0" oninput="Counter()" /></td>
+					<td><input type="number" asp-for="Form.Questions.Question0" class="form-control" id="q0" oninput="Counter()" readonly /></td>
 				</tr>
 			</tbody>
 			<tfoot>
@@ -141,16 +141,22 @@
 		</div>
 		<div class="form-group">
 			<label asp-for="Form.Questions.LongReview" class="control-label">IV. Uzasadnienie i inne uwagi oceniające pracę</label>
-			<textarea asp-for="Form.Questions.LongReview" class="form-control"></textarea>
+			<textarea asp-for="Form.Questions.LongReview" class="form-control" id="lr" readonly></textarea>
 		</div>
 		<div class="form-group">
 			<label asp-for="Form.Questions.Grade" class="control-label">V. Ocena Końcowa ( cel, bdb, db pl, db, dst pl, dst, nd )</label>
-			<input asp-for="Form.Questions.Grade" class="form-control">
+			<input asp-for="Form.Questions.Grade" class="form-control" id="g" readonly>
 		</div>
-		<div class="form-group">
-			<input type="submit" value="Save" class="btn btn-success" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
+		@if (!Model.Form.Questions.Finished)
+		{
+			<div class="form-group">
+				<input type="submit" value="Zapisz" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Zakończ ocenianie" class="btn btn-success" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
+			</div>
+		}
 		</div>
-	</div>
 </form>
 
 <script>
@@ -164,3 +170,25 @@
 		document.getElementById("sumaFinal").innerHTML = suma3 + suma2 + suma1;
 	}
 </script>
+	
+
+@if (!Model.Form.Questions.Finished)
+{
+	<script>
+		readygo();
+		function readygo() {
+			document.getElementById("q0").readOnly = false;
+			document.getElementById("q1").readOnly = false;
+			document.getElementById("q2").readOnly = false;
+			document.getElementById("q3").readOnly = false;
+			document.getElementById("q4").readOnly = false;
+			document.getElementById("q5").readOnly = false;
+			document.getElementById("q6").readOnly = false;
+			document.getElementById("q7").readOnly = false;
+			document.getElementById("q8").readOnly = false;
+			document.getElementById("q9").readOnly = false;
+			document.getElementById("lr").readOnly = false;
+			document.getElementById("g").readOnly = false;
+		}
+	</script>
+}

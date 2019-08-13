@@ -193,6 +193,8 @@ namespace ThesisReview.Migrations
                     b.Property<string>("GuardianName")
                         .IsRequired();
 
+                    b.Property<string>("Link");
+
                     b.Property<string>("Password");
 
                     b.Property<int?>("QuestionsGuardianQuestionsId");
@@ -231,6 +233,8 @@ namespace ThesisReview.Migrations
                     b.Property<int>("QuestionsId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Finished");
 
                     b.Property<string>("FormURL");
 

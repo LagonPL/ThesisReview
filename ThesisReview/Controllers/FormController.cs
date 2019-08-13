@@ -73,7 +73,7 @@ namespace ThesisReview.Controllers
         };
         url = StringGenerator.LinkGenerator(uri, guid.ToString(), password.ToString());
 
-        DatabaseAction.AddForm(form, guid.ToString(), "0", password.ToString());
+        DatabaseAction.AddForm(form, guid.ToString(), "0", password.ToString(), url);
 
         content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
         EmailSender.Send(form.StudentMail, "Stworzyłeś formularz", content);
@@ -154,8 +154,31 @@ namespace ThesisReview.Controllers
         LongReview = fdVM.Form.Questions.LongReview,
         Grade = fdVM.Form.Questions.Grade
       };
-      DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL, mail);
+      DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL, mail, false);
       DatabaseAction.UpdateStatus("Otwarta", fdVM.Form.FormURL);
+      return RedirectToAction("Index", "List");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> FinishForm(FormDetailViewModel fdVM)
+    {
+      var mail = await GetCurrentUser();
+      Questions questions = new Questions
+      {
+        Question1 = fdVM.Form.Questions.Question1,
+        Question2 = fdVM.Form.Questions.Question2,
+        Question3 = fdVM.Form.Questions.Question3,
+        Question4 = fdVM.Form.Questions.Question4,
+        Question5 = fdVM.Form.Questions.Question5,
+        Question6 = fdVM.Form.Questions.Question6,
+        Question7 = fdVM.Form.Questions.Question7,
+        Question8 = fdVM.Form.Questions.Question8,
+        Question9 = fdVM.Form.Questions.Question9,
+        Question0 = fdVM.Form.Questions.Question0,
+        LongReview = fdVM.Form.Questions.LongReview,
+        Grade = fdVM.Form.Questions.Grade
+      };
+      DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL, mail, true);
       return RedirectToAction("Index", "List");
     }
 
