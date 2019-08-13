@@ -20,18 +20,20 @@ namespace ThesisReview.Controllers
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IFormRepository _formRepository;
 
-    public FormController( UserManager<ApplicationUser> userManager, IFormRepository formRepository)
+    public FormController(UserManager<ApplicationUser> userManager, IFormRepository formRepository)
     {
       _userManager = userManager;
       _formRepository = formRepository;
     }
 
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
+      var mail = await GetCurrentUser();
       var fVM = new FormViewModel
       {
         ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller()),
-        EmailExist = true
+        NoError = true,
+        StudentMail = mail
       };
 
       return View(fVM);
@@ -40,41 +42,47 @@ namespace ThesisReview.Controllers
     [HttpPost]
     public IActionResult Create(FormViewModel fVM)
     {
-      Form form = new Form
-      {
-        Title = fVM.Title,
-        ReviewType = fVM.ReviewType,
-        ShortDescription = fVM.ShortDescription,
-        StudentMail = fVM.StudentMail,
-        Status = "Nowa",
-        ReviewerName = fVM.ReviewerName,
-        GuardianName = fVM.GuardianName        
-      };
-      if (!EmailExist(fVM.ReviewerName, fVM.GuardianName))
-      {
-        fVM.EmailExist = false;
-        fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
-        return View(fVM);
-      }
-      string content, url;
-      var guid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
-      var password = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
-      var uri = new UriBuilder
-      {
-        Scheme = Request.Scheme,
-        Host = Request.Host.ToString(),
-        Path = "/Form/View/"
-      };
-      url = StringGenerator.LinkGenerator(uri, guid.ToString(), password.ToString());
+      
+        Form form = new Form
+        {
+          Title = fVM.Title,
+          ReviewType = fVM.ReviewType,
+          ShortDescription = fVM.ShortDescription,
+          StudentMail = fVM.StudentMail,
+          Status = "Nowa",
+          ReviewerName = fVM.ReviewerName,
+          GuardianName = fVM.GuardianName
+        };
       if (ModelState.IsValid)
       {
+        if (!EmailExist(fVM.ReviewerName, fVM.GuardianName))
+        {
+          fVM.NoError = false;
+          fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
+          fVM.ErrorMessage = "Brakuje maili w bazie lub mail opiekuna i recenzenta jest taki sam";
+          return View(fVM);
+        }
+        string content, url;
+        var guid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
+        var password = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
+        var uri = new UriBuilder
+        {
+          Scheme = Request.Scheme,
+          Host = Request.Host.ToString(),
+          Path = "/Form/View/"
+        };
+        url = StringGenerator.LinkGenerator(uri, guid.ToString(), password.ToString());
+
         DatabaseAction.AddForm(form, guid.ToString(), "0", password.ToString());
 
         content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
         EmailSender.Send(form.StudentMail, "Stworzyłeś formularz", content);
         return RedirectToAction("Index", "Home");
       }
-      return View(form);
+      fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
+      fVM.NoError = false;
+      fVM.ErrorMessage = "Źle wypełniony formularz";
+      return View(fVM);
 
     }
 
@@ -103,7 +111,7 @@ namespace ThesisReview.Controllers
     {
       Form form = new Form();
       form = DatabaseAction.ReadFormView(id, password);
-      if(String.IsNullOrEmpty(form.FormURL))
+      if (String.IsNullOrEmpty(form.FormURL))
         return RedirectToAction("Error", "Error");
       var suma = new Sum();
       var sumaGuardian = new Sum();
@@ -113,7 +121,7 @@ namespace ThesisReview.Controllers
         suma = Util.Sum(form);
         sumaGuardian = Util.SumGuardian(form);
       }
-        
+
       var fdVM = new FormDetailViewModel
       {
         Form = form,
@@ -147,7 +155,7 @@ namespace ThesisReview.Controllers
         Grade = fdVM.Form.Questions.Grade
       };
       DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL, mail);
-      DatabaseAction.UpdateStatus("Otwarta",fdVM.Form.FormURL);
+      DatabaseAction.UpdateStatus("Otwarta", fdVM.Form.FormURL);
       return RedirectToAction("Index", "List");
     }
 
@@ -155,7 +163,16 @@ namespace ThesisReview.Controllers
     {
       var user = await _userManager.GetUserAsync(HttpContext.User);
       var email = _userManager.GetEmailAsync(user);
-      string mail = user.Email;
+      string mail = "";
+      try
+      {
+        mail = user.Email;
+      }
+      catch (NullReferenceException)
+      {
+        return mail;
+      }
+
       return mail;
     }
 
@@ -165,7 +182,7 @@ namespace ThesisReview.Controllers
       ApplicationUser user2 = _formRepository.GetUser(mail2);
       try
       {
-        if (String.IsNullOrEmpty(user1.Email) && String.IsNullOrEmpty(user2.Email))
+        if (String.IsNullOrEmpty(user1.Email) || String.IsNullOrEmpty(user2.Email) || user1.Equals(user2))
         {
           return false;
         }

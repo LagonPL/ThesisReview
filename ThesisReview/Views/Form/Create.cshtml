@@ -8,9 +8,9 @@
 
 <h5>Wyślij formularz recenzji. Podani przez ciebie Recenzenci poddadzą wysłaną przez ciebie pracę.</h5>
 <hr />
-@if (!Model.EmailExist)
+@if (!Model.NoError)
 {
-	<div class="alert alert-danger" role="alert">Brak maila w bazie</div>
+	<div class="alert alert-danger" role="alert">@Model.ErrorMessage</div>
 }
 <div class="row">
 	<div class="col-md-6">
