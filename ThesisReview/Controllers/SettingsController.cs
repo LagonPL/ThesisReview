@@ -38,7 +38,12 @@ namespace ThesisReview.Controllers
         var user = await _userManager.GetUserAsync(HttpContext.User);
         if (user != null)
         {
-          await _userManager.ChangePasswordAsync(user, settingViewModel.OldPassword, settingViewModel.NewPassword);
+          var results = await _userManager.ChangePasswordAsync(user, settingViewModel.OldPassword, settingViewModel.NewPassword);
+          if (!results.Succeeded)
+          {
+            settingViewModel.AnyError = true;
+            return View(settingViewModel);
+          }
         }
       }
       else
@@ -46,7 +51,7 @@ namespace ThesisReview.Controllers
         settingViewModel.AnyError = true;
         return View(settingViewModel);
       }
-      return View();
+      return View(settingViewModel);
     }
 
   }

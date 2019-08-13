@@ -3,7 +3,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
 	<ul class="nav navbar-nav mr-auto">
-		<li><a asp-controller="Settings" asp-action="Account">Ustawienia <span class="glyphicon glyphicon-cog"></span></a></li>
+		<li><a asp-controller="Settings" asp-action="Account">@User.Identity.Name <span class="glyphicon glyphicon-cog"></span></a></li>
 	</ul>
 	<form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
 				method="post" class="navbar-right">
