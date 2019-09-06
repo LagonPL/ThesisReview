@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class DateTimefix : Migration
+    public partial class UserandForm : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,8 @@ namespace ThesisReview.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Department = table.Column<string>(nullable: true)
+                    Department = table.Column<string>(nullable: true),
+                    Fullname = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,8 +82,9 @@ namespace ThesisReview.Migrations
                 columns: table => new
                 {
                     UserListId = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    Mail = table.Column<string>(nullable: true)
+                    Mail = table.Column<string>(nullable: true),
+                    Fullname = table.Column<string>(nullable: true),
+                    Department = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -206,12 +208,14 @@ namespace ThesisReview.Migrations
                     ShortDescription = table.Column<string>(nullable: false),
                     Status = table.Column<string>(nullable: true),
                     StudentMail = table.Column<string>(nullable: false),
-                    ReviewerName = table.Column<string>(nullable: false),
+                    Department = table.Column<string>(nullable: false),
                     GuardianName = table.Column<string>(nullable: false),
+                    ReviewerName = table.Column<string>(nullable: true),
                     FormURL = table.Column<string>(nullable: true),
                     Link = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     QuestionsId = table.Column<int>(nullable: true),
+                    DateTime = table.Column<DateTime>(nullable: false),
                     QuestionsGuardianQuestionsId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

@@ -18,6 +18,8 @@ namespace ThesisReview.ViewModels
     [Required]
     [DataType(DataType.Password)]
     public string Password { get; set; }
+    [Required]
+    public string Fullname { get; set; }
     public string Department { get; set; }
     public SelectList Departments { get; set; }
     public string ReturnUrl { get; set; }

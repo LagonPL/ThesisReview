@@ -65,6 +65,7 @@ namespace ThesisReview
       services.AddTransient<IListRepository, ListRepository>();
       services.AddTransient<IFormRepository, FormRepository>();
       services.AddTransient<IAdminRepository, AdminRepository>();
+      services.AddTransient<IUserListRepository, UserListRepository>();
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
     }
