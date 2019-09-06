@@ -22,6 +22,7 @@ namespace ThesisReview
   public class Startup
   {
     private IConfigurationRoot _configurationRoot;
+    public static string ConnectionString { get; private set; }
 
     public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
     {
@@ -73,6 +74,7 @@ namespace ThesisReview
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
+      ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
       app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseCookiePolicy();
