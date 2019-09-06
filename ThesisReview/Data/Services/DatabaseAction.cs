@@ -12,8 +12,7 @@ namespace ThesisReview.Data.Services
   public class DatabaseAction
   {
     private readonly AppDbContext _appDbContext;
-    private readonly static string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=ThesisReview;Trusted_Connection=True;MultipleActiveResultSets=true";
-
+    private readonly static string connectionString = Startup.ConnectionString;
     public DatabaseAction(AppDbContext appDbContext)
     {
       _appDbContext = appDbContext;
