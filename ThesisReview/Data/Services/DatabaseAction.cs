@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using ThesisReview.Data.Models;
 
@@ -10,14 +11,19 @@ namespace ThesisReview.Data.Services
 {
   public class DatabaseAction
   {
-
+    private readonly AppDbContext _appDbContext;
     private readonly static string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=ThesisReview;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+    public DatabaseAction(AppDbContext appDbContext)
+    {
+      _appDbContext = appDbContext;
+    }
 
     public static void AddForm(Form form, string id, string zero, string password, string link)
     {
       DateTime dateTime = DateTime.Now;
       string sql;
-      if(form.ReviewType.Equals("Praca Magisterska"))
+      if (form.ReviewType.Equals("Praca Magisterska"))
       {
         sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL, ReviewType, Status, Password, Link, DateTime) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{id}','{form.ReviewType}','{form.Status}','{password}','{link}','{dateTime.ToString("yyyy-MM-dd HH:mm:ss")}');  Insert Into Questions (FormURL, Mail, Question0, Question1, Question2, Question3, Question4, Question5, Question6, Question7, Question8, Question9, Points, Finished) Values ('{id}', '{form.ReviewerName}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{false}'); Insert Into Questions (FormURL, Mail, Question0, Question1, Question2, Question3, Question4, Question5, Question6, Question7, Question8, Question9, Points, Finished) Values ('{id}', '{form.GuardianName}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{zero}', '{false}')";
       }
@@ -38,9 +44,9 @@ namespace ThesisReview.Data.Services
         }
       }
     }
-
-    public static void UpdateForm(Questions questions, string id, string mail, bool isFinish)
-    {
+    
+      public static void UpdateForm(Questions questions, string id, string mail, bool isFinish)
+      {
       string sql;
       if (isFinish)
       {
@@ -131,7 +137,7 @@ namespace ThesisReview.Data.Services
       }
       if (statusGuardian == statusReviewer)
       {
-        UpdateStatus("Zakończono", id);
+        UpdateStatus("Oceniono", id);
         EmailSender.Send(mail, "Zakończono Oceniania", "Zakończono Ocenianie twojego zgłoszenia\nLink: " + url);
       }
 

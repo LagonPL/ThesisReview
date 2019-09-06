@@ -80,7 +80,7 @@ namespace ThesisReview.Data.Services
         "Praca Inżynierska",
         "Praca Licencjacka",
         "Praca Magisterska",
-        "Praca Doktorska"
+        "Praca Podyplomowa"
       };
       return items;
     }
@@ -129,6 +129,41 @@ namespace ThesisReview.Data.Services
         var items = StringGenerator.AdvanceQuestion();
         return items;
       }
+    }
+
+    public static Questions BasicTemplate(string formurl, string mail)
+    {
+      Questions questions = new Questions
+      {
+        FormURL = formurl,
+        Mail = mail,
+        Points = 0,
+        Finished = false
+      };
+
+      return questions;
+    }
+    
+    public static Questions AdvanceTemplate(string formurl, string mail)
+    {
+      Questions questions = new Questions
+      {
+        FormURL = formurl,
+        Mail = mail,
+        Points = 0,
+        Finished = false,
+        Question0 = "0",
+        Question1 = "0",
+        Question2 = "0",
+        Question3 = "0",
+        Question4 = "0",
+        Question5 = "0",
+        Question6 = "0",
+        Question7 = "0",
+        Question8 = "0",
+        Question9 = "0",
+      };
+      return questions;
     }
 
 

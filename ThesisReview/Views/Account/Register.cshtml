@@ -27,6 +27,13 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label asp-for="Fullname" class="col-md-2 control-label">Nazwisko i Imię</label>
+				<div class="col-md-10">
+					<input asp-for="Fullname" class="form-control" />
+					<span asp-validation-for="Fullname" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="form-group">
 				<label asp-for="Department" class="col-md-2 control-label">Wydział</label>
 				<div class="col-md-10">
 					@Html.DropDownListFor(m => m.Department, Model.Departments, new { @class = "dropdown-header col-md-12" })

@@ -2,11 +2,11 @@
 @{
 	ViewData["Title"] = Model.Form.Title;
 }
-@if (Model.ReviewType.Equals("Praca Inzynierska") || Model.ReviewType.Equals("Praca Licencjacka"))
+@if (Model.ReviewType.Equals("Praca Inżynierska") || Model.ReviewType.Equals("Praca Licencjacka"))
 {
 	@Html.Partial("View/BasicView")
 }
-@if (Model.ReviewType.Equals("Praca Doktorska"))
+@if (Model.ReviewType.Equals("Praca Podyplomowa"))
 {
 	@Html.Partial("View/AdvanceView")
 }

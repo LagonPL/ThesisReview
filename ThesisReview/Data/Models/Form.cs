@@ -18,6 +18,7 @@ namespace ThesisReview.Data.Models
     public string ReviewType { get; set; }
 
     [Required]
+    [DataType(DataType.MultilineText)]
     public string ShortDescription { get; set; }
 
     public string Status { get; set; }
@@ -27,12 +28,14 @@ namespace ThesisReview.Data.Models
     public string StudentMail { get; set; }
 
     [Required]
-    [DataType(DataType.EmailAddress)]
-    public string ReviewerName { get; set; }
+    public string Department { get; set; }
 
     [Required]
     [DataType(DataType.EmailAddress)]
     public string GuardianName { get; set; }
+
+    [DataType(DataType.EmailAddress)]
+    public string ReviewerName { get; set; }
 
     public string FormURL { get; set; }
 

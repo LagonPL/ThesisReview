@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ThesisReview.Data;
 using ThesisReview.Data.Interface;
 using ThesisReview.Data.Models;
 using ThesisReview.Data.Services;
@@ -19,11 +20,13 @@ namespace ThesisReview.Controllers
   {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IFormRepository _formRepository;
+    private readonly AppDbContext _appDbContext;
 
-    public FormController(UserManager<ApplicationUser> userManager, IFormRepository formRepository)
+    public FormController(UserManager<ApplicationUser> userManager, IFormRepository formRepository, AppDbContext appDbContext)
     {
       _userManager = userManager;
       _formRepository = formRepository;
+      _appDbContext = appDbContext;
     }
 
     public async Task<IActionResult> Create()
@@ -32,6 +35,7 @@ namespace ThesisReview.Controllers
       var fVM = new FormViewModel
       {
         ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller()),
+        DepartmentList = new SelectList(StringGenerator.DepartmentFiller()),
         NoError = true,
         StudentMail = mail
       };
@@ -51,7 +55,8 @@ namespace ThesisReview.Controllers
           StudentMail = fVM.StudentMail,
           Status = "Nowa",
           ReviewerName = fVM.ReviewerName,
-          GuardianName = fVM.GuardianName
+          GuardianName = fVM.GuardianName,
+          Department = fVM.Department
         };
       if (ModelState.IsValid)
       {
@@ -59,6 +64,7 @@ namespace ThesisReview.Controllers
         {
           fVM.NoError = false;
           fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
+          fVM.DepartmentList = new SelectList(StringGenerator.DepartmentFiller());
           fVM.ErrorMessage = "Brakuje maili w bazie lub mail opiekuna i recenzenta jest taki sam";
           return View(fVM);
         }
@@ -73,13 +79,16 @@ namespace ThesisReview.Controllers
         };
         url = StringGenerator.LinkGenerator(uri, guid.ToString(), password.ToString());
 
-        DatabaseAction.AddForm(form, guid.ToString(), "0", password.ToString(), url);
+        //DatabaseAction.AddForm(form, guid.ToString(), "0", password.ToString(), url);
 
         content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
         EmailSender.Send(form.StudentMail, "Stworzyłeś formularz", content);
+       
+        _formRepository.AddFormEntity(form, guid.ToString(), "0", password.ToString(), url);
         return RedirectToAction("Index", "Home");
       }
       fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
+      fVM.DepartmentList = new SelectList(StringGenerator.DepartmentFiller());
       fVM.NoError = false;
       fVM.ErrorMessage = "Źle wypełniony formularz";
       return View(fVM);
@@ -98,6 +107,7 @@ namespace ThesisReview.Controllers
       var fdVM = new FormDetailViewModel
       {
         Form = form,
+        mail = mail,
         ReviewType = form.ReviewType,
         QuestionList = questions,
         Answers = StringGenerator.AnswersGenerator(),
@@ -152,10 +162,13 @@ namespace ThesisReview.Controllers
         Question9 = fdVM.Form.Questions.Question9,
         Question0 = fdVM.Form.Questions.Question0,
         LongReview = fdVM.Form.Questions.LongReview,
-        Grade = fdVM.Form.Questions.Grade
+        Grade = fdVM.Form.Questions.Grade,
+        FormURL = fdVM.Form.FormURL,
+        Mail = mail
       };
-      DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL, mail, false);
-      DatabaseAction.UpdateStatus("Otwarta", fdVM.Form.FormURL);
+      //DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL, mail, false);
+      //DatabaseAction.UpdateStatus("Otwarta", fdVM.Form.FormURL);
+      _formRepository.UpdateFormEntity(questions);
       return RedirectToAction("Index", "List");
     }
 
@@ -176,9 +189,12 @@ namespace ThesisReview.Controllers
         Question9 = fdVM.Form.Questions.Question9,
         Question0 = fdVM.Form.Questions.Question0,
         LongReview = fdVM.Form.Questions.LongReview,
-        Grade = fdVM.Form.Questions.Grade
+        Grade = fdVM.Form.Questions.Grade,
+        FormURL = fdVM.Form.FormURL,
+        Mail = mail,
+        Finished = true
       };
-      DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL, mail, true);
+      _formRepository.FinishFormEntity(questions);
       return RedirectToAction("Index", "List");
     }
 

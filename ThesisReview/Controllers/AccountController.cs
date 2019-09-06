@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ThesisReview.Data;
 using ThesisReview.Data.Models;
 using ThesisReview.Data.Services;
 using ThesisReview.ViewModels;
@@ -21,12 +22,13 @@ namespace ThesisReview.Controllers
 
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
-    
+    private readonly AppDbContext _appDbContext;
 
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext appDbContext)
     {
       _userManager = userManager;
       _signInManager = signInManager;
+      _appDbContext = appDbContext;
     }
 
 
@@ -80,7 +82,7 @@ namespace ThesisReview.Controllers
       string content;
       if (ModelState.IsValid)
       {
-        var user = new ApplicationUser() { UserName = registerViewModel.UserName, Email = registerViewModel.Email, Department = registerViewModel.Department};
+        var user = new ApplicationUser() { UserName = registerViewModel.UserName, Email = registerViewModel.Email, Department = registerViewModel.Department, Fullname = registerViewModel.Fullname};
         var result = await _userManager.CreateAsync(user, registerViewModel.Password);
         if (registerViewModel.IsAdmin)
         {
@@ -93,8 +95,16 @@ namespace ThesisReview.Controllers
 
         if (result.Succeeded)
         {
-          content = "Witaj " + registerViewModel.UserName + ", zostałeś pomyślnie zarejestrowany w naszym serwisie.";
+          content = "Witaj " + registerViewModel.Fullname + "!\n Twój mail: \"" + registerViewModel.Email + "\" został pomyślnie zarejestrowany w naszym serwisie.";
           EmailSender.Send(registerViewModel.Email, "Pomyślna Rejestracja", content);
+          UserList userList = new UserList
+          {
+            Department = registerViewModel.Department,
+            Fullname = registerViewModel.Fullname,
+            Mail = registerViewModel.Email
+          };
+          _appDbContext.UserLists.Add(userList);
+          _appDbContext.SaveChanges();
           return RedirectToAction("Index", "Home");
         }
         else

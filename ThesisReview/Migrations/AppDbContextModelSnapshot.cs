@@ -146,6 +146,8 @@ namespace ThesisReview.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("Fullname");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -190,6 +192,9 @@ namespace ThesisReview.Migrations
 
                     b.Property<DateTime>("DateTime");
 
+                    b.Property<string>("Department")
+                        .IsRequired();
+
                     b.Property<string>("FormURL");
 
                     b.Property<string>("GuardianName")
@@ -206,8 +211,7 @@ namespace ThesisReview.Migrations
                     b.Property<string>("ReviewType")
                         .IsRequired();
 
-                    b.Property<string>("ReviewerName")
-                        .IsRequired();
+                    b.Property<string>("ReviewerName");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired();
@@ -278,9 +282,11 @@ namespace ThesisReview.Migrations
                     b.Property<string>("UserListId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Mail");
+                    b.Property<string>("Department");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("Fullname");
+
+                    b.Property<string>("Mail");
 
                     b.HasKey("UserListId");
 

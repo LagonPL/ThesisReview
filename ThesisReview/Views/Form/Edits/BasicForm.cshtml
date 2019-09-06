@@ -8,6 +8,10 @@
 		<form asp-controller="Form" method="post" class="form-horizontal" role="form">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<input type="hidden" asp-for="Form.FormId" />
+			<div class="form-group hidden">
+				<label asp-for="mail" class="control-label"></label>
+				<input asp-for="mail" class="form-control" readonly />
+			</div>
 			<div class="form-group">
 				<label asp-for="Form.FormURL" class="control-label disabled"></label>
 				<input asp-for="Form.FormURL" class="form-control" readonly />
