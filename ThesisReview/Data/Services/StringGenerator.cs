@@ -31,7 +31,8 @@ namespace ThesisReview.Data.Services
         Question5 = "Charakterystyka doboru i wykorzystania źródeł",
         Question6 = "Ocena formalnej strony pracy (poprawność języka, opanowanie techniki pisania pracy, spis rzeczy, odsyłacze)",
         Question7 = "Sposób wykorzystania pracy (publikacja, udostępnienie instytucjom, materiał źródłowy)",
-        Question8 = "Ocena pracy"
+        Question8 = "Ocena pracy",
+        Grade = "Końcowa ocena"
       };
       return items;
     }
@@ -49,7 +50,8 @@ namespace ThesisReview.Data.Services
         Question6 = "Czy praca jest napisana poprawnym językiem?	",
         Question7 = "Czy dobór źródeł i ich wykorzystanie są prawidłowe?",
         Question8 = "Czy zostały osiągnięte założone efekty kształcenia dla pracy końcowej?",
-        LongReview = "Krótka ocena merytoryczna: "
+        LongReview = "Krótka ocena merytoryczna: ",
+        Grade = "Końcowa ocena"
       };
       return items;
     }
@@ -114,7 +116,7 @@ namespace ThesisReview.Data.Services
 
     public static Questions GetQuestions(string reviewtype)
     {
-      if(reviewtype.Equals("Praca Inzynierska") || reviewtype.Equals("Praca Licencjacka"))
+      if(reviewtype.Equals("Praca Inżynierska") || reviewtype.Equals("Praca Licencjacka"))
       {
         var items = StringGenerator.BasicQuestion();
         return items;

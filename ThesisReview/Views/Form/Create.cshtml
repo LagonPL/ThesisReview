@@ -24,7 +24,7 @@
 			<div class="form-group">
 				<label asp-for="ReviewType" class="control-label">Typ Pracy</label>
 				<div class="text-danger">
-					@Html.DropDownListFor(m => m.ReviewType, Model.ReviewTypeList, new { @class = "dropdown-header form-control" })
+					@Html.DropDownListFor(m => m.ReviewType, Model.ReviewTypeList, new { @class = "dropdown-header form-control", @id = "reviewlist", @onchange = "elo()" })
 				</div>
 			</div>
 			<div class="form-group">
@@ -43,15 +43,16 @@
 					@Html.DropDownListFor(m => m.Department, Model.DepartmentList, new { @class = "dropdown-header form-control" })
 				</div>
 			</div>
+			<div class="form-group" id="guardian">
+				<label asp-for="GuardianName" class="control-label">Mail Opiekuna</label>
+				<input asp-for="GuardianName" class="form-control" />
+				<span asp-validation-for="GuardianName" class="text-danger"></span>
+			</div>
 			<div class="form-group">
 				<label asp-for="ReviewerName" class="control-label">Mail Recenzenta</label>
 				<input asp-for="ReviewerName" class="form-control" />
 				<span asp-validation-for="ReviewerName" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="GuardianName" class="control-label">Mail Opiekuna</label>
-				<input asp-for="GuardianName" class="form-control" />
-				<span asp-validation-for="GuardianName" class="text-danger"></span>
+				<h6 class="text-info">Jeśli wybrałeś Pracę Podyplomową, zostaw puste.</h6>
 			</div>
 			<hr />
 			<div class="form-group">
@@ -64,4 +65,19 @@
 <div>
 	<a asp-action="Index" asp-controller="Home">Wróć</a>
 </div>
+
+<script>
+	document.getElementById("reviewlist").onchange = function () {
+		alert(this.value);
+		if (document.getElementById("reviewlist").textContent = "Praca Podyplomowa") {
+			document.getElementById("guardian").hidden = true;
+		}
+		else {
+			document.getElementById("guardian").hidden = false;
+		}
+
+		function elo() {
+			alert("test");
+		}
+</script>
 

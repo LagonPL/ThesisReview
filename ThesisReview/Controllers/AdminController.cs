@@ -34,6 +34,20 @@ namespace ThesisReview.Controllers
       return View(aVM);
     }
 
+    [Authorize(Roles = "Admin")]
+    public IActionResult Report(string datestart, string datefinish)
+    {
+      ReportViewModel rVM = new ReportViewModel
+      {
+        Reports = _adminRepository.GetReports(datefinish, datestart)
+      };
+      
+      DateTime dateTimeStart = Convert.ToDateTime(datestart);
+      DateTime dateTimeFinish = Convert.ToDateTime(datefinish);
+
+      return View(rVM);
+    }
+
     public IActionResult Delete(string id)
     {
       _adminRepository.DeleteUser(id);

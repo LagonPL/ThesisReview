@@ -13,12 +13,12 @@
 		<input asp-for="mail" class="form-control" readonly />
 	</div>
 	<div class="form-group">
-		<label asp-for="Form.Title" class="control-label disabled"></label>
-		<input asp-for="Form.Title" class="form-control" readonly />
-	</div>
-	<div class="form-group">
 		<label asp-for="Form.StudentMail" class="control-label disabled"></label>
 		<input asp-for="Form.StudentMail" class="form-control" readonly />
+	</div>
+	<div class="form-group">
+		<label asp-for="Form.Title" class="control-label disabled"></label>
+		<input asp-for="Form.Title" class="form-control" readonly />
 	</div>
 	<div class="form-group">
 		<label asp-for="Form.ShortDescription" class="control-label disabled"></label>
@@ -109,6 +109,7 @@
 	{
 		<input type="submit" value="Save" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
 		@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
+		<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
 		<input type="submit" value="Zakończ ocenianie" class="btn btn-success pull-right" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
 	}
 </form>

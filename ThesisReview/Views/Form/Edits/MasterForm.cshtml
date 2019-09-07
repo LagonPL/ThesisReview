@@ -10,12 +10,12 @@
 		<input asp-for="Form.FormURL" class="form-control" readonly />
 	</div>
 	<div class="form-group">
-		<label asp-for="Form.Title" class="control-label disabled"></label>
-		<input asp-for="Form.Title" class="form-control" readonly />
-	</div>
-	<div class="form-group">
 		<label asp-for="Form.StudentMail" class="control-label disabled"></label>
 		<input asp-for="Form.StudentMail" class="form-control" readonly />
+	</div>
+	<div class="form-group">
+		<label asp-for="Form.Title" class="control-label disabled"></label>
+		<input asp-for="Form.Title" class="form-control" readonly />
 	</div>
 	<div class="form-group">
 		<label asp-for="Form.ShortDescription" class="control-label disabled"></label>
@@ -152,14 +152,16 @@
 			<textarea asp-for="Form.Questions.LongReview" class="form-control" id="lr" readonly></textarea>
 		</div>
 		<div class="form-group">
-			<label asp-for="Form.Questions.Grade" class="control-label">V. Ocena Końcowa ( cel, bdb, db pl, db, dst pl, dst, nd )</label>
+			<label asp-for="Form.Questions.Grade" class="control-label">V. Ocena Końcowa</label>
 			<input asp-for="Form.Questions.Grade" class="form-control" id="g" readonly>
+			<h6 class="text-info">Należy stosować następującą skalę ocen: 5,0 – pięć, 4,5 – cztery i pół, 4,0 – cztery, 3,5 – trzy i pół, 3,0 – trzy, 2,0 – dwa.</h6>
 		</div>
 		@if (!Model.Form.Questions.Finished)
 		{
 			<div class="form-group">
 				<input type="submit" value="Zapisz" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
 				@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
+				<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
 
 			</div>
 			<div class="form-group pull-right">

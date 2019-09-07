@@ -14,5 +14,6 @@ namespace ThesisReview.Data.Interface
 
     IEnumerable<ApplicationUser> GetAllUser();
     IEnumerable<ApplicationUser> GetAllUserNoYou(string user);
+    IEnumerable<Report> GetReports(string datestart, string datefinish);
   }
 }
