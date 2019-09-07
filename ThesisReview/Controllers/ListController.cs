@@ -30,20 +30,20 @@ namespace ThesisReview.Controllers
       string mail = await GetCurrentUser();
       ViewData["CurrentSort"] = sortOrder;
       ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Date" : "";
+      
       var revieweritems = _listRepository.GetReviewerForms(mail).Concat(_listRepository.GetGuardianForms(mail));
       switch (sortOrder)
       {
         case "Date":
-          revieweritems = revieweritems.OrderBy(p => p.DateTime);
+          revieweritems = revieweritems.OrderBy(p => p.DateTimeStart);
           break;
 
         default:
-          revieweritems = revieweritems.OrderByDescending(p => p.DateTime);
+          revieweritems = revieweritems.OrderByDescending(p => p.DateTimeStart);
           break;
 
       }
       
-
 
       var finished = revieweritems.Where(p => p.Status == "Zakonczono");
       revieweritems = revieweritems.Where(p => p.Status != "Zakonczono");

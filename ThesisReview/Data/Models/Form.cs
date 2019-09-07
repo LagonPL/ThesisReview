@@ -43,9 +43,11 @@ namespace ThesisReview.Data.Models
 
     public string Password { get; set; }
 
-    public Questions Questions { get; set; }
+    public DateTime DateTimeStart { get; set; }
 
-    public DateTime DateTime { get; set; }
+    public DateTime DateTimeFinish { get; set; }
+
+    public Questions Questions { get; set; }
 
     public Questions QuestionsGuardian { get; set; }
   }

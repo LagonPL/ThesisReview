@@ -11,12 +11,8 @@ namespace ThesisReview.Data.Services
 {
   public class DatabaseAction
   {
-    private readonly AppDbContext _appDbContext;
     private readonly static string connectionString = Startup.ConnectionString;
-    public DatabaseAction(AppDbContext appDbContext)
-    {
-      _appDbContext = appDbContext;
-    }
+
 
     public static void AddForm(Form form, string id, string zero, string password, string link)
     {
@@ -76,10 +72,18 @@ namespace ThesisReview.Data.Services
 
     public static void UpdateStatus(string status, string id)
     {
-
+      DateTime dateTime = DateTime.Now;
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        string sql = $"Update Forms SET Status='{status}'  Where FormURL='{id}'";
+        string sql;
+        if (status.Equals("Oceniono"))
+        {
+          sql = $"Update Forms SET Status='{status}', DateTimeFinish='{dateTime.ToString("yyyy-MM-dd HH:mm:ss")}'  Where FormURL='{id}'";
+        }
+        else
+        {
+          sql = $"Update Forms SET Status='{status}'  Where FormURL='{id}'";
+        }
         using (SqlCommand command = new SqlCommand(sql, connection))
         {
           connection.Open();
@@ -88,12 +92,13 @@ namespace ThesisReview.Data.Services
         }
       }
     }
-    public static void ReadStatus(string id)
+    public static bool ReadStatus(string id)
     {
       string reviewer = String.Empty;
       string guardian = reviewer;
       string mail = reviewer;
       string url = reviewer;
+      string reviewtype = reviewer;
       bool statusReviewer = true;
       bool statusGuardian = false;
       using (SqlConnection connection = new SqlConnection(connectionString))
@@ -111,7 +116,14 @@ namespace ThesisReview.Data.Services
             guardian = Convert.ToString(dataReader["GuardianName"]);
             mail = Convert.ToString(dataReader["StudentMail"]);
             url = Convert.ToString(dataReader["Link"]);
+            reviewtype = Convert.ToString(dataReader["ReviewType"]);
           }
+        }
+        if (reviewtype.Equals("Praca Podyplomowa"))
+        {
+          UpdateStatus("Oceniono", id);
+          EmailSender.Send(mail, "Zakończono Oceniania", "Zakończono Ocenianie twojego zgłoszenia\nLink: " + url);
+          return true;
         }
         sql = "select * from Questions where Questions.FormURL = '" + id + "' And Questions.Mail = '" + reviewer + "'";
         command = new SqlCommand(sql, connection);
@@ -138,8 +150,9 @@ namespace ThesisReview.Data.Services
       {
         UpdateStatus("Oceniono", id);
         EmailSender.Send(mail, "Zakończono Oceniania", "Zakończono Ocenianie twojego zgłoszenia\nLink: " + url);
+        return true;
       }
-
+      return false;
     }
 
     public static Form ReadForm(string id, string mail)

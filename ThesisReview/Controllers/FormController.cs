@@ -60,7 +60,7 @@ namespace ThesisReview.Controllers
         };
       if (ModelState.IsValid)
       {
-        if (!EmailExist(fVM.ReviewerName, fVM.GuardianName))
+        if (!EmailExist(fVM.ReviewerName, fVM.GuardianName, fVM.ReviewType))
         {
           fVM.NoError = false;
           fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
@@ -215,10 +215,28 @@ namespace ThesisReview.Controllers
       return mail;
     }
 
-    public bool EmailExist(string mail1, string mail2)
+    public bool EmailExist(string mail1, string mail2, string reviewtype)
     {
-      ApplicationUser user1 = _formRepository.GetUser(mail1);
-      ApplicationUser user2 = _formRepository.GetUser(mail2);
+      ApplicationUser user1;
+      ApplicationUser user2;
+      if (reviewtype.Equals("Praca Podyplomowa"))
+      {
+        user1 = _formRepository.GetUser(mail2);
+        try
+        {
+          if (String.IsNullOrEmpty(user1.Email))
+          {
+            return false;
+          }
+        }
+        catch (NullReferenceException)
+        {
+          return false;
+        }
+        return true;
+      }
+      user1 = _formRepository.GetUser(mail1);
+      user2 = _formRepository.GetUser(mail2);
       try
       {
         if (String.IsNullOrEmpty(user1.Email) || String.IsNullOrEmpty(user2.Email) || user1.Equals(user2))

@@ -25,7 +25,7 @@
 				<td class="text-right col-md-5">@line.Title</td>
 				<td class="text-right">@line.ReviewType</td>
 				<td class="text-right">@line.Status</td>
-				<td class="text-right">@line.DateTime</td>
+				<td class="text-right">@line.DateTimeStart</td>
 				<td class="text-center"><a class="glyphicon glyphicon-edit text-danger remove" asp-controller="Form" asp-action="Edit" asp-route-id="@line.FormURL"></a></td>
 				<td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" onclick="return confirm('Czy na pewno chcesz zakończyć ocene tej recenzji?\n @line.Title')"></a></td>
 			</tr>
@@ -41,7 +41,7 @@
 				<th>Tytuł recenzji</th>
 				<th class="text-right">Typ</th>
 				<th class="text-right">Status</th>
-				<th class="text-right">Data Utworzenia</th>
+				<th class="text-right">Data Zakończenia</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -53,7 +53,7 @@
 					<td class="text-right col-md-5">@line.Title</td>
 					<td class="text-right">@line.ReviewType</td>
 					<td class="text-right">@line.Status</td>
-					<td class="text-right">@line.DateTime</td>
+					<td class="text-right">@line.DateTimeFinish</td>
 					<td class="text-center"><a class="glyphicon glyphicon-eye-open text-danger remove" asp-controller="Form" asp-action="Edit" asp-route-id="@line.FormURL"></a></td>
 				</tr>
 			}

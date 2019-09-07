@@ -95,7 +95,7 @@ namespace ThesisReview.Controllers
 
         if (result.Succeeded)
         {
-          content = "Witaj " + registerViewModel.Fullname + "!\n Twój mail: \"" + registerViewModel.Email + "\" został pomyślnie zarejestrowany w naszym serwisie.";
+          content = "Witaj " + registerViewModel.Fullname + "!\nTwój mail: " + registerViewModel.Email + " został pomyślnie zarejestrowany w naszym serwisie.";
           EmailSender.Send(registerViewModel.Email, "Pomyślna Rejestracja", content);
           UserList userList = new UserList
           {

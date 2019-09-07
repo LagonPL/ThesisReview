@@ -2,6 +2,18 @@
 @{
 	ViewData["Title"] = "Panel Administratora";
 }
+<p>
+	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#datepick" aria-expanded="false" aria-controls="datepick">Raporty Pracownicze</button>
+</p>
+<div class="collapse multi-collapse col-lg-3" id="datepick">
+	<form asp-controller="Form" asp-action="UpdateForm" method="post" class="form-horizontal" role="form">
+		<label>Data Początkowa</label>
+		<input class="form-control" name="datestart" type="date" value="@ViewData["datastart"]" />
+		<label>Data Początkowa</label>
+		<input class="form-control" name="datafinish" type="date" value="@ViewData["datafinish"]" />
+		<input type="submit" value="Wyświetl" class="btn btn-info" asp-action="Report" asp-route-datestart="@ViewData["datastart"]" asp-route-datefinish="@ViewData["datafinish"]" />
+	</form>
+</div>
 <table class="table table-bordered table-striped">
 	<thead>
 		<tr>

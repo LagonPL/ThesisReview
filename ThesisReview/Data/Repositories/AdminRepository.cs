@@ -35,5 +35,7 @@ namespace ThesisReview.Data.Repositories
 
     public IEnumerable<ApplicationUser> GetAllUserNoYou(string user) => _appDbContext.Users.Where(p => p.Email != user);
 
+    public IEnumerable<Report> GetReports(string datestart, string datefinish) => _appDbContext.Reports;
+
   }
 }

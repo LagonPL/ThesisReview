@@ -20,5 +20,6 @@ namespace ThesisReview.Data
     public DbSet<Form> Forms { get; set; }
     public DbSet<Questions> Questions { get; set; }
     public DbSet<UserList> UserLists { get; set; }
+    public DbSet<Report> Reports { get; set; }
   }
 }
