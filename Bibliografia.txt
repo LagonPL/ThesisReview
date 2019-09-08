@@ -1,1 +1,5 @@
-[1] https://docs.microsoft.com/pl-pl/aspnet/core/?view=aspnetcore-2.2
+[1] https://docs.microsoft.com/pl-pl/aspnet/core/?view=aspnetcore-2.1
+[2] https://docs.microsoft.com/pl-pl/aspnet/core/mvc/overview?view=aspnetcore-2.1
+
+
+<rysunek1> MVC model
