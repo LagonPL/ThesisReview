@@ -103,7 +103,6 @@ namespace ThesisReview.Data.Services
       bool statusGuardian = false;
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        //SqlDataReader
         connection.Open();
         
         string sql = "select * from Forms where Forms.FormURL = '" + id + "'";
@@ -122,7 +121,7 @@ namespace ThesisReview.Data.Services
         if (reviewtype.Equals("Praca Podyplomowa"))
         {
           UpdateStatus("Oceniono", id);
-          EmailSender.Send(mail, "Zakończono Oceniania", "Zakończono Ocenianie twojego zgłoszenia\nLink: " + url);
+          EmailSender.Send(mail, "ThesisReview - Zakończono Oceniania", "Zakończono Ocenianie twojego zgłoszenia\nLink: " + url);
           return true;
         }
         sql = "select * from Questions where Questions.FormURL = '" + id + "' And Questions.Mail = '" + reviewer + "'";
@@ -149,7 +148,7 @@ namespace ThesisReview.Data.Services
       if (statusGuardian == statusReviewer)
       {
         UpdateStatus("Oceniono", id);
-        EmailSender.Send(mail, "Zakończono Oceniania", "Zakończono Ocenianie twojego zgłoszenia\nLink: " + url);
+        EmailSender.Send(mail, "ThesisReview - Zakończono Oceniania", "Zakończono Ocenianie twojego zgłoszenia\nLink: " + url);
         return true;
       }
       return false;
@@ -161,7 +160,6 @@ namespace ThesisReview.Data.Services
       Questions questions = new Questions();
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        //SqlDataReader
         connection.Open();
 
         string sql = "select * from Forms, Questions where Forms.FormURL = '" + id + "' And Questions.FormURL = '" + id + "' And Questions.Mail = '" + mail + "'";
@@ -204,7 +202,6 @@ namespace ThesisReview.Data.Services
       Questions questions2 = new Questions();
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        //SqlDataReader
         connection.Open();
         string sql1 = "select * from Forms where Forms.FormURL = '" + id + "' And Forms.Password = '" + password + "'";
         SqlCommand command = new SqlCommand(sql1, connection);

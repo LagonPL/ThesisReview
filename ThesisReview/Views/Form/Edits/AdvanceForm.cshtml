@@ -112,6 +112,10 @@
 		<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
 		<input type="submit" value="Zakończ ocenianie" class="btn btn-success pull-right" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
 	}
+	else
+	{
+		<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
+	}
 </form>
 
 

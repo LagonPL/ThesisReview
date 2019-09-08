@@ -43,8 +43,10 @@ namespace ThesisReview.Data.Models
 
     public string Password { get; set; }
 
+    [DisplayFormat(DataFormatString = "{dd-MM-yyyy}", ApplyFormatInEditMode = true)]
     public DateTime DateTimeStart { get; set; }
 
+    [DisplayFormat(DataFormatString = "{dd-MM-yyyy}", ApplyFormatInEditMode = true)]
     public DateTime DateTimeFinish { get; set; }
 
     public Questions Questions { get; set; }

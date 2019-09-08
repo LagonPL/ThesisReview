@@ -33,7 +33,6 @@ namespace ThesisReview.Controllers
 
 
 
-    // GET: /<controller>/
     public IActionResult Login(string returnUrl)
     {
       return View(new LogInViewModel()
@@ -53,8 +52,6 @@ namespace ThesisReview.Controllers
         var result = await _signInManager.PasswordSignInAsync(user, logInViewModel.Password, false, false);
         if (result.Succeeded)
         {
-          //var role = await _userManager.GetRolesAsync(user);
-          //EmailSender.Send(logInViewModel.Email, "Pomyślna Rejestracja", role[0]);
           if (string.IsNullOrEmpty(logInViewModel.ReturnUrl))
             return RedirectToAction("Index", "Home");
           return Redirect(logInViewModel.ReturnUrl);
@@ -96,7 +93,7 @@ namespace ThesisReview.Controllers
         if (result.Succeeded)
         {
           content = "Witaj " + registerViewModel.Fullname + "!\nTwój mail: " + registerViewModel.Email + " został pomyślnie zarejestrowany w naszym serwisie.";
-          EmailSender.Send(registerViewModel.Email, "Pomyślna Rejestracja", content);
+          EmailSender.Send(registerViewModel.Email, "ThesisReview - Pomyślna Rejestracja", content);
           UserList userList = new UserList
           {
             Department = registerViewModel.Department,

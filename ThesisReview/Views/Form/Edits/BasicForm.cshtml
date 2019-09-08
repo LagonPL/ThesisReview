@@ -4,90 +4,95 @@
 }
 
 <div class="row">
-	<div id="print">
-	<div class="col-md-12">
-		<form asp-controller="Form" method="post" class="form-horizontal" role="form">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<input type="hidden" asp-for="Form.FormId" />
-			<div class="form-group hidden">
-				<label asp-for="mail" class="control-label"></label>
-				<input asp-for="mail" class="form-control" readonly />
-			</div>
-			<div class="form-group hidden">
-				<label asp-for="Form.FormURL" class="control-label disabled"></label>
-				<input asp-for="Form.FormURL" class="form-control" readonly />
-				<span asp-validation-for="Form.Title" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Form.StudentMail" class="control-label disabled">Mail Studenta</label>
-				<input asp-for="Form.StudentMail" class="form-control" readonly />
-			</div>
-			<div class="form-group">
-				<label asp-for="Form.Title" class="control-label disabled">Tytuł pracy</label>
-				<input asp-for="Form.Title" class="form-control" readonly />
-				<span asp-validation-for="Form.Title" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Form.ShortDescription" class="control-label disabled">Wstęp</label>
-				<textarea asp-for="Form.ShortDescription" class="form-control" readonly></textarea>
-			</div>
-			<div class="form-group">
-				<label asp-for="Form.Questions.Question1" class="control-label">@Model.QuestionList.Question1</label>
-				<textarea asp-for="Form.Questions.Question1" class="form-control" id="q1" readonly></textarea>
-				<span asp-validation-for="Form.Questions.Question1" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Form.Questions.Question2" class="control-label">@Model.QuestionList.Question2</label>
-				<textarea asp-for="Form.Questions.Question2" class="form-control" id="q2" readonly></textarea>
-				<span asp-validation-for="Form.Questions.Question2" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Form.Questions.Question3" class="control-label">@Model.QuestionList.Question3</label>
-				<textarea asp-for="Form.Questions.Question3" class="form-control" id="q3" readonly></textarea>
-				<span asp-validation-for="Form.Questions.Question3" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Form.Questions.Question4" class="control-label">@Model.QuestionList.Question4</label>
-				<textarea asp-for="Form.Questions.Question4" class="form-control" id="q4" readonly></textarea>
-				<span asp-validation-for="Form.Questions.Question4" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Form.Questions.Question5" class="control-label">@Model.QuestionList.Question5</label>
-				<textarea asp-for="Form.Questions.Question5" class="form-control" id="q5" readonly></textarea>
-				<span asp-validation-for="Form.Questions.Question5" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Form.Questions.Question6" class="control-label">@Model.QuestionList.Question6</label>
-				<textarea asp-for="Form.Questions.Question6" class="form-control" id="q6" readonly></textarea>
-				<span asp-validation-for="Form.Questions.Question6" class="text-danger"></span>
-			</div><div class="form-group">
-				<label asp-for="Form.Questions.Question7" class="control-label">@Model.QuestionList.Question7</label>
-				<textarea asp-for="Form.Questions.Question7" class="form-control" id="q7" readonly></textarea>
-				<span asp-validation-for="Form.Questions.Question7" class="text-danger"></span>
-			</div><div class="form-group">
-				<label asp-for="Form.Questions.Grade" class="control-label">@Model.QuestionList.Grade</label>
-				<textarea asp-for="Form.Questions.Grade" class="form-control" id="q8" readonly></textarea>
-				<span asp-validation-for="Form.Questions.Grade" class="text-danger"></span>
-				<h6 class="text-info">Należy stosować następującą skalę ocen: 5,0 – pięć, 4,5 – cztery i pół, 4,0 – cztery, 3,5 – trzy i pół, 3,0 – trzy, 2,0 – dwa.</h6>
-			</div>
-</div>
-	@if (!Model.Form.Questions.Finished)
-	{
-						<div class="form-group">
-							<input type="submit" value="Zapisz" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
-							@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
-							<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
-
-						</div>
-		<div class="form-group pull-right">
-			<input type="submit" value="Zakończ" class="btn btn-success" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
+	<div id="section-to-print">
+		<div class="col-md-12">
+			<form asp-controller="Form" method="post" class="form-horizontal" role="form">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<input type="hidden" asp-for="Form.FormId" />
+				<div class="form-group hidden">
+					<label asp-for="mail" class="control-label"></label>
+					<input asp-for="mail" class="form-control" readonly />
+				</div>
+				<div class="form-group hidden">
+					<label asp-for="Form.FormURL" class="control-label disabled"></label>
+					<input asp-for="Form.FormURL" class="form-control" readonly />
+					<span asp-validation-for="Form.Title" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Form.StudentMail" class="control-label disabled">Mail Studenta</label>
+					<input asp-for="Form.StudentMail" class="form-control" readonly />
+				</div>
+				<div class="form-group">
+					<label asp-for="Form.Title" class="control-label disabled">Tytuł pracy</label>
+					<input asp-for="Form.Title" class="form-control" readonly />
+					<span asp-validation-for="Form.Title" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Form.ShortDescription" class="control-label disabled">Wstęp</label>
+					<textarea asp-for="Form.ShortDescription" class="form-control" readonly></textarea>
+				</div>
+				<div class="form-group">
+					<label asp-for="Form.Questions.Question1" class="control-label">@Model.QuestionList.Question1</label>
+					<textarea asp-for="Form.Questions.Question1" class="form-control" id="q1" readonly></textarea>
+					<span asp-validation-for="Form.Questions.Question1" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Form.Questions.Question2" class="control-label">@Model.QuestionList.Question2</label>
+					<textarea asp-for="Form.Questions.Question2" class="form-control" id="q2" readonly></textarea>
+					<span asp-validation-for="Form.Questions.Question2" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Form.Questions.Question3" class="control-label">@Model.QuestionList.Question3</label>
+					<textarea asp-for="Form.Questions.Question3" class="form-control" id="q3" readonly></textarea>
+					<span asp-validation-for="Form.Questions.Question3" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Form.Questions.Question4" class="control-label">@Model.QuestionList.Question4</label>
+					<textarea asp-for="Form.Questions.Question4" class="form-control" id="q4" readonly></textarea>
+					<span asp-validation-for="Form.Questions.Question4" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Form.Questions.Question5" class="control-label">@Model.QuestionList.Question5</label>
+					<textarea asp-for="Form.Questions.Question5" class="form-control" id="q5" readonly></textarea>
+					<span asp-validation-for="Form.Questions.Question5" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Form.Questions.Question6" class="control-label">@Model.QuestionList.Question6</label>
+					<textarea asp-for="Form.Questions.Question6" class="form-control" id="q6" readonly></textarea>
+					<span asp-validation-for="Form.Questions.Question6" class="text-danger"></span>
+				</div><div class="form-group">
+					<label asp-for="Form.Questions.Question7" class="control-label">@Model.QuestionList.Question7</label>
+					<textarea asp-for="Form.Questions.Question7" class="form-control" id="q7" readonly></textarea>
+					<span asp-validation-for="Form.Questions.Question7" class="text-danger"></span>
+				</div><div class="form-group">
+					<label asp-for="Form.Questions.Grade" class="control-label">@Model.QuestionList.Grade</label>
+					<textarea asp-for="Form.Questions.Grade" class="form-control" id="q8" readonly></textarea>
+					<span asp-validation-for="Form.Questions.Grade" class="text-danger"></span>
+					<h6 class="text-info">Należy stosować następującą skalę ocen: 5,0 – pięć, 4,5 – cztery i pół, 4,0 – cztery, 3,5 – trzy i pół, 3,0 – trzy, 2,0 – dwa.</h6>
+				</div>
 		</div>
-	}
-	</form>
-</div>
-</div>
+	</div>
+	<div id="non-printable">
+		@if (!Model.Form.Questions.Finished)
+		{
+			<div class="form-group">
+				<input type="submit" value="Zapisz" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
+				@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
+				<input type="submit" value="Drukuj" class="btn btn-warning"  onclick="window.print()" />
 
-
+			</div>
+			<div class="form-group pull-right">
+				<input type="submit" value="Zakończ" class="btn btn-success" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
+			</div>
+		}
+		else
+		{
+			<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
+		}
+	</div>
+		</form>
+	
+</div>
 
 
 @if (!Model.Form.Questions.Finished)

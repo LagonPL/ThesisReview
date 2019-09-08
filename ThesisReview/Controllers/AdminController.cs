@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ThesisReview.Data.Interface;
 using ThesisReview.Data.Models;
+using ThesisReview.Data.Services;
 using ThesisReview.ViewModels;
 
 namespace ThesisReview.Controllers
@@ -39,11 +41,10 @@ namespace ThesisReview.Controllers
     {
       ReportViewModel rVM = new ReportViewModel
       {
-        Reports = _adminRepository.GetReports(datefinish, datestart)
+        Reports = _adminRepository.GetReports(Convert.ToDateTime(datestart), Convert.ToDateTime(datefinish))
       };
       
-      DateTime dateTimeStart = Convert.ToDateTime(datestart);
-      DateTime dateTimeFinish = Convert.ToDateTime(datefinish);
+      
 
       return View(rVM);
     }
@@ -51,6 +52,20 @@ namespace ThesisReview.Controllers
     public IActionResult Delete(string id)
     {
       _adminRepository.DeleteUser(id);
+      var aVM = new AdminViewModel
+      {
+        UsersList = _adminRepository.GetAllUser()
+      };
+      return RedirectToAction("Index", "Admin");
+    }
+
+    public IActionResult Reset(string id)
+    {
+      var applicationUser = _userManager.FindByEmailAsync(id);
+      var token = _userManager.GeneratePasswordResetTokenAsync(applicationUser.Result);
+      var guid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
+      _userManager.ResetPasswordAsync(applicationUser.Result, token.Result, guid.ToString());
+      EmailSender.Send(id, "ThesisReview - Reset Hasła", "Administrator serwisu zresetował twoje hasło, obecne to: " + guid.ToString());
       var aVM = new AdminViewModel
       {
         UsersList = _adminRepository.GetAllUser()
