@@ -25,17 +25,12 @@ namespace ThesisReview.Data.Repositories
       _appDbContext.Users.Remove(deleteduser);
       _appDbContext.SaveChanges();
     }
-    //TODO: Password Reset
-    public void EditUser(string useId)
-    {
-      var changeuser = _appDbContext.Users.FirstOrDefault(p => p.Email == useId);
-    }
 
     public IEnumerable<ApplicationUser> GetAllUser() => _appDbContext.Users;
 
-    public IEnumerable<ApplicationUser> GetAllUserNoYou(string user) => _appDbContext.Users.Where(p => p.Email != user);
+    public IEnumerable<ApplicationUser> GetAllUserNoYou(string user) => _appDbContext.Users.Where(p => (p.Email != user) && (p.Department != "Administrator Główny"));
 
-    public IEnumerable<Report> GetReports(string datestart, string datefinish) => _appDbContext.Reports;
+    public IEnumerable<Report> GetReports(DateTime datestart, DateTime datefinish) => _appDbContext.Reports.Where(t => t.Date >= datestart && t.Date <= datefinish);
 
   }
 }

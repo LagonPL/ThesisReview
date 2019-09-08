@@ -10,10 +10,9 @@ namespace ThesisReview.Data.Interface
   {
 
     void DeleteUser(string useId);
-    void EditUser(string useId);
 
     IEnumerable<ApplicationUser> GetAllUser();
     IEnumerable<ApplicationUser> GetAllUserNoYou(string user);
-    IEnumerable<Report> GetReports(string datestart, string datefinish);
+    IEnumerable<Report> GetReports(DateTime datestart, DateTime datefinish);
   }
 }

@@ -9,18 +9,17 @@
 	<form asp-controller="Form" asp-action="UpdateForm" method="post" class="form-horizontal" role="form">
 		<label>Data Początkowa</label>
 		<input class="form-control" name="datestart" type="date" value="@ViewData["datastart"]" />
-		<label>Data Początkowa</label>
-		<input class="form-control" name="datafinish" type="date" value="@ViewData["datafinish"]" />
-		<input type="submit" value="Wyświetl" class="btn btn-info" asp-action="Report" asp-route-datestart="@ViewData["datastart"]" asp-route-datefinish="@ViewData["datafinish"]" />
+		<label>Data Końcowa</label>
+		<input class="form-control" name="datefinish" type="date" value="@ViewData["datefinish"]" />
+		<input type="submit" value="Wyświetl" class="btn btn-info" asp-action="Report" asp-route-datestart="@ViewData["datastart"]" asp-route-datefinish="@ViewData["datefinish"]" />
 	</form>
 </div>
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped table-hover">
 	<thead>
 		<tr>
 			<th>Email</th>
 			<th>Wydział</th>
-			<th class="text-right">Nazwa</th>
-			<th class="text-right">Rola</th>
+			<th class="text-right">Imię i nazwisko</th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -31,10 +30,9 @@
 			<tr>
 				<td class="text-center">@line.Email</td>
 				<td class="text-right">@line.Department</td>
-				<td class="text-right">@line.UserName</td>
-				<td class="text-right"></td>
-				<td class="text-center"><a class="glyphicon glyphicon-edit text-danger remove" onclick="return confirm('Czy na pewno chcesz zakończyć ocene tej recenzji?\n @line.UserName')"></a></td>
-				<td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" asp-controller="Admin" asp-action="Delete" asp-route-id="@line.Email" onclick="return confirm('Czy na pewno chcesz zakończyć ocene tej recenzji?\n @line.UserName')"></a></td>
+				<td class="text-right">@line.Fullname</td>
+				<td class="text-center"><a class="glyphicon glyphicon-edit text-danger remove" asp-controller="Admin" asp-action="Reset" asp-route-id="@line.Email"  onclick="return confirm('Czy na pewno chcesz zresetować hasło tego użytkownika?\n @line.Fullname')"></a></td>
+				<td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" asp-controller="Admin" asp-action="Delete" asp-route-id="@line.Email" onclick="return confirm('Czy na pewno chcesz usunąć użytkownika?\n @line.Fullname')"></a></td>
 			</tr>
 		}
 	</tbody>

@@ -42,7 +42,7 @@ namespace ThesisReview.Data
         {
           UserName = "admin",
           Email = "recenzjeprac@gmail.com",
-          Department = "Adminstrator"
+          Department = "Administrator Główny"
         };
 
         IdentityResult result = userManager.CreateAsync(user, "admin").Result;
@@ -51,7 +51,7 @@ namespace ThesisReview.Data
         {
           userManager.AddToRoleAsync(user, "Admin").Wait();
           string content = "Drogi użytkowniku.\nDostałeś właśnie dostęp do strony Recenzje Prac i jesteś pierwszym adminem.\nTwój i hasło to: admin. \nZalecamy zmianę hasła na bardziej bezpieczne.\nPozdrawiam Dawid Sowała - Twórca";
-          EmailSender.Send(user.Email, "Administrator Recenzji Prac", content);
+          EmailSender.Send(user.Email, "ThesisReview - Administrator", content);
         }
       }
 

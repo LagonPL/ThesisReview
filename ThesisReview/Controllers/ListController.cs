@@ -8,8 +8,6 @@ using ThesisReview.Data.Interface;
 using ThesisReview.Data.Models;
 using ThesisReview.ViewModels;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ThesisReview.Controllers
 {
   public class ListController : Controller
@@ -45,8 +43,8 @@ namespace ThesisReview.Controllers
       }
       
 
-      var finished = revieweritems.Where(p => p.Status == "Zakonczono");
-      revieweritems = revieweritems.Where(p => p.Status != "Zakonczono");
+      var finished = revieweritems.Where(p => p.Status == "Oceniono");
+      revieweritems = revieweritems.Where(p => p.Status != "Oceniono");
       var fLVM = new ListViewModel
       {
         Forms = revieweritems,

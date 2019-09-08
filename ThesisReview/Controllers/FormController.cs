@@ -79,10 +79,8 @@ namespace ThesisReview.Controllers
         };
         url = StringGenerator.LinkGenerator(uri, guid.ToString(), password.ToString());
 
-        //DatabaseAction.AddForm(form, guid.ToString(), "0", password.ToString(), url);
-
         content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
-        EmailSender.Send(form.StudentMail, "Stworzyłeś formularz", content);
+        EmailSender.Send(form.StudentMail, "ThesisReview - Stworzyłeś formularz", content);
        
         _formRepository.AddFormEntity(form, guid.ToString(), "0", password.ToString(), url);
         return RedirectToAction("Index", "Home");
@@ -166,8 +164,6 @@ namespace ThesisReview.Controllers
         FormURL = fdVM.Form.FormURL,
         Mail = mail
       };
-      //DatabaseAction.UpdateForm(questions, fdVM.Form.FormURL, mail, false);
-      //DatabaseAction.UpdateStatus("Otwarta", fdVM.Form.FormURL);
       _formRepository.UpdateFormEntity(questions);
       return RedirectToAction("Index", "List");
     }

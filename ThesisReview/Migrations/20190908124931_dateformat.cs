@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class UserandForm : Migration
+    public partial class dateformat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -75,6 +75,23 @@ namespace ThesisReview.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.QuestionsId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    ReportId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Guardian = table.Column<string>(nullable: true),
+                    Reviewer = table.Column<string>(nullable: true),
+                    Student = table.Column<string>(nullable: true),
+                    Grade = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.ReportId);
                 });
 
             migrationBuilder.CreateTable(
@@ -214,8 +231,9 @@ namespace ThesisReview.Migrations
                     FormURL = table.Column<string>(nullable: true),
                     Link = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
+                    DateTimeStart = table.Column<DateTime>(nullable: false),
+                    DateTimeFinish = table.Column<DateTime>(nullable: false),
                     QuestionsId = table.Column<int>(nullable: true),
-                    DateTime = table.Column<DateTime>(nullable: false),
                     QuestionsGuardianQuestionsId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -304,6 +322,9 @@ namespace ThesisReview.Migrations
 
             migrationBuilder.DropTable(
                 name: "Forms");
+
+            migrationBuilder.DropTable(
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "UserLists");

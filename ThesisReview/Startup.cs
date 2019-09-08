@@ -61,7 +61,8 @@ namespace ThesisReview
       });
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
-        .AddEntityFrameworkStores<AppDbContext>();
+        .AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders();
 
       services.AddTransient<IListRepository, ListRepository>();
       services.AddTransient<IFormRepository, FormRepository>();
@@ -99,6 +100,10 @@ namespace ThesisReview
         routes.MapRoute(
                   name: "OrderList",
                   template: "List/{id}", defaults: new { Controller = "List", id = "" });
+        routes.MapRoute(
+                 name: "MailChange",
+                 template: "Settings/{action}/{mail}/{token}", defaults: new { Controller = "Settings", action = "MailChange", mail = "", token = "" });
+
       });
 
       DbInitializer.Seed(userManager, roleManager);

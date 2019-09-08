@@ -9,7 +9,7 @@ namespace ThesisReview.Data.Services
   public class StringGenerator
   {
     //https://www.p.lodz.pl/pl/wydzialy-jednostki-naukowe
-    //TODO: Uzupelnij to
+    //TODO : Uzupelnij to
     public static List<string> DepartmentFiller()
     {
       var items = new List<string> { "Instytut Inżynierii Materiałowej",

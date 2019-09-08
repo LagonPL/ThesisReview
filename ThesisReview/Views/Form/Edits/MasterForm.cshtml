@@ -168,6 +168,10 @@
 				<input type="submit" value="Zakończ ocenianie" class="btn btn-success" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
 			</div>
 		}
+		else
+		{
+			<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
+		}
 	</div>
 </form>
 
