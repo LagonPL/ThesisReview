@@ -22,6 +22,7 @@ namespace ThesisReview.Data.Services
 
       using (var client = new SmtpClient())
       {
+        client.ServerCertificateValidationCallback = (s, c, h, e) => true;
         client.Connect("smtp.gmail.com", 587, false);
         client.Authenticate("recenzjeprac@gmail.com", "Recenzj@2C#");
         client.Send(message);
