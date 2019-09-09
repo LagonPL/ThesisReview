@@ -1,5 +1,7 @@
 [1] https://docs.microsoft.com/pl-pl/aspnet/core/?view=aspnetcore-2.1
 [2] https://docs.microsoft.com/pl-pl/aspnet/core/mvc/overview?view=aspnetcore-2.1
 
+Freeman A. (2017), ASP.NET Core MVC 2. Zaawansowane programowanie. Wydanie VII, Gliwice, Wydawnictwo Helion, ISBN 9788328346017
+Oliveira J. Brucher M. (2017), ASP.NET Core 2.0. Wprowadzenie, Gliwice, Wydawnictwo Helion, ISBN 9788328345003
 
 <rysunek1> MVC model
