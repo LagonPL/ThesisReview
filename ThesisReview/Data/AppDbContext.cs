@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,5 +20,6 @@ namespace ThesisReview.Data
     public DbSet<Questions> Questions { get; set; }
     public DbSet<UserList> UserLists { get; set; }
     public DbSet<Report> Reports { get; set; }
+    public DbSet<RequestForm> RequestForms { get; set; }
   }
 }

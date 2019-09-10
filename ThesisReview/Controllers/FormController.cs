@@ -68,6 +68,10 @@ namespace ThesisReview.Controllers
           fVM.ErrorMessage = "Brakuje maili w bazie lub mail opiekuna i recenzenta jest taki sam";
           return View(fVM);
         }
+        if(form.ReviewType.Equals("Praca Podyplomowa"))
+        {
+          form.ReviewerName = "";
+        }
         string content, url;
         var guid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
         var password = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");

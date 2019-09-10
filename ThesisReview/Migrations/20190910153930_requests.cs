@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class dateformat : Migration
+    public partial class requests : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -92,6 +92,21 @@ namespace ThesisReview.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reports", x => x.ReportId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RequestForms",
+                columns: table => new
+                {
+                    RequestFormId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(nullable: true),
+                    Fullname = table.Column<string>(nullable: true),
+                    Department = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RequestForms", x => x.RequestFormId);
                 });
 
             migrationBuilder.CreateTable(
@@ -325,6 +340,9 @@ namespace ThesisReview.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reports");
+
+            migrationBuilder.DropTable(
+                name: "RequestForms");
 
             migrationBuilder.DropTable(
                 name: "UserLists");

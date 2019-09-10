@@ -300,6 +300,23 @@ namespace ThesisReview.Migrations
                     b.ToTable("Reports");
                 });
 
+            modelBuilder.Entity("ThesisReview.Data.Models.RequestForm", b =>
+                {
+                    b.Property<int>("RequestFormId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Department");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Fullname");
+
+                    b.HasKey("RequestFormId");
+
+                    b.ToTable("RequestForms");
+                });
+
             modelBuilder.Entity("ThesisReview.Data.Models.UserList", b =>
                 {
                     b.Property<string>("UserListId")

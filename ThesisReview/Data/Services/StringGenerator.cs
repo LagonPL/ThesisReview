@@ -8,14 +8,65 @@ namespace ThesisReview.Data.Services
 {
   public class StringGenerator
   {
-    //https://www.p.lodz.pl/pl/wydzialy-jednostki-naukowe
-    //TODO : Uzupelnij to
+
     public static List<string> DepartmentFiller()
     {
-      var items = new List<string> { "Instytut Inżynierii Materiałowej",
-      "Instytut Obrabiarek i Technologii Budowy Maszyn",
-      "Instytut Maszyn Przepływowych"};
-
+      var items = new List<string> {
+        "Instytut Inżynierii Materiałowej",
+        "Instytut Obrabiarek i Technologii Budowy Maszyn",
+        "Instytut Maszyn Przepływowych",
+        "Katedra Pojazdów i Podstaw Budowy Maszyn",
+        "Katedra Wytrzymałości Materiałów i Konstrukcji",
+        "Katedra Dynamiki Maszyn",
+        "Katedra Automatyki, Biomechaniki i Mechatroniki",
+        "Katedra Technologii Materiałowych i Systemów Produkcji",
+        "Instytut Systemów Inżynierii Elektrycznej",
+        "Instytut Automatyki",
+        "Instytut Mechatroniki i Systemów Informatycznych",
+        "Instytut Elektroenergetyki",
+        "Instytut Elektroniki",
+        "Instytut Informatyki Stosowanej",
+        "Katedra Aparatów Elektrycznych",
+        "Katedra Mikroelektroniki i Technik Informatycznych",
+        "Katedra Przyrządów Półprzewodnikowych i Optoelektronicznych",
+        "Instytut Chemii Ogólnej i Ekologicznej",
+        "Instytut Chemii Organicznej",
+        "Międzyresortowy Instytut Techniki Radiacyjnej",
+        "Instytut Technologii Polimerów i Barwników",
+        "Katedra Fizyki Molekularnej",
+        "Katedra Włókien Sztucznych",
+        "Katedra Technologii Dziewiarskich i Maszyn Włókienniczych",
+        "Katedra Materiałoznawstwa, Towaroznawstwa i Metrologii Włókienniczej",
+        "Katedra Mechaniki i Informatyki Technicznej",
+        "Instytut Architektury Tekstyliów",
+        "Instytut Podstaw Chemii Żywności",
+        "Instytut Biochemii Technicznej",
+        "Instytut Technologii i Analizy Żywności",
+        "Instytut Technologii Fermentacji i Mikrobiologii",
+        "Instytut Architektury i Urbanistyki",
+        "Katedra Mechaniki Materiałów",
+        "Katedra Fizyki Budowli i Materiałów Budowlanych",
+        "Katedra Mechaniki Konstrukcji",
+        "Katedra Budownictwa Betonowego",
+        "Katedra Geotechniki i Budowli Inżynierskich",
+        "Instytut Inżynierii Środowiska i Instalacji Budowlanych",
+        "Instytut Informatyki",
+        "Instytut Matematyki",
+        "Instytut Fizyki",
+        "Katedra Zarządzania",
+        "Katedra Zarządzania Produkcją i Logistyki",
+        "Katedra Integracji Europejskiej i Marketingu Międzynarodowego",
+        "Katedra Systemów Zarządzania i Innowacji",
+        "Instytut Nauk Społecznych i Zarządzania Technologiami",
+        "Instytut Papiernictwa i Poligrafii",
+        "Katedra Inżynierii Chemicznej",
+        "Katedra Inżynierii Bioprocesowej",
+        "Katedra Termodynamiki Procesowej",
+        "Katedra Inżynierii Bezpieczeństwa Pracy",
+        "Katedra Inżynierii Środowiska",
+        "Katedra Inżynierii Molekularnej",
+        "Brak"
+      };
       return items;
     }
 
@@ -116,12 +167,12 @@ namespace ThesisReview.Data.Services
 
     public static Questions GetQuestions(string reviewtype)
     {
-      if(reviewtype.Equals("Praca Inżynierska") || reviewtype.Equals("Praca Licencjacka"))
+      if (reviewtype.Equals("Praca Inżynierska") || reviewtype.Equals("Praca Licencjacka"))
       {
         var items = StringGenerator.BasicQuestion();
         return items;
       }
-      else if(reviewtype.Equals("Praca Magisterska"))
+      else if (reviewtype.Equals("Praca Magisterska"))
       {
         var items = StringGenerator.MasterQuestion();
         return items;
@@ -145,7 +196,7 @@ namespace ThesisReview.Data.Services
 
       return questions;
     }
-    
+
     public static Questions AdvanceTemplate(string formurl, string mail)
     {
       Questions questions = new Questions
