@@ -10,8 +10,8 @@ using ThesisReview.Data;
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190908124931_dateformat")]
-    partial class dateformat
+    [Migration("20190910153930_requests")]
+    partial class requests
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -300,6 +300,23 @@ namespace ThesisReview.Migrations
                     b.HasKey("ReportId");
 
                     b.ToTable("Reports");
+                });
+
+            modelBuilder.Entity("ThesisReview.Data.Models.RequestForm", b =>
+                {
+                    b.Property<int>("RequestFormId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Department");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Fullname");
+
+                    b.HasKey("RequestFormId");
+
+                    b.ToTable("RequestForms");
                 });
 
             modelBuilder.Entity("ThesisReview.Data.Models.UserList", b =>

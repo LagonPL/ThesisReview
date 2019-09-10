@@ -26,11 +26,20 @@ namespace ThesisReview.Data.Repositories
       _appDbContext.SaveChanges();
     }
 
+    public void DeleteRequest(string email)
+    {
+      var delete = _appDbContext.RequestForms.FirstOrDefault(p => p.Email == email);
+      _appDbContext.RequestForms.Remove(delete);
+      _appDbContext.SaveChanges();
+    }
+
     public IEnumerable<ApplicationUser> GetAllUser() => _appDbContext.Users;
 
     public IEnumerable<ApplicationUser> GetAllUserNoYou(string user) => _appDbContext.Users.Where(p => (p.Email != user) && (p.Department != "Administrator Główny"));
 
     public IEnumerable<Report> GetReports(DateTime datestart, DateTime datefinish) => _appDbContext.Reports.Where(t => t.Date >= datestart && t.Date <= datefinish);
 
+    public IEnumerable<RequestForm> GetRequest() => _appDbContext.RequestForms;
+    
   }
 }

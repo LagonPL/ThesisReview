@@ -47,7 +47,7 @@ namespace ThesisReview.Controllers
         return View(logInViewModel);
 
       var user = await _userManager.FindByEmailAsync(logInViewModel.Email);
-      if(user != null)
+      if (user != null)
       {
         var result = await _signInManager.PasswordSignInAsync(user, logInViewModel.Password, false, false);
         if (result.Succeeded)
@@ -71,6 +71,40 @@ namespace ThesisReview.Controllers
       return View(rVM);
     }
 
+    public ActionResult RequestForm()
+    {
+      var rVM = new RequestViewModel
+      {
+        Departments = new SelectList(StringGenerator.DepartmentFiller())
+      };
+      return View(rVM);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult RequestForm(RequestViewModel requestViewModel)
+    {
+      if (ModelState.IsValid)
+      {
+        var requestForm = new RequestForm
+        {
+          Department = requestViewModel.Department,
+          Email = requestViewModel.Email,
+          Fullname = requestViewModel.Fullname
+        };
+        _appDbContext.RequestForms.Add(requestForm);
+        _appDbContext.SaveChanges();
+        return RedirectToAction("Index", "Home");
+      }
+      else
+      {
+        ModelState.AddModelError("wrongform", "Źle wpisane dane");
+        requestViewModel.Departments = new SelectList(StringGenerator.DepartmentFiller());
+        return View(requestViewModel);
+      }
+      
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Admin")]
@@ -79,7 +113,7 @@ namespace ThesisReview.Controllers
       string content;
       if (ModelState.IsValid)
       {
-        var user = new ApplicationUser() { UserName = registerViewModel.UserName, Email = registerViewModel.Email, Department = registerViewModel.Department, Fullname = registerViewModel.Fullname};
+        var user = new ApplicationUser() { UserName = registerViewModel.UserName, Email = registerViewModel.Email, Department = registerViewModel.Department, Fullname = registerViewModel.Fullname };
         var result = await _userManager.CreateAsync(user, registerViewModel.Password);
         if (registerViewModel.IsAdmin)
         {

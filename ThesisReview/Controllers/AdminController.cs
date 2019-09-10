@@ -31,7 +31,8 @@ namespace ThesisReview.Controllers
       string user = await GetCurrentUser();
       var aVM = new AdminViewModel
       {
-        UsersList = _adminRepository.GetAllUserNoYou(user)
+        UsersList = _adminRepository.GetAllUserNoYou(user),
+        RequestForms = _adminRepository.GetRequest()
       };
       return View(aVM);
     }
@@ -49,26 +50,42 @@ namespace ThesisReview.Controllers
       return View(rVM);
     }
 
-    public IActionResult Delete(string id)
+    public async Task<IActionResult> Delete(string id)
     {
       _adminRepository.DeleteUser(id);
+      string user = await GetCurrentUser();
       var aVM = new AdminViewModel
       {
-        UsersList = _adminRepository.GetAllUser()
+        UsersList = _adminRepository.GetAllUserNoYou(user),
+        RequestForms = _adminRepository.GetRequest()
       };
       return RedirectToAction("Index", "Admin");
     }
 
-    public IActionResult Reset(string id)
+    public async Task<IActionResult> DeleteRequest(string email)
+    {
+      _adminRepository.DeleteRequest(email);
+      string user = await GetCurrentUser();
+      var aVM = new AdminViewModel
+      {
+        UsersList = _adminRepository.GetAllUserNoYou(user),
+        RequestForms = _adminRepository.GetRequest()
+      };
+      return RedirectToAction("Index", "Admin");
+    }
+
+    public async Task<IActionResult> Reset(string id)
     {
       var applicationUser = _userManager.FindByEmailAsync(id);
+      string user = await GetCurrentUser();
       var token = _userManager.GeneratePasswordResetTokenAsync(applicationUser.Result);
       var guid = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
-      _userManager.ResetPasswordAsync(applicationUser.Result, token.Result, guid.ToString());
+      await _userManager.ResetPasswordAsync(applicationUser.Result, token.Result, guid.ToString());
       EmailSender.Send(id, "ThesisReview - Reset Hasła", "Administrator serwisu zresetował twoje hasło, obecne to: " + guid.ToString());
       var aVM = new AdminViewModel
       {
-        UsersList = _adminRepository.GetAllUser()
+        UsersList = _adminRepository.GetAllUserNoYou(user),
+        RequestForms = _adminRepository.GetRequest()
       };
       return RedirectToAction("Index", "Admin");
     }

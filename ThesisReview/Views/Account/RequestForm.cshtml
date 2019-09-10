@@ -1,0 +1,41 @@
+﻿@model RequestViewModel
+@{
+	ViewData["Title"] = "Zaloguj się";
+}
+
+<div class="row loginForm">
+	<div class="col-md-8 col-md-offset-2">
+		<h2>Wyślij zgłoszenie o rejestracje do administratora:</h2>
+		@if (!ViewData.ModelState.IsValid)
+		{
+		<div class="alert alert-danger" role="alert">@Html.ValidationMessage("wrongform")</div>
+		}
+
+		<form asp-controller="Account" asp-action="RequestForm" method="post" class="form-horizontal" role="form">
+			<div class="form-group">
+				<label asp-for="Email" class="col-md-2 control-label">E-mail</label>
+				<div class="col-md-10">
+					<input asp-for="Email" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Fullname" class="col-md-2 control-label">Imię i nazwisko</label>
+				<div class="col-md-10">
+					<input asp-for="Fullname" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label asp-for="Department" class="col-md-2 control-label">Wydział</label>
+				<div class="col-md-10">
+					@Html.DropDownListFor(m => m.Department, Model.Departments, new { @class = "dropdown-header col-md-12" })
+				</div>
+			</div>
+			<div class="form-group pull-right formPullRightButton">
+				<div class="col-md-offset-2 col-md-10">
+					<input type="submit" class="btn btn-success" value="Wyślij" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
