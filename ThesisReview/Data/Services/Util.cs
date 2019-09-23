@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ThesisReview.Data.Models;
 
 namespace ThesisReview.Data.Services
 {
   public class Util
   {
+    /// <summary>
+    /// Generates points in master form.
+    /// </summary>
+    /// <returns>Points in form</returns>
     public static Sum Sum(Form form)
     {
       int x = 0;
@@ -64,6 +65,11 @@ namespace ThesisReview.Data.Services
 
       return suma;
     }
+
+    /// <summary>
+    /// Generates points in master form for guardian.
+    /// </summary>
+    /// <returns>Points in form</returns>
     public static Sum SumGuardian(Form form)
     {
       int x = 0;

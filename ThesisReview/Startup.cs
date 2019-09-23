@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +17,10 @@ namespace ThesisReview
   {
     private IConfigurationRoot _configurationRoot;
     public static string ConnectionString { get; private set; }
+    public static string MailName { get; set; }
+    public static string MailPassword { get; set; }
+    public static string MailSMTP { get; set; }
+    public static string MailPort { get; set; }
 
     public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
     {
@@ -36,7 +34,6 @@ namespace ThesisReview
     public IConfiguration Configuration { get; }
 
 
-    // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
       services.Configure<IdentityOptions>(options =>
@@ -72,10 +69,15 @@ namespace ThesisReview
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
       ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
+      MailName = Configuration["ConnectionStrings:MailName"];
+      MailPassword = Configuration["ConnectionStrings:MailPassword"];
+      MailSMTP = Configuration["ConnectionStrings:MailSMTP"];
+      MailPort = Configuration["ConnectionStrings:MailPort"];
+
+      app.UseExceptionHandler("/Error/Error");
       app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseCookiePolicy();

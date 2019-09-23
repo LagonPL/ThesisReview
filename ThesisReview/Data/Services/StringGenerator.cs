@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ThesisReview.Data.Models;
 
 namespace ThesisReview.Data.Services
 {
   public class StringGenerator
   {
-
+    /// <summary>
+    /// Generates list of departments.
+    /// </summary>
+    /// <returns>List of departments</returns>
     public static List<string> DepartmentFiller()
     {
       var items = new List<string> {
@@ -70,6 +71,10 @@ namespace ThesisReview.Data.Services
       return items;
     }
 
+    /// <summary>
+    /// Generates Questions for basic form.
+    /// </summary>
+    /// <returns>Questions</returns>
     public static Questions BasicQuestion()
     {
 
@@ -88,6 +93,10 @@ namespace ThesisReview.Data.Services
       return items;
     }
 
+    /// <summary>
+    /// Generates Questions for advanced form.
+    /// </summary>
+    /// <returns>Questions</returns>
     public static Questions AdvanceQuestion()
     {
 
@@ -106,6 +115,11 @@ namespace ThesisReview.Data.Services
       };
       return items;
     }
+
+    /// <summary>
+    /// Generates Questions for master form.
+    /// </summary>
+    /// <returns>Questions</returns>
     public static Questions MasterQuestion()
     {
 
@@ -126,6 +140,10 @@ namespace ThesisReview.Data.Services
       return items;
     }
 
+    /// <summary>
+    /// List of review types.
+    /// </summary>
+    /// <returns>Review types</returns>
     public static List<string> ReviewTypesFiller()
     {
       var items = new List<string>
@@ -138,6 +156,10 @@ namespace ThesisReview.Data.Services
       return items;
     }
 
+    /// <summary>
+    /// Answers for advanced form.
+    /// </summary>
+    /// <returns>Answers</returns>
     public static List<Answers> AnswersGenerator()
     {
       var answers = new List<Answers>
@@ -152,6 +174,10 @@ namespace ThesisReview.Data.Services
       return answers;
     }
 
+    /// <summary>
+    /// Generates url address of form for student.
+    /// </summary>
+    /// <returns>Url address</returns>
     public static string LinkGenerator(UriBuilder uri, string gid, string pass)
     {
       string url;
@@ -165,6 +191,10 @@ namespace ThesisReview.Data.Services
       return url;
     }
 
+    /// <summary>
+    /// Chooses  correct questions based on review type.
+    /// </summary>
+    /// <returns>Questions</returns>
     public static Questions GetQuestions(string reviewtype)
     {
       if (reviewtype.Equals("Praca Inżynierska") || reviewtype.Equals("Praca Licencjacka"))
@@ -184,6 +214,10 @@ namespace ThesisReview.Data.Services
       }
     }
 
+    /// <summary>
+    /// Generates basic question template for database.
+    /// </summary>
+    /// <returns>Questions</returns>
     public static Questions BasicTemplate(string formurl, string mail)
     {
       Questions questions = new Questions
@@ -197,6 +231,10 @@ namespace ThesisReview.Data.Services
       return questions;
     }
 
+    /// <summary>
+    /// Generates advanced question template for database.
+    /// </summary>
+    /// <returns>Questions</returns>
     public static Questions AdvanceTemplate(string formurl, string mail)
     {
       Questions questions = new Questions
