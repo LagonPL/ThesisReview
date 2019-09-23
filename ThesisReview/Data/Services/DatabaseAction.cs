@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ThesisReview.Data.Models;
 
 namespace ThesisReview.Data.Services
 {
   public class DatabaseAction
   {
+
     private readonly static string connectionString = Startup.ConnectionString;
 
-
+    /// <summary>
+    /// Deprecated method for adding a form.
+    /// </summary>
     public static void AddForm(Form form, string id, string zero, string password, string link)
     {
       DateTime dateTime = DateTime.Now;
@@ -26,10 +25,10 @@ namespace ThesisReview.Data.Services
       {
         sql = $"Insert Into Forms (Title, ShortDescription, StudentMail, ReviewerName, GuardianName, FormURL, ReviewType, Status, Password, Link, DateTime) Values ('{form.Title}', '{form.ShortDescription}','{form.StudentMail}','{form.ReviewerName}','{form.GuardianName}','{id}','{form.ReviewType}','{form.Status}','{password}','{link}','{dateTime.ToString("yyyy-MM-dd HH:mm:ss")}'); Insert Into Questions (FormURL, Mail, Points, Finished) Values ('{id}', '{form.ReviewerName}', '{zero}', '{false}'); Insert Into Questions (FormURL, Mail, Points, Finished) Values ('{id}', '{form.GuardianName}', '{zero}', '{false}')";
       }
-      
+
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
-        
+
         using (SqlCommand command = new SqlCommand(sql, connection))
         {
           command.CommandType = CommandType.Text;
@@ -39,9 +38,12 @@ namespace ThesisReview.Data.Services
         }
       }
     }
-    
-      public static void UpdateForm(Questions questions, string id, string mail, bool isFinish)
-      {
+
+    /// <summary>
+    /// Deprecated method for updating form.
+    /// </summary>
+    public static void UpdateForm(Questions questions, string id, string mail, bool isFinish)
+    {
       string sql;
       if (isFinish)
       {
@@ -69,7 +71,9 @@ namespace ThesisReview.Data.Services
       }
 
     }
-
+    /// <summary>
+    /// Method changes status.
+    /// </summary>
     public static void UpdateStatus(string status, string id)
     {
       DateTime dateTime = DateTime.Now;
@@ -92,6 +96,11 @@ namespace ThesisReview.Data.Services
         }
       }
     }
+
+    /// <summary>
+    /// Read status of reviews and compares them with reviewer/guardian.
+    /// </summary>
+    /// <returns>Boolean value whether status are the same or not.</returns>
     public static bool ReadStatus(string id)
     {
       string reviewer = String.Empty;
@@ -104,7 +113,7 @@ namespace ThesisReview.Data.Services
       using (SqlConnection connection = new SqlConnection(connectionString))
       {
         connection.Open();
-        
+
         string sql = "select * from Forms where Forms.FormURL = '" + id + "'";
         SqlCommand command = new SqlCommand(sql, connection);
         using (SqlDataReader dataReader = command.ExecuteReader())
@@ -154,6 +163,10 @@ namespace ThesisReview.Data.Services
       return false;
     }
 
+    /// <summary>
+    /// Read form and questions from database to edit them.
+    /// </summary>
+    /// <returns>Form with questions.</returns>
     public static Form ReadForm(string id, string mail)
     {
       Form form = new Form();
@@ -195,6 +208,10 @@ namespace ThesisReview.Data.Services
       }
       return form;
     }
+    /// <summary>
+    /// Read values from databases for studend's reviews form.
+    /// </summary>
+    /// <returns>Form with questions to display for student.</returns>
     public static Form ReadFormView(string id, string password)
     {
       Form form = new Form();
