@@ -8,8 +8,6 @@ using ThesisReview.Data.Models;
 using ThesisReview.Data.Services;
 using ThesisReview.ViewModels;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ThesisReview.Controllers
 {
   public class AccountController : Controller
