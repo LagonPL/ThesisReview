@@ -59,7 +59,8 @@ namespace ThesisReview.Controllers
     {
       var rVM = new RegisterViewModel
       {
-        Departments = new SelectList(StringGenerator.DepartmentFiller())
+        Departments = new SelectList(StringGenerator.DepartmentFiller()),
+        Titles = new SelectList(StringGenerator.TitlesFiller())
       };
       return View(rVM);
     }
@@ -68,7 +69,8 @@ namespace ThesisReview.Controllers
     {
       var rVM = new RequestViewModel
       {
-        Departments = new SelectList(StringGenerator.DepartmentFiller())
+        Departments = new SelectList(StringGenerator.DepartmentFiller()),
+        Titles = new SelectList(StringGenerator.TitlesFiller())
       };
       return View(rVM);
     }
@@ -93,6 +95,7 @@ namespace ThesisReview.Controllers
       {
         ModelState.AddModelError("wrongform", "Źle wpisane dane");
         requestViewModel.Departments = new SelectList(StringGenerator.DepartmentFiller());
+        requestViewModel.Titles = new SelectList(StringGenerator.TitlesFiller());
         return View(requestViewModel);
       }
       
@@ -106,7 +109,7 @@ namespace ThesisReview.Controllers
       string content;
       if (ModelState.IsValid)
       {
-        var user = new ApplicationUser() { UserName = registerViewModel.UserName, Email = registerViewModel.Email, Department = registerViewModel.Department, Fullname = registerViewModel.Fullname };
+        var user = new ApplicationUser() { UserName = registerViewModel.UserName, Email = registerViewModel.Email, Department = registerViewModel.Department, Fullname = registerViewModel.Fullname, Title = registerViewModel.Title };
         var result = await _userManager.CreateAsync(user, registerViewModel.Password);
         if (registerViewModel.IsAdmin)
         {
@@ -125,7 +128,8 @@ namespace ThesisReview.Controllers
           {
             Department = registerViewModel.Department,
             Fullname = registerViewModel.Fullname,
-            Mail = registerViewModel.Email
+            Mail = registerViewModel.Email,
+            Title = registerViewModel.Title
           };
           _appDbContext.UserLists.Add(userList);
           _appDbContext.SaveChanges();
@@ -138,6 +142,7 @@ namespace ThesisReview.Controllers
 
       }
       registerViewModel.Departments = new SelectList(StringGenerator.DepartmentFiller());
+      registerViewModel.Titles = new SelectList(StringGenerator.TitlesFiller());
       ModelState.AddModelError("wrongform", "Źle wprowadzone dane");
       return View(registerViewModel);
     }

@@ -166,6 +166,8 @@ namespace ThesisReview.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<string>("Title");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -221,6 +223,9 @@ namespace ThesisReview.Migrations
                     b.Property<string>("Status");
 
                     b.Property<string>("StudentMail")
+                        .IsRequired();
+
+                    b.Property<string>("StudentName")
                         .IsRequired();
 
                     b.Property<string>("Title")
@@ -287,7 +292,9 @@ namespace ThesisReview.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<string>("Grade");
+                    b.Property<string>("GradeGuardian");
+
+                    b.Property<string>("GradeReviewer");
 
                     b.Property<string>("Guardian");
 
@@ -327,6 +334,8 @@ namespace ThesisReview.Migrations
                     b.Property<string>("Fullname");
 
                     b.Property<string>("Mail");
+
+                    b.Property<string>("Title");
 
                     b.HasKey("UserListId");
 

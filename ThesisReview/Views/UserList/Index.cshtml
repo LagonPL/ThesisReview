@@ -5,6 +5,7 @@
 <table class="table table-bordered table-striped">
 	<thead>
 		<tr>
+			<th>Stopień naukowy</th>
 			<th>Nazwisko i imię</th>
 			<th>Wydział</th>
 			<th>Mail</th>
@@ -13,11 +14,12 @@
 	<tbody>
 		@foreach (var line in Model.UsersList)
 		{
-			<tr>
-				<td class="text-left">@line.Fullname</td>
-				<td class="text-left">@line.Department</td>
-				<td class="text-left">@line.Mail</td>
-			</tr>
+		<tr>
+			<td class="text-left">@line.Title</td>
+			<td class="text-left">@line.Fullname</td>
+			<td class="text-left">@line.Department</td>
+			<td class="text-left">@line.Mail</td>
+		</tr>
 		}
 	</tbody>
 </table>

@@ -184,6 +184,7 @@ namespace ThesisReview.Data.Services
             form.FormURL = Convert.ToString(dataReader["FormURL"]);
             form.Title = Convert.ToString(dataReader["Title"]);
             form.StudentMail = Convert.ToString(dataReader["StudentMail"]);
+            form.StudentName = Convert.ToString(dataReader["StudentName"]);
             form.ReviewerName = Convert.ToString(dataReader["ReviewerName"]);
             form.GuardianName = Convert.ToString(dataReader["GuardianName"]);
             form.ReviewType = Convert.ToString(dataReader["ReviewType"]);

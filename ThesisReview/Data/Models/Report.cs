@@ -8,7 +8,8 @@ namespace ThesisReview.Data.Models
     public String Guardian { get; set; }
     public String Reviewer { get; set; }
     public String Student { get; set; }
-    public string Grade { get; set; }
+    public string GradeGuardian { get; set; }
+    public string GradeReviewer {get; set; }
     public DateTime Date { get; set; }
   }
 }

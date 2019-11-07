@@ -31,6 +31,12 @@
 					@Html.DropDownListFor(m => m.Department, Model.Departments, new { @class = "dropdown-header col-md-12" })
 				</div>
 			</div>
+			<div class="form-group">
+				<label asp-for="Department" class="col-md-2 control-label">Stopień naukowy</label>
+				<div class="col-md-10">
+					@Html.DropDownListFor(m => m.Title, Model.Titles, new { @class = "dropdown-header col-md-12" })
+				</div>
+			</div>
 			<div class="form-group pull-right formPullRightButton">
 				<div class="col-md-offset-2 col-md-10">
 					<input type="submit" class="btn btn-success" value="Wyślij" />

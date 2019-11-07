@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class requests : Migration
+    public partial class gradeinreport : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,7 +42,8 @@ namespace ThesisReview.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Department = table.Column<string>(nullable: true),
-                    Fullname = table.Column<string>(nullable: true)
+                    Fullname = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,7 +87,8 @@ namespace ThesisReview.Migrations
                     Guardian = table.Column<string>(nullable: true),
                     Reviewer = table.Column<string>(nullable: true),
                     Student = table.Column<string>(nullable: true),
-                    Grade = table.Column<string>(nullable: true),
+                    GradeGuardian = table.Column<string>(nullable: true),
+                    GradeReviewer = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -116,7 +118,8 @@ namespace ThesisReview.Migrations
                     UserListId = table.Column<string>(nullable: false),
                     Mail = table.Column<string>(nullable: true),
                     Fullname = table.Column<string>(nullable: true),
-                    Department = table.Column<string>(nullable: true)
+                    Department = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -240,6 +243,7 @@ namespace ThesisReview.Migrations
                     ShortDescription = table.Column<string>(nullable: false),
                     Status = table.Column<string>(nullable: true),
                     StudentMail = table.Column<string>(nullable: false),
+                    StudentName = table.Column<string>(nullable: false),
                     Department = table.Column<string>(nullable: false),
                     GuardianName = table.Column<string>(nullable: false),
                     ReviewerName = table.Column<string>(nullable: true),

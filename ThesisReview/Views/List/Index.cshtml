@@ -21,7 +21,7 @@
 		@foreach (var line in Model.Forms)
 		{
 			<tr>
-				<td class="text-center">@line.StudentMail</td>
+				<td class="text-center">@line.StudentMail - @line.StudentName</td>
 				<td class="text-right">@line.Title</td>
 				<td class="text-right">@line.ReviewType</td>
 				<td class="text-right">@line.Status</td>
@@ -49,7 +49,7 @@
 			@foreach (var line in Model.ArchiveForms)
 			{
 				<tr>
-					<td class="text-center">@line.StudentMail</td>
+					<td class="text-center">@line.StudentMail - @line.StudentName</td>
 					<td class="text-right col-md-5">@line.Title</td>
 					<td class="text-right">@line.ReviewType</td>
 					<td class="text-right">@line.Status</td>

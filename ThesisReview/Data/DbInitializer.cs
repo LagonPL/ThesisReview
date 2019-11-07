@@ -45,6 +45,7 @@ namespace ThesisReview.Data
         if (result.Succeeded)
         {
           userManager.AddToRoleAsync(user, "Admin").Wait();
+
           string content = "Drogi użytkowniku.\nDostałeś właśnie dostęp do strony Recenzje Prac i jesteś pierwszym adminem.\nTwój i hasło to: admin. \nZalecamy zmianę hasła na bardziej bezpieczne.\nPozdrawiam Dawid Sowała - Twórca";
           EmailSender.Send(user.Email, "ThesisReview - Administrator", content);
         }

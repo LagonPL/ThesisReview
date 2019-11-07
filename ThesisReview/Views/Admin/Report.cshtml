@@ -6,22 +6,24 @@
 	<thead>
 		<tr>
 			<th>Opiekun</th>
-			<th>Recenzent</th>
-			<th>Student</th>
 			<th>Ocena</th>
+			<th>Recenzent</th>
+			<th>Ocena</th>
+			<th>Student</th>
 			<th>Data Zakończenia</th>
 		</tr>
 	</thead>
 	<tbody>
 		@foreach (var line in Model.Reports)
 		{
-			<tr>
-				<td>@line.Guardian</td>
-				<td>@line.Reviewer</td>
-				<td>@line.Student</td>
-				<td>@line.Grade</td>
-				<td>@line.Date</td>
-			</tr>
+		<tr>
+			<td>@line.Guardian</td>
+			<td>@line.GradeGuardian</td>
+			<td>@line.Reviewer</td>
+			<td>@line.GradeReviewer</td>
+			<td>@line.Student</td>
+			<td>@line.Date</td>
+		</tr>
 		}
 	</tbody>
 </table>

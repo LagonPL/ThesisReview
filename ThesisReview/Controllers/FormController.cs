@@ -52,7 +52,8 @@ namespace ThesisReview.Controllers
           Status = "Nowa",
           ReviewerName = fVM.ReviewerName,
           GuardianName = fVM.GuardianName,
-          Department = fVM.Department
+          Department = fVM.Department,
+          StudentName = fVM.StudentName
         };
       if (ModelState.IsValid)
       {
@@ -79,7 +80,7 @@ namespace ThesisReview.Controllers
         };
         url = StringGenerator.LinkGenerator(uri, guid.ToString(), password.ToString());
 
-        content = "Witaj, udało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
+        content = "Witaj " + fVM.StudentName + "\nUdało ci się pomyślnie wysłać zgłoszenie w naszym serwisie. \nLink: " + url;
         EmailSender.Send(form.StudentMail, "ThesisReview - Stworzyłeś formularz", content);
        
         _formRepository.AddFormEntity(form, guid.ToString(), "0", password.ToString(), url);

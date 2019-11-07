@@ -89,26 +89,31 @@ namespace ThesisReview.Data.Repositories
     }
     public void AddReport(string id)
     {
-      string reviewer;
+      string reviewer, grade;
       var form = _appDbContext.Forms.FirstOrDefault(p => p.FormURL == id);
       var user1 = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == form.GuardianName);
       var user2 = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == form.ReviewerName);
-      var question = _appDbContext.Questions.FirstOrDefault(p => (p.FormURL == id) && (p.Mail == user1.Mail));
+      var question1 = _appDbContext.Questions.FirstOrDefault(p => (p.FormURL == id) && (p.Mail == user1.Mail));
+      
       if (user2 == null)
       {
         reviewer = "";
+        grade = "";
       }
       else
       {
         reviewer = user2.Fullname;
+        var question2 = _appDbContext.Questions.FirstOrDefault(p => (p.FormURL == id) && (p.Mail == user2.Mail));
+        grade = question2.Grade;
       }
       Report report = new Report
       {
         Date = form.DateTimeFinish,
-        Grade = question.Grade,
-        Student = form.StudentMail,
+        GradeGuardian = question1.Grade,
+        Student = form.StudentMail + " - " + form.StudentName,
         Guardian = user1.Fullname,
-        Reviewer = reviewer
+        Reviewer = reviewer,
+        GradeReviewer = grade
       };
       
       _appDbContext.Reports.Add(report);

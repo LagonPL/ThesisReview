@@ -71,6 +71,21 @@ namespace ThesisReview.Data.Services
       return items;
     }
 
+    public static List<string> TitlesFiller()
+    {
+      var items = new List<string> {
+        "mgr inż.",
+        "dr inż.",
+        "dr hab.",
+        "dr hab. inż.",
+        "prof.",
+        "prof. dr hab.",
+        "prof. dr hab. inż."
+
+      };
+      return items;
+    }
+
     /// <summary>
     /// Generates Questions for basic form.
     /// </summary>

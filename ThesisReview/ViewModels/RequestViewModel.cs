@@ -11,6 +11,8 @@ namespace ThesisReview.ViewModels
     [Required]
     public string Fullname { get; set; }
     public string Department { get; set; }
+    public string Title { get; set; }
+    public SelectList Titles { get; set; }
     public SelectList Departments { get; set; }
 
   }

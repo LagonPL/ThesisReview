@@ -25,6 +25,9 @@ namespace ThesisReview.Data.Models
     public string StudentMail { get; set; }
 
     [Required]
+    public string StudentName { get; set; }
+
+    [Required]
     public string Department { get; set; }
 
     [Required]

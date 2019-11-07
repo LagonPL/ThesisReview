@@ -6,7 +6,6 @@ namespace ThesisReview.Controllers
   {
     public IActionResult Error()
     {
-      ViewBag.ErrorMessage = "Nieprawidłowy link.\nSprawdź czy poprawnie skopiowałeś link z maila.";
       return View();
     }
   }
