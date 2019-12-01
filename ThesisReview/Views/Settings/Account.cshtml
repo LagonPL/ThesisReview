@@ -2,15 +2,16 @@
 @{
 	ViewData["Title"] = "Ustawienia";
 }
-@if (Model.AnyError)
-{
-	<div class="alert alert-info" role="alert">Nieprawidłowe obecne hasło, lub pola nie zgadzają się</div>
-}
+
 
 <div class="row loginForm">
 	<div class="col-md-8 col-md-offset-2">
 		<h2>Zmień hasło:</h2>
-		<form asp-controller="Settings" asp-action="Password" method="post" class="form-horizontal" role="form">
+		@if (Model.AnyError)
+		{
+			<div class="alert alert-info" role="alert">Nieprawidłowe obecne hasło, lub pola nie zgadzają się</div>
+		}
+		<form asp-controller="Settings" asp-action="Account" method="post" class="form-horizontal" role="form">
 			<div class="form-group">
 				<label asp-for="OldPassword" class="col-md-2 control-label">Stare hasło</label>
 				<div class="col-md-10">

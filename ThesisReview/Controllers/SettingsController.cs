@@ -30,28 +30,33 @@ namespace ThesisReview.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> Password(SettingViewModel settingViewModel)
+    public async Task<IActionResult> Account(SettingViewModel settingViewModel)
     {
+      SettingViewModel svm = new SettingViewModel();
+      svm.AnyError = true;
+
+      if (!ModelState.IsValid)
+        return View(svm);
+
       if (settingViewModel.NewPassword.Equals(settingViewModel.ConfirmPassword))
       {
         var user = await _userManager.GetUserAsync(HttpContext.User);
         if (user != null)
         {
           var results = await _userManager.ChangePasswordAsync(user, settingViewModel.OldPassword, settingViewModel.NewPassword);
-          
+
           if (!results.Succeeded)
           {
-            settingViewModel.AnyError = true;
-            return View(settingViewModel);
+            return View(svm);
           }
         }
       }
       else
       {
         settingViewModel.AnyError = true;
-        return View(settingViewModel);
+        return View(svm);
       }
-      return View(settingViewModel);
+      return RedirectToAction("Index", "Home");
     }
 
     [HttpPost]
