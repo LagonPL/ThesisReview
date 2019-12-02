@@ -9,7 +9,7 @@
 		<h2>Zmień hasło:</h2>
 		@if (Model.AnyError)
 		{
-			<div class="alert alert-info" role="alert">Nieprawidłowe obecne hasło, lub pola nie zgadzają się</div>
+			<div class="alert alert-danger" role="alert">Nieprawidłowe obecne hasło, lub pola nie zgadzają się</div>
 		}
 		<form asp-controller="Settings" asp-action="Account" method="post" class="form-horizontal" role="form">
 			<div class="form-group">

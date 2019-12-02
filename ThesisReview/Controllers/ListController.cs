@@ -25,16 +25,42 @@ namespace ThesisReview.Controllers
     {
       
       string mail = await GetCurrentUser();
-      ViewData["CurrentSort"] = sortOrder;
-      ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Date" : "";
-      
+      ViewData["DateSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Date" : "";
+      ViewData["NameSortParm"] = sortOrder == "Name" ? "name_desc" : "Name";
+      ViewData["TitleSortParm"] = sortOrder == "Title" ? "title_desc" : "Title";
+      ViewData["TypeSortParm"] = sortOrder == "Type" ? "type_desc" : "Type";
+      ViewData["StatusSortParm"] = sortOrder == "Status" ? "status_desc" : "Status";
+
       var revieweritems = _listRepository.GetReviewerForms(mail).Concat(_listRepository.GetGuardianForms(mail));
       switch (sortOrder)
       {
         case "Date":
           revieweritems = revieweritems.OrderBy(p => p.DateTimeStart);
           break;
-
+        case "Name":
+          revieweritems = revieweritems.OrderBy(p => p.StudentMail);
+          break;
+        case "name_desc":
+          revieweritems = revieweritems.OrderByDescending(p => p.StudentMail);
+          break;
+        case "Title":
+          revieweritems = revieweritems.OrderBy(p => p.Title);
+          break;
+        case "title_desc":
+          revieweritems = revieweritems.OrderByDescending(p => p.Title);
+          break;
+        case "Type":
+          revieweritems = revieweritems.OrderBy(p => p.ReviewType);
+          break;
+        case "type_desc":
+          revieweritems = revieweritems.OrderByDescending(p => p.ReviewType);
+          break;
+        case "Status":
+          revieweritems = revieweritems.OrderBy(p => p.Status);
+          break;
+        case "status_desc":
+          revieweritems = revieweritems.OrderByDescending(p => p.Status);
+          break;
         default:
           revieweritems = revieweritems.OrderByDescending(p => p.DateTimeStart);
           break;

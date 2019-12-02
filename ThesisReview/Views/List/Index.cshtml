@@ -8,11 +8,11 @@
 <table class="table table-bordered table-striped table-hover" table id="example">
 	<thead>
 		<tr>
-			<th>Student</th>
-			<th>Tytuł recenzji</th>
-			<th class="text-right">Typ</th>
-			<th class="text-right">Status</th>
-			<th class="text-right">Data Utworzenia <a class="glyphicon glyphicon-sort-by-order text-danger remove" asp-route-sortOrder="@ViewData["NameSortParm"]"></a></th>
+			<th><a asp-route-sortOrder="@ViewData["NameSortParm"]">Student</a></th>
+			<th><a asp-route-sortOrder="@ViewData["TitleSortParm"]">Tytuł recenzji</a></th>
+			<th class="text-right"><a asp-route-sortOrder="@ViewData["TypeSortParm"]">Typ</a></th>
+			<th class="text-right"><a asp-route-sortOrder="@ViewData["StatusSortParm"]">Status</a></th>
+			<th class="text-right"><a asp-route-sortOrder="@ViewData["DateSortParm"]">Data Utworzenia</a></th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -40,7 +40,6 @@
 				<th>Student</th>
 				<th>Tytuł recenzji</th>
 				<th class="text-right">Typ</th>
-				<th class="text-right">Status</th>
 				<th class="text-right">Data Zakończenia</th>
 				<th></th>
 			</tr>
@@ -52,7 +51,6 @@
 					<td class="text-center">@line.StudentMail - @line.StudentName</td>
 					<td class="text-right col-md-5">@line.Title</td>
 					<td class="text-right">@line.ReviewType</td>
-					<td class="text-right">@line.Status</td>
 					<td class="text-right">@line.DateTimeFinish</td>
 					<td class="text-center"><a class="glyphicon glyphicon-eye-open text-danger remove" asp-controller="Form" asp-action="Edit" asp-route-id="@line.FormURL"></a></td>
 				</tr>

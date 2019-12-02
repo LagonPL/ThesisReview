@@ -84,7 +84,7 @@ namespace ThesisReview.Controllers
         EmailSender.Send(form.StudentMail, "ThesisReview - Stworzyłeś formularz", content);
        
         _formRepository.AddFormEntity(form, guid.ToString(), "0", password.ToString(), url);
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Home", new { @id = form.FormURL });
       }
       fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
       fVM.DepartmentList = new SelectList(StringGenerator.DepartmentFiller());

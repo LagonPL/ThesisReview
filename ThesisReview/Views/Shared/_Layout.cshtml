@@ -32,6 +32,7 @@
 							<ul class="nav navbar-nav">
 								@*<li><a href="https://www.github.com/LagonPL" target="_blank">Autor</a></li>*@
 								<li><a asp-area="" asp-controller="UserList" asp-action="Index"><span class="glyphicon glyphicon-education"></span> Pracownicy</a></li>
+								<li><a asp-area="" asp-controller="Form" asp-action="Create"><span class="glyphicon glyphicon-plus"></span> Wyślij pracę</a></li>
 								@await Html.PartialAsync("LoginPartial")
 							</ul>
             </div>

@@ -56,7 +56,7 @@ namespace ThesisReview.Controllers
         settingViewModel.AnyError = true;
         return View(svm);
       }
-      return RedirectToAction("Index", "Home");
+      return RedirectToAction("Index", "Home", new { @id = "sukces" });
     }
 
     [HttpPost]
