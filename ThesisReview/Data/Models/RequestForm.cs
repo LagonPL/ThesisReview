@@ -6,5 +6,6 @@
     public string Email { get; set; }
     public string Fullname { get; set; }
     public string Department { get; set; }
+    public string Title { get; set; }
   }
 }

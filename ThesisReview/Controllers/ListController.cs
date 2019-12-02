@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -32,6 +33,31 @@ namespace ThesisReview.Controllers
       ViewData["StatusSortParm"] = sortOrder == "Status" ? "status_desc" : "Status";
 
       var revieweritems = _listRepository.GetReviewerForms(mail).Concat(_listRepository.GetGuardianForms(mail));
+      revieweritems = SortForms(sortOrder, revieweritems);
+      
+
+      var finished = revieweritems.Where(p => p.Status == "Oceniono");
+      finished = SortForms(sortOrder, finished);
+      revieweritems = revieweritems.Where(p => p.Status != "Oceniono");
+      var fLVM = new ListViewModel
+      {
+        Forms = revieweritems,
+        ArchiveForms = finished
+      };
+
+      return View(fLVM);
+    }
+
+    private async Task<string> GetCurrentUser()
+    {
+      var user = await _userManager.GetUserAsync(HttpContext.User);
+      var email = _userManager.GetEmailAsync(user);
+      string mail = user.Email;
+      return mail;
+    }
+
+    private IEnumerable<Form> SortForms(String sortOrder, IEnumerable<Form> revieweritems)
+    {
       switch (sortOrder)
       {
         case "Date":
@@ -66,25 +92,7 @@ namespace ThesisReview.Controllers
           break;
 
       }
-      
-
-      var finished = revieweritems.Where(p => p.Status == "Oceniono");
-      revieweritems = revieweritems.Where(p => p.Status != "Oceniono");
-      var fLVM = new ListViewModel
-      {
-        Forms = revieweritems,
-        ArchiveForms = finished
-      };
-
-      return View(fLVM);
-    }
-
-    private async Task<string> GetCurrentUser()
-    {
-      var user = await _userManager.GetUserAsync(HttpContext.User);
-      var email = _userManager.GetEmailAsync(user);
-      string mail = user.Email;
-      return mail;
+      return revieweritems;
     }
 
   }

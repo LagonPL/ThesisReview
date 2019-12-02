@@ -23,17 +23,19 @@
 				<th>Wydział</th>
 				<th>Email</th>
 				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (var line in Model.RequestForms)
 			{
-				<tr>
-					<td class="text-center">@line.Fullname</td>
-					<td class="text-right">@line.Department</td>
-					<td class="text-right">@line.Email</td>
-					<td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" asp-controller="Admin" asp-action="DeleteRequest" asp-route-email="@line.Email" onclick="return confirm('Czy na pewno chcesz usunąć to zgłoszenie?')"></a></td>
-				</tr>
+			<tr>
+				<td class="text-center">@line.Fullname</td>
+				<td class="text-right">@line.Department</td>
+				<td class="text-right">@line.Email</td>
+				<td class="text-center"><a class="glyphicon glyphicon-plus text-danger remove" asp-controller="Account" asp-action="Register" asp-route-email="@line.Email" asp-route-name="@line.Fullname" asp-route-department="@line.Department" asp-route-title="@line.Title"></a></td>
+				<td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" asp-controller="Admin" asp-action="DeleteRequest" asp-route-email="@line.Email" onclick="return confirm('Czy na pewno chcesz usunąć to zgłoszenie?')"></a></td>
+			</tr>
 			}
 		</tbody>
 	</table>

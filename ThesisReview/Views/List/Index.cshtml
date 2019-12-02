@@ -37,10 +37,10 @@
 	<table class="table table-bordered table-striped" table id="example">
 		<thead>
 			<tr>
-				<th>Student</th>
-				<th>Tytuł recenzji</th>
-				<th class="text-right">Typ</th>
-				<th class="text-right">Data Zakończenia</th>
+				<th><a asp-route-sortOrder="@ViewData["NameSortParm"]">Student</a></th>
+				<th><a asp-route-sortOrder="@ViewData["TitleSortParm"]">Tytuł recenzji</a></th>
+				<th class="text-right"><a asp-route-sortOrder="@ViewData["TypeSortParm"]">Typ</a></th>
+				<th class="text-right"><a asp-route-sortOrder="@ViewData["DateSortParm"]">Data Utworzenia</a></th>
 				<th></th>
 			</tr>
 		</thead>

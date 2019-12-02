@@ -51,8 +51,9 @@
 			<div class="form-group">
 				<label asp-for="Password" class="col-md-2 control-label">Hasło</label>
 				<div class="col-md-10">
-					<input asp-for="Password" class="form-control" />
+					<input asp-for="Password" id="password" class="form-control" />
 					<span asp-validation-for="Password" class="text-danger"></span>
+					<button class="btn btn-info" data-toggle="button" aria-pressed="false" onclick="Generate()">Generuj hasło</button>
 					<small id="passwordHelpBlock" class="form-text text-muted">
 						Hasło musi mieć minumum 8 znaków i posiadać minumum 1 liczbę.
 					</small>
@@ -66,3 +67,16 @@
 		</form>
 	</div>
 </div>
+
+
+<script>
+
+	function randomPassword() {
+    var randomstring = Math.random().toString(36).slice(-8);
+		return randomstring;
+	}
+	function Generate() {
+		
+		document.getElementById("password").value = randomPassword();
+	}
+</script>

@@ -19,6 +19,18 @@ namespace ThesisReview.Data
 
     public IEnumerable<Form> GetGuardianForms(string mail) => _appDbContext.Forms.Where(p => p.GuardianName == mail);
 
+    public IEnumerable<Form> GetAll() => _appDbContext.Forms;
+
     public Form GetFormById(int formId) => _appDbContext.Forms.FirstOrDefault(p => p.FormId == formId);
+
+    public bool isAdmin(string mail)
+    {
+      var admin = _appDbContext.Users.FirstOrDefault(p => p.Department == "Administrator Główny");
+      if (admin.Email.Equals(mail))
+        return true;
+
+      return false;
+
+    }
   }
 }

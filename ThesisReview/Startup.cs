@@ -77,7 +77,7 @@ namespace ThesisReview
       MailSMTP = Configuration["ConnectionStrings:MailSMTP"];
       MailPort = Configuration["ConnectionStrings:MailPort"];
 
-      app.UseExceptionHandler("/Error/Error");
+      app.UseStatusCodePagesWithRedirects("/Error/{0}");
       app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseCookiePolicy();

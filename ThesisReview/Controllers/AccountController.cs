@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -55,8 +56,35 @@ namespace ThesisReview.Controllers
     }
 
     [Authorize(Roles = "Admin")]
-    public ActionResult Register()
+    public ActionResult Register(string email, string name, string department, string title)
     {
+      if (name != null)
+      {
+        var registerViewModel = new RegisterViewModel
+        {
+          Fullname = name,
+          Email = email,
+          Departments = new SelectList(StringGenerator.DepartmentFiller()),
+          Titles = new SelectList(StringGenerator.TitlesFiller())
+        };
+        foreach (var item in registerViewModel.Departments)
+        {
+          if (item.Value == department)
+          {
+            item.Selected = true;
+            break;
+          }
+        }
+        foreach (var item in registerViewModel.Titles)
+        {
+          if (item.Value == title)
+          {
+            item.Selected = true;
+            break;
+          }
+        }
+        return View(registerViewModel);
+      }
       var rVM = new RegisterViewModel
       {
         Departments = new SelectList(StringGenerator.DepartmentFiller()),
@@ -122,7 +150,7 @@ namespace ThesisReview.Controllers
 
         if (result.Succeeded)
         {
-          content = "Witaj " + registerViewModel.Fullname + "!\nTwój mail: " + registerViewModel.Email + " został pomyślnie zarejestrowany w naszym serwisie.";
+          content = "Witaj " + registerViewModel.Fullname + "!\nTwój mail: " + registerViewModel.Email + " został pomyślnie zarejestrowany w naszym serwisie. \nTwoj login to: " + registerViewModel.Email + "\nHasło: " + registerViewModel.Password + "\nZmienić hasło możesz w ustawieniach użytkownika po zalogowaniu";
           EmailSender.Send(registerViewModel.Email, "ThesisReview - Pomyślna Rejestracja", content);
           UserList userList = new UserList
           {
