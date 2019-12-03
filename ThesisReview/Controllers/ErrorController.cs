@@ -12,7 +12,7 @@ namespace ThesisReview.Controllers
         ViewData["Error"] = "Brak uprawnień lub podana strona nie istnieje!";
 
       }
-      else if(statusCode == 0)
+      else if(statusCode == 0 || statusCode == 1)
       {
         ViewData["Error"] = "Nieprawidłowy link do recenzji!";
       }

@@ -42,9 +42,6 @@ namespace ThesisReview.Controllers
       {
         Reports = _adminRepository.GetReports(Convert.ToDateTime(datestart), Convert.ToDateTime(datefinish))
       };
-      
-      
-
       return View(rVM);
     }
 

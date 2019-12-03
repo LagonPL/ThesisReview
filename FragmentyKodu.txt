@@ -1,0 +1,72 @@
+1.
+public IActionResult Create(FormViewModel fVM)
+    {
+      /wczytanie danych z FormViewModel do Form
+        Form form = new Form
+        {
+          Title = fVM.Title,
+          ReviewType = fVM.ReviewType,
+          ShortDescription = fVM.ShortDescription,
+          StudentMail = fVM.StudentMail,
+          Status = "Nowa",
+          ReviewerName = fVM.ReviewerName,
+          GuardianName = fVM.GuardianName,
+          Department = fVM.Department,
+          StudentName = fVM.StudentName
+        };
+      if (ModelState.IsValid)
+      {
+        if (!EmailExist(fVM.ReviewerName, fVM.GuardianName, fVM.ReviewType))
+        {
+		//Wysłanie danych do FormViewModel w przypadku błędu walidacji
+          fVM.NoError = false;
+          fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
+          fVM.DepartmentList = new SelectList(StringGenerator.DepartmentFiller());
+          fVM.ErrorMessage = "Brakuje maili w bazie lub mail opiekuna i recenzenta jest taki sam";
+		  //Wysłanie ich bezpośrednio do widoku tworzenia formularza
+          return View(fVM);
+        }
+	[.]
+2.
+@model ReportViewModel
+@{
+	ViewData["Title"] = "Raporty";
+}
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>Opiekun</th>
+			<th>Ocena</th>
+			<th>Recenzent</th>
+			<th>Ocena</th>
+			<th>Student</th>
+			<th>Data Zakończenia</th>
+		</tr>
+	</thead>
+	<tbody>
+	//Pętla foreach korzystająca z dobrodziejstw silnika Razor. Uwage należy zwórić na @.
+		@foreach (var line in Model.Reports)
+		{
+		<tr>
+			<td>@line.Guardian</td>
+			<td>@line.GradeGuardian</td>
+			<td>@line.Reviewer</td>
+			<td>@line.GradeReviewer</td>
+			<td>@line.Student</td>
+			<td>@line.Date</td>
+		</tr>
+		}
+	</tbody>
+</table>
+3.
+[Authorize(Roles = "Admin")]
+public IActionResult Report(string datestart, string datefinish)
+{
+//Aplikacja tworzy ViewModel z raportami pracowniczymi 
+  ReportViewModel rVM = new ReportViewModel
+  {
+	Reports = _adminRepository.GetReports(Convert.ToDateTime(datestart), Convert.ToDateTime(datefinish))
+  };
+  //Aplikacja wysyła ReportViewModel z raportami pracowniczymi do odpowiadającym im strony
+  return View(rVM);
+}

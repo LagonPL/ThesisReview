@@ -8,6 +8,7 @@ namespace ThesisReview.ViewModels
 
     public IEnumerable<Form> Forms { get; set; }
     public IEnumerable<Form> ArchiveForms { get; set; }
+    public string mail { get; set; }
     public bool IsOrder { get; set; }
 
   }

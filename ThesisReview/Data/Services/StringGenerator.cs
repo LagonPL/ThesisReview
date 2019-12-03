@@ -240,7 +240,8 @@ namespace ThesisReview.Data.Services
         FormURL = formurl,
         Mail = mail,
         Points = 0,
-        Finished = false
+        Finished = false,
+        Status = "Nowa"
       };
 
       return questions;
@@ -268,6 +269,7 @@ namespace ThesisReview.Data.Services
         Question7 = "0",
         Question8 = "0",
         Question9 = "0",
+        Status = "Nowa"
       };
       return questions;
     }

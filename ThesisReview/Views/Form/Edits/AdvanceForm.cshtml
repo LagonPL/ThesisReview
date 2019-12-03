@@ -9,8 +9,8 @@
 		<input asp-for="Form.FormURL" class="form-control" readonly />
 	</div>
 	<div class="form-group hidden">
-		<label asp-for="mail" class="control-label"></label>
-		<input asp-for="mail" class="form-control" readonly />
+		<label asp-for="Mail" class="control-label"></label>
+		<input asp-for="Mail" class="form-control" readonly />
 	</div>
 	<div class="form-group">
 		<label asp-for="Form.StudentMail" class="control-label disabled">Dane Studenta</label>
@@ -108,13 +108,18 @@
 	</div>
 	@if (!Model.Form.Questions.Finished)
 	{
-		<input type="submit" value="Save" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
+		<input type="submit" value="Zapisz" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
 		@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
 		<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
+		@if (Model.Archive)
+		{
+			<input type="submit" value="Archiwizuj" class="btn btn-info pull-right" asp-action="ArchiveForm" onclick="return confirm('Zgłoszenie ma ponad 60 dni, możesz je zaarchiwizować.\nCzy na pewno chcesz to zrobić?')" />
+		}
 		<input type="submit" value="Zakończ ocenianie" class="btn btn-success pull-right" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
 	}
 	else
 	{
+		@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
 		<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
 	}
 </form>

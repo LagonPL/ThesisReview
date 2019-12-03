@@ -32,8 +32,10 @@ namespace ThesisReview.Controllers
     [HttpPost]
     public async Task<IActionResult> Account(SettingViewModel settingViewModel)
     {
-      SettingViewModel svm = new SettingViewModel();
-      svm.AnyError = true;
+      SettingViewModel svm = new SettingViewModel
+      {
+        AnyError = true
+      };
 
       if (!ModelState.IsValid)
         return View(svm);

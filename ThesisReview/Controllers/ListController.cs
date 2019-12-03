@@ -32,7 +32,7 @@ namespace ThesisReview.Controllers
       ViewData["TypeSortParm"] = sortOrder == "Type" ? "type_desc" : "Type";
       ViewData["StatusSortParm"] = sortOrder == "Status" ? "status_desc" : "Status";
 
-      var revieweritems = _listRepository.GetReviewerForms(mail).Concat(_listRepository.GetGuardianForms(mail));
+      var revieweritems = _listRepository.GetReviewerForms(mail);
       revieweritems = SortForms(sortOrder, revieweritems);
       
 
@@ -42,7 +42,8 @@ namespace ThesisReview.Controllers
       var fLVM = new ListViewModel
       {
         Forms = revieweritems,
-        ArchiveForms = finished
+        ArchiveForms = finished,
+        mail = mail
       };
 
       return View(fLVM);

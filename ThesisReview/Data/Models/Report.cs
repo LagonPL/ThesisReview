@@ -5,6 +5,7 @@ namespace ThesisReview.Data.Models
   public class Report
   {
     public int ReportId { get; set; }
+    public Form Form { get; set; }
     public String Guardian { get; set; }
     public String Reviewer { get; set; }
     public String Student { get; set; }

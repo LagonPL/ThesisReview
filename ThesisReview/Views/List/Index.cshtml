@@ -24,7 +24,9 @@
 				<td class="text-center">@line.StudentMail - @line.StudentName</td>
 				<td class="text-right">@line.Title</td>
 				<td class="text-right">@line.ReviewType</td>
-				<td class="text-right">@line.Status</td>
+				<td class="text-right">@if (line.QuestionsGuardian.Mail.Equals(Model.mail))
+				{ @line.QuestionsGuardian.Status }
+				else { @line.Questions.Status }</td>
 				<td class="text-right">@line.DateTimeStart</td>
 				<td class="text-center"><a class="glyphicon glyphicon-edit text-danger remove" asp-controller="Form" asp-action="Edit" asp-route-id="@line.FormURL"></a></td>
 				<td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" onclick="return confirm('Czy na pewno chcesz zakończyć ocene tej recenzji?\n @line.Title')"></a></td>

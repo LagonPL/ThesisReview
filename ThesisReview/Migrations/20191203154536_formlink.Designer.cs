@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThesisReview.Data;
 
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191203154536_formlink")]
+    partial class formlink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -337,8 +339,6 @@ namespace ThesisReview.Migrations
                     b.Property<string>("UserListId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<string>("Department");
 
                     b.Property<string>("Fullname");
@@ -348,8 +348,6 @@ namespace ThesisReview.Migrations
                     b.Property<string>("Title");
 
                     b.HasKey("UserListId");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("UserLists");
                 });
@@ -415,13 +413,6 @@ namespace ThesisReview.Migrations
                     b.HasOne("ThesisReview.Data.Models.Form", "Form")
                         .WithMany()
                         .HasForeignKey("FormId");
-                });
-
-            modelBuilder.Entity("ThesisReview.Data.Models.UserList", b =>
-                {
-                    b.HasOne("ThesisReview.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
                 });
 #pragma warning restore 612, 618
         }

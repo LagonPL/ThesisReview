@@ -61,6 +61,7 @@ namespace ThesisReview
         .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
 
+      services.AddTransient<IAccountRepository, AccountRepository>();
       services.AddTransient<IListRepository, ListRepository>();
       services.AddTransient<IFormRepository, FormRepository>();
       services.AddTransient<IAdminRepository, AdminRepository>();

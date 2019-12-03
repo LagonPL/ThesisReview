@@ -19,6 +19,7 @@
     public string LongReview { get; set; }
     public string Grade { get; set; }
     public bool Finished { get; set; }
+    public string Status { get; set; }
   }
 
 }

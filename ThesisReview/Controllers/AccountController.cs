@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ThesisReview.Data;
+using ThesisReview.Data.Interface;
 using ThesisReview.Data.Models;
 using ThesisReview.Data.Services;
 using ThesisReview.ViewModels;
@@ -16,13 +17,13 @@ namespace ThesisReview.Controllers
 
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly AppDbContext _appDbContext;
+    private readonly IAccountRepository _accountRepository;
 
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext appDbContext)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IAccountRepository accountRepository)
     {
       _userManager = userManager;
       _signInManager = signInManager;
-      _appDbContext = appDbContext;
+      _accountRepository = accountRepository;
     }
 
 
@@ -60,9 +61,11 @@ namespace ThesisReview.Controllers
     {
       if (name != null)
       {
+        int position = email.IndexOf("@");
         var registerViewModel = new RegisterViewModel
         {
           Fullname = name,
+          UserName = email.Substring(0,position),
           Email = email,
           Departments = new SelectList(StringGenerator.DepartmentFiller()),
           Titles = new SelectList(StringGenerator.TitlesFiller())
@@ -109,14 +112,7 @@ namespace ThesisReview.Controllers
     {
       if (ModelState.IsValid)
       {
-        var requestForm = new RequestForm
-        {
-          Department = requestViewModel.Department,
-          Email = requestViewModel.Email,
-          Fullname = requestViewModel.Fullname
-        };
-        _appDbContext.RequestForms.Add(requestForm);
-        _appDbContext.SaveChanges();
+        _accountRepository.SendRequest(requestViewModel);
         return RedirectToAction("Index", "Home");
       }
       else
@@ -152,15 +148,8 @@ namespace ThesisReview.Controllers
         {
           content = "Witaj " + registerViewModel.Fullname + "!\nTwój mail: " + registerViewModel.Email + " został pomyślnie zarejestrowany w naszym serwisie. \nTwoj login to: " + registerViewModel.Email + "\nHasło: " + registerViewModel.Password + "\nZmienić hasło możesz w ustawieniach użytkownika po zalogowaniu";
           EmailSender.Send(registerViewModel.Email, "ThesisReview - Pomyślna Rejestracja", content);
-          UserList userList = new UserList
-          {
-            Department = registerViewModel.Department,
-            Fullname = registerViewModel.Fullname,
-            Mail = registerViewModel.Email,
-            Title = registerViewModel.Title
-          };
-          _appDbContext.UserLists.Add(userList);
-          _appDbContext.SaveChanges();
+          
+          _accountRepository.AddUserToList(registerViewModel, user);
           return RedirectToAction("Index", "Home");
         }
         else

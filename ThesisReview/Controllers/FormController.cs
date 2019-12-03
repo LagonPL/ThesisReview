@@ -16,13 +16,11 @@ namespace ThesisReview.Controllers
   {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IFormRepository _formRepository;
-    private readonly AppDbContext _appDbContext;
 
-    public FormController(UserManager<ApplicationUser> userManager, IFormRepository formRepository, AppDbContext appDbContext)
+    public FormController(UserManager<ApplicationUser> userManager, IFormRepository formRepository)
     {
       _userManager = userManager;
       _formRepository = formRepository;
-      _appDbContext = appDbContext;
     }
 
     public async Task<IActionResult> Create()
@@ -98,30 +96,38 @@ namespace ThesisReview.Controllers
     {
       Form form = new Form();
       var mail = await GetCurrentUser();
-      form = DatabaseAction.ReadForm(id, mail);
+      form = _formRepository.GetFormByMail(id, mail);
       var suma = new Sum();
+      
       var questions = StringGenerator.GetQuestions(form.ReviewType);
       if (form.ReviewType.Equals("Praca Magisterska"))
         suma = Util.Sum(form);
       var fdVM = new FormDetailViewModel
       {
         Form = form,
-        mail = mail,
+        Mail = mail,
         ReviewType = form.ReviewType,
         QuestionList = questions,
         Answers = StringGenerator.AnswersGenerator(),
-        Sum = suma
+        Sum = suma,
+        Archive = false
       };
-
+       var span = DateTime.Now.Subtract(form.DateTimeStart);
+      if ((int)span.TotalDays > 60 && form.Status != "Oceniono")
+      {
+        fdVM.Archive = true;
+      }
       return View(fdVM);
     }
 
     public ActionResult View(string id, string password)
     {
       Form form = new Form();
-      form = DatabaseAction.ReadFormView(id, password);
-      if (String.IsNullOrEmpty(form.FormURL))
-        return RedirectToAction("Error", "Error");
+      TimeSpan span;
+      DateTime dateTime = DateTime.Now;
+      form = _formRepository.GetForm(id, password);
+      if (form == null)
+        return RedirectToAction("Error", "Error", new { @statusCode = 1 });
       var suma = new Sum();
       var sumaGuardian = new Sum();
       var questions = StringGenerator.GetQuestions(form.ReviewType);
@@ -130,7 +136,6 @@ namespace ThesisReview.Controllers
         suma = Util.Sum(form);
         sumaGuardian = Util.SumGuardian(form);
       }
-
       var fdVM = new FormDetailViewModel
       {
         Form = form,
@@ -138,8 +143,14 @@ namespace ThesisReview.Controllers
         QuestionList = questions,
         Answers = StringGenerator.AnswersGenerator(),
         Sum = suma,
-        SumGuardian = sumaGuardian
+        SumGuardian = sumaGuardian,
+        Archive = false
       };
+      span = form.DateTimeStart.Subtract(dateTime);
+      if ((int)span.TotalDays > 60)
+      {
+        fdVM.Archive = true;
+      }
 
       return View(fdVM);
     }
@@ -163,9 +174,17 @@ namespace ThesisReview.Controllers
         LongReview = fdVM.Form.Questions.LongReview,
         Grade = fdVM.Form.Questions.Grade,
         FormURL = fdVM.Form.FormURL,
-        Mail = mail
+        Mail = mail,
+        Status = "Otwarto"
       };
       _formRepository.UpdateFormEntity(questions);
+      return RedirectToAction("Index", "List");
+    }
+
+    [HttpPost]
+    public IActionResult ArchiveForm(FormDetailViewModel fdVM)
+    {
+      _formRepository.ArchiveFormEntity(fdVM.Form.FormURL);
       return RedirectToAction("Index", "List");
     }
 
@@ -189,7 +208,8 @@ namespace ThesisReview.Controllers
         Grade = fdVM.Form.Questions.Grade,
         FormURL = fdVM.Form.FormURL,
         Mail = mail,
-        Finished = true
+        Finished = true,
+        Status = "Oceniono"
       };
       _formRepository.FinishFormEntity(questions);
       return RedirectToAction("Index", "List");

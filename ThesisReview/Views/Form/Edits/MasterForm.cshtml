@@ -2,8 +2,8 @@
 
 <form asp-controller="Form" method="post" class="form-horizontal" role="form">
 	<div class="form-group hidden">
-		<label asp-for="mail" class="control-label"></label>
-		<input asp-for="mail" class="form-control" readonly />
+		<label asp-for="Mail" class="control-label"></label>
+		<input asp-for="Mail" class="form-control" readonly />
 	</div>
 	<div class="form-group hidden">
 		<label asp-for="Form.FormURL" class="control-label"></label>
@@ -171,6 +171,7 @@
 		}
 		else
 		{
+			@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
 			<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
 		}
 	</div>

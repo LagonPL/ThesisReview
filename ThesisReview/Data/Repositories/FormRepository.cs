@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using ThesisReview.Data.Interface;
 using ThesisReview.Data.Models;
@@ -16,6 +17,26 @@ namespace ThesisReview.Data.Repositories
     }
 
     public ApplicationUser GetUser(string mail) => _appDbContext.Users.FirstOrDefault(p => p.Email == mail);
+
+    public Form GetForm(string id, string password)
+    {
+      _appDbContext.Forms.Load();
+      var form = _appDbContext.Forms.Where(p => (p.FormURL == id) && (p.Password == password)).Include(b => b.Questions).Include(b => b.QuestionsGuardian).FirstOrDefault();
+      if (form == null)
+        return form;
+
+      return form;
+    }
+
+    public Form GetFormByMail(string id, string mail)
+    {
+      var form = _appDbContext.Forms.FirstOrDefault(p => p.FormURL == id);
+      if (form == null)
+        return form;
+      var question = _appDbContext.Questions.FirstOrDefault(p => (p.Mail == mail) && (p.FormURL == form.FormURL));
+      form.Questions = question;
+      return form;
+    }
 
     public void AddFormEntity(Form form, string id, string zero, string password, string link)
     {
@@ -58,14 +79,17 @@ namespace ThesisReview.Data.Repositories
       result.LongReview = questions.LongReview;
       result.Grade = questions.Grade;
       result.Finished = questions.Finished;
+      result.Status = questions.Status;
 
-      DatabaseAction.UpdateStatus("Otwarta", questions.FormURL);
+      var form = _appDbContext.Forms.FirstOrDefault(b => b.FormURL == questions.FormURL);
+      form.Status = "Otwarto";
       _appDbContext.SaveChanges();
 
     }
     public void FinishFormEntity(Questions questions)
     {
       var result = _appDbContext.Questions.SingleOrDefault(b => (b.FormURL == questions.FormURL) && (b.Mail == questions.Mail));
+      DateTime dateTime = DateTime.Now;
       result.Question0 = questions.Question0;
       result.Question1 = questions.Question1;
       result.Question2 = questions.Question2;
@@ -79,21 +103,25 @@ namespace ThesisReview.Data.Repositories
       result.Points = questions.Points;
       result.LongReview = questions.LongReview;
       result.Grade = questions.Grade;
+      result.Status = questions.Status;
       result.Finished = questions.Finished;
-      _appDbContext.SaveChanges();
-      bool isOver = DatabaseAction.ReadStatus(questions.FormURL);
-      if (isOver)
+      var form = _appDbContext.Forms.FirstOrDefault(b => b.FormURL == questions.FormURL);
+      var otherQuestion = _appDbContext.Questions.FirstOrDefault(b => (b.FormURL == questions.FormURL) && (b.Mail != questions.Mail));
+      if (otherQuestion == null || otherQuestion.Finished)
       {
-        AddReport(questions.FormURL);
+        form.Status = "Oceniono";
+        form.DateTimeFinish = dateTime;
+        EmailSender.Send(form.StudentMail, "ThesisReview - Zakończono Oceniania", "Zakończono Ocenianie twojego zgłoszenia\nOcena końcowa: " + result.Grade+ " oraz " + questions.Grade +"\nLink: " + form.Link);
+        AddReport(form);
       }
+      _appDbContext.SaveChanges();
     }
-    public void AddReport(string id)
+    public void AddReport(Form form)
     {
       string reviewer, grade;
-      var form = _appDbContext.Forms.FirstOrDefault(p => p.FormURL == id);
       var user1 = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == form.GuardianName);
       var user2 = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == form.ReviewerName);
-      var question1 = _appDbContext.Questions.FirstOrDefault(p => (p.FormURL == id) && (p.Mail == user1.Mail));
+      var question1 = _appDbContext.Questions.FirstOrDefault(p => (p.FormURL == form.FormURL) && (p.Mail == user1.Mail));
       
       if (user2 == null)
       {
@@ -103,7 +131,7 @@ namespace ThesisReview.Data.Repositories
       else
       {
         reviewer = user2.Fullname;
-        var question2 = _appDbContext.Questions.FirstOrDefault(p => (p.FormURL == id) && (p.Mail == user2.Mail));
+        var question2 = _appDbContext.Questions.FirstOrDefault(p => (p.FormURL == form.FormURL) && (p.Mail == user2.Mail));
         grade = question2.Grade;
       }
       Report report = new Report
@@ -113,10 +141,18 @@ namespace ThesisReview.Data.Repositories
         Student = form.StudentMail + " - " + form.StudentName,
         Guardian = user1.Fullname,
         Reviewer = reviewer,
-        GradeReviewer = grade
+        GradeReviewer = grade,
+        Form = form
       };
       
       _appDbContext.Reports.Add(report);
+      _appDbContext.SaveChanges();
+    }
+
+    public void ArchiveFormEntity(string id)
+    {
+      var form = _appDbContext.Forms.FirstOrDefault(p => p.FormURL == id);
+      form.Status = "Oceniono";
       _appDbContext.SaveChanges();
     }
   }
