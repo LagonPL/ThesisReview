@@ -1,10 +1,16 @@
 ﻿@model FormDetailViewModel
 
-<div class="form-group">
-	<label asp-for="Form.FormURL" class="control-label disabled"></label>
-	<input asp-for="Form.FormURL" class="form-control" readonly />
-	<span asp-validation-for="Form.Title" class="text-danger"></span>
-</div>
+<form method="post">
+	<div class="form-group">
+		<label asp-for="Form.FormURL" class="control-label disabled"></label>
+		<input asp-for="Form.FormURL" class="form-control" readonly />
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Form.ThesisFile" class="control-label">Pobierz Pracę</label>
+		<input type="submit" asp-controller="Form" asp-action="DownloadFile" class="btn btn-info" value="Pobierz" />
+	</div>
+</form>
 <div class="form-group">
 	<label asp-for="Form.Title" class="control-label disabled"></label>
 	<input asp-for="Form.Title" class="form-control" readonly />

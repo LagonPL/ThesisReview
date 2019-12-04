@@ -18,7 +18,9 @@ namespace ThesisReview.Data.Repositories
 
     public ApplicationUser GetUser(string mail) => _appDbContext.Users.FirstOrDefault(p => p.Email == mail);
 
-    public Form GetForm(string id, string password)
+    public Form GetForm(string id) => _appDbContext.Forms.FirstOrDefault(p => p.FormURL == id);
+
+    public Form GetFormView(string id, string password)
     {
       _appDbContext.Forms.Load();
       var form = _appDbContext.Forms.Where(p => (p.FormURL == id) && (p.Password == password)).Include(b => b.Questions).Include(b => b.QuestionsGuardian).FirstOrDefault();
@@ -155,5 +157,6 @@ namespace ThesisReview.Data.Repositories
       form.Status = "Oceniono";
       _appDbContext.SaveChanges();
     }
+
   }
 }

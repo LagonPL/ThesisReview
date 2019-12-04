@@ -29,6 +29,10 @@
 					<span asp-validation-for="Form.Title" class="text-danger"></span>
 				</div>
 				<div class="form-group">
+					<label asp-for="Form.ThesisFile" class="control-label">Pobierz Pracę</label>
+					<input type="submit" asp-controller="Form" asp-action="DownloadFile" class="btn btn-info" value="Pobierz" />
+				</div>
+				<div class="form-group">
 					<label asp-for="Form.ShortDescription" class="control-label disabled">Wstęp</label>
 					<textarea asp-for="Form.ShortDescription" class="form-control" readonly></textarea>
 				</div>
@@ -71,7 +75,7 @@
 					<span asp-validation-for="Form.Questions.Grade" class="text-danger"></span>
 					<h6 class="text-info">Należy stosować następującą skalę ocen: 5,0 – pięć, 4,5 – cztery i pół, 4,0 – cztery, 3,5 – trzy i pół, 3,0 – trzy, 2,0 – dwa.</h6>
 				</div>
-		</div>
+</div>
 	</div>
 	<div id="non-printable">
 		@if (!Model.Form.Questions.Finished)
