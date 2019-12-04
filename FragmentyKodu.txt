@@ -92,11 +92,27 @@ public void ConfigureServices(IServiceCollection services)
 //1
 	services.AddDbContext<AppDbContext>(options =>
 		options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
-//2		
+}
+5.1
+public void DeleteUser(string userId)
+    {
+	//Czytanie usera z bazy
+      var deleteduser = _appDbContext.Users.FirstOrDefault(p => p.Email == userId);
+      var userlist = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == userId);
+	  //usuwanie go z listy pracowników
+      _appDbContext.UserLists.Remove(userlist);
+	  //Deaktywacja jego konta
+      deleteduser.IsActive = false;
+	  //Zapisanie powiązanych z bazą rekordów z pomocą AppDbContext
+      _appDbContext.SaveChanges();
+    }
+	
+	
+5.2.
 	services.AddIdentity<ApplicationUser, IdentityRole>()
 		.AddEntityFrameworkStores<AppDbContext>()
 		.AddDefaultTokenProviders();
-}
+
 
 6.
 public async Task<IActionResult> Login(LogInViewModel logInViewModel)
@@ -138,3 +154,28 @@ public class Program
 services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
 		
+9.
+public static void Send(string receiver, string subject, string content)
+    {
+      var message = new MimeMessage();
+	  //Adres mailowy nadawcy wraz z jego nazwą
+      message.From.Add(new MailboxAddress("Recenzje Prac", MailName));
+	  //Adres odbiorcy
+      message.To.Add(new MailboxAddress(receiver, receiver));
+	  //Temat maila
+      message.Subject = subject;
+	  //Treści wiadomości
+      message.Body = new TextPart("plain")
+      {
+        Text = content
+      };
+	//Lączenie z klientem Smtp oraz wysyłka maila
+      using (var client = new SmtpClient())
+      {
+        client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+        client.Connect(MailSMTP, Int32.Parse(MailPort) , false);
+        client.Authenticate(MailName, MailPassword);
+        client.Send(message);
+        client.Disconnect(true);
+      }
+    }
