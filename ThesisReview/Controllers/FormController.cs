@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -38,21 +39,37 @@ namespace ThesisReview.Controllers
     }
 
     [HttpPost]
-    public IActionResult Create(FormViewModel fVM)
+    public async Task<IActionResult> Create(FormViewModel fVM)
     {
-      
-        Form form = new Form
+      Form form = new Form
+      {
+        Title = fVM.Title,
+        ReviewType = fVM.ReviewType,
+        ShortDescription = fVM.ShortDescription,
+        StudentMail = fVM.StudentMail,
+        Status = "Nowa",
+        ReviewerName = fVM.ReviewerName,
+        GuardianName = fVM.GuardianName,
+        Department = fVM.Department,
+        StudentName = fVM.StudentName
+      };
+      using (var memoryStream = new MemoryStream())
+      { 
+        if (fVM.FileUpload.FormFile.Length < 5242880 && fVM.FileUpload.FormFile.FileName.Contains(".pdf"))
         {
-          Title = fVM.Title,
-          ReviewType = fVM.ReviewType,
-          ShortDescription = fVM.ShortDescription,
-          StudentMail = fVM.StudentMail,
-          Status = "Nowa",
-          ReviewerName = fVM.ReviewerName,
-          GuardianName = fVM.GuardianName,
-          Department = fVM.Department,
-          StudentName = fVM.StudentName
-        };
+          await fVM.FileUpload.FormFile.CopyToAsync(memoryStream);
+          form.ThesisFile = memoryStream.ToArray();
+        }
+        else
+        {
+          fVM.NoError = false;
+          fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
+          fVM.DepartmentList = new SelectList(StringGenerator.DepartmentFiller());
+          fVM.ErrorMessage = "Niepradłowy plik z pracą";
+          return View(fVM);
+        }
+      }
+
       if (ModelState.IsValid)
       {
         if (!EmailExist(fVM.ReviewerName, fVM.GuardianName, fVM.ReviewType))
@@ -125,7 +142,7 @@ namespace ThesisReview.Controllers
       Form form = new Form();
       TimeSpan span;
       DateTime dateTime = DateTime.Now;
-      form = _formRepository.GetForm(id, password);
+      form = _formRepository.GetFormView(id, password);
       if (form == null)
         return RedirectToAction("Error", "Error", new { @statusCode = 1 });
       var suma = new Sum();
@@ -153,6 +170,14 @@ namespace ThesisReview.Controllers
       }
 
       return View(fdVM);
+    }
+
+    [HttpPost]
+    public IActionResult DownloadFile(FormDetailViewModel fdVM)
+    {
+      var form = _formRepository.GetForm(fdVM.Form.FormURL);
+      string filename = form.StudentName.Replace(" ", "") + form.DateTimeStart.Year.ToString() + ".pdf";
+      return File(form.ThesisFile, "application/force-download", filename);
     }
 
     [HttpPost]

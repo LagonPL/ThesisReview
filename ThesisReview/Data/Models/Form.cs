@@ -52,5 +52,7 @@ namespace ThesisReview.Data.Models
     public Questions Questions { get; set; }
 
     public Questions QuestionsGuardian { get; set; }
+
+    public byte[] ThesisFile { get; set; }
   }
 }
