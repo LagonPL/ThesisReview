@@ -2,14 +2,20 @@
 using System.Linq;
 using ThesisReview.Data.Models;
 using ThesisReview.Data.Services;
+using Microsoft.AspNetCore.Builder;
+using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ThesisReview.Data
 {
   public class DbInitializer
   {
 
-    public static void Seed(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public static void Seed(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IServiceProvider applicationBuilder)
     {
+      AppDbContext context = applicationBuilder.GetRequiredService<AppDbContext>();
+      context.Database.EnsureCreated();
+
       if (!roleManager.RoleExistsAsync("Admin").Result)
       {
         IdentityRole role = new IdentityRole
@@ -37,7 +43,8 @@ namespace ThesisReview.Data
         {
           UserName = "admin",
           Email = "recenzjeprac@gmail.com",
-          Department = "Administrator Główny"
+          Department = "Administrator Główny",
+          IsActive = true
         };
 
         IdentityResult result = userManager.CreateAsync(user, "admin").Result;

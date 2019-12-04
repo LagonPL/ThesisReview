@@ -16,14 +16,15 @@ namespace ThesisReview.Data.Repositories
       _appDbContext = appDbContext;
     }
 
-    public ApplicationUser GetUser(string mail) => _appDbContext.Users.FirstOrDefault(p => p.Email == mail);
+    public UserList GetUser(string mail) => _appDbContext.UserLists.FirstOrDefault(p => p.Mail == mail);
 
     public Form GetForm(string id) => _appDbContext.Forms.FirstOrDefault(p => p.FormURL == id);
 
     public Form GetFormView(string id, string password)
     {
       _appDbContext.Forms.Load();
-      var form = _appDbContext.Forms.Where(p => (p.FormURL == id) && (p.Password == password)).Include(b => b.Questions).Include(b => b.QuestionsGuardian).FirstOrDefault();
+      var form = _appDbContext.Forms.Where(p => (p.FormURL == id) && (p.Password == password))
+        .Include(b => b.Questions).Include(b => b.QuestionsGuardian).FirstOrDefault();
       if (form == null)
         return form;
 
@@ -35,7 +36,8 @@ namespace ThesisReview.Data.Repositories
       var form = _appDbContext.Forms.FirstOrDefault(p => p.FormURL == id);
       if (form == null)
         return form;
-      var question = _appDbContext.Questions.FirstOrDefault(p => (p.Mail == mail) && (p.FormURL == form.FormURL));
+      var question = _appDbContext.Questions
+        .FirstOrDefault(p => (p.Mail == mail) && (p.FormURL == form.FormURL));
       form.Questions = question;
       return form;
     }
@@ -47,8 +49,10 @@ namespace ThesisReview.Data.Repositories
       form.Link = link;
       form.Password = password;
       form.FormURL = id;
+      form.GuardianUser = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == form.GuardianName);
       if (form.ReviewType.Equals("Praca Magisterska")) {
         form.QuestionsGuardian = StringGenerator.AdvanceTemplate(id, form.GuardianName);
+        form.ReviewerUser = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == form.ReviewerName);
         form.Questions = StringGenerator.AdvanceTemplate(id, form.ReviewerName);
       }
       else if (form.ReviewType.Equals("Praca Podyplomowa"))
@@ -58,6 +62,7 @@ namespace ThesisReview.Data.Repositories
       else 
       {
         form.QuestionsGuardian = StringGenerator.BasicTemplate(id, form.GuardianName);
+        form.ReviewerUser = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == form.ReviewerName);
         form.Questions = StringGenerator.BasicTemplate(id, form.ReviewerName);
       }
       _appDbContext.Forms.Add(form);
@@ -66,7 +71,8 @@ namespace ThesisReview.Data.Repositories
 
     public void UpdateFormEntity(Questions questions)
     {
-      var result = _appDbContext.Questions.SingleOrDefault(b => (b.FormURL == questions.FormURL) && (b.Mail == questions.Mail));
+      var result = _appDbContext.Questions
+        .SingleOrDefault(b => (b.FormURL == questions.FormURL) && (b.Mail == questions.Mail));
       result.Question0 = questions.Question0;
       result.Question1 = questions.Question1;
       result.Question2 = questions.Question2;
@@ -90,7 +96,8 @@ namespace ThesisReview.Data.Repositories
     }
     public void FinishFormEntity(Questions questions)
     {
-      var result = _appDbContext.Questions.SingleOrDefault(b => (b.FormURL == questions.FormURL) && (b.Mail == questions.Mail));
+      var result = _appDbContext.Questions
+        .SingleOrDefault(b => (b.FormURL == questions.FormURL) && (b.Mail == questions.Mail));
       DateTime dateTime = DateTime.Now;
       result.Question0 = questions.Question0;
       result.Question1 = questions.Question1;
@@ -108,7 +115,8 @@ namespace ThesisReview.Data.Repositories
       result.Status = questions.Status;
       result.Finished = questions.Finished;
       var form = _appDbContext.Forms.FirstOrDefault(b => b.FormURL == questions.FormURL);
-      var otherQuestion = _appDbContext.Questions.FirstOrDefault(b => (b.FormURL == questions.FormURL) && (b.Mail != questions.Mail));
+      var otherQuestion = _appDbContext.Questions
+        .FirstOrDefault(b => (b.FormURL == questions.FormURL) && (b.Mail != questions.Mail));
       if (otherQuestion == null || otherQuestion.Finished)
       {
         form.Status = "Oceniono";
@@ -123,7 +131,8 @@ namespace ThesisReview.Data.Repositories
       string reviewer, grade;
       var user1 = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == form.GuardianName);
       var user2 = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == form.ReviewerName);
-      var question1 = _appDbContext.Questions.FirstOrDefault(p => (p.FormURL == form.FormURL) && (p.Mail == user1.Mail));
+      var question1 = _appDbContext.Questions
+        .FirstOrDefault(p => (p.FormURL == form.FormURL) && (p.Mail == user1.Mail));
       
       if (user2 == null)
       {
@@ -133,7 +142,8 @@ namespace ThesisReview.Data.Repositories
       else
       {
         reviewer = user2.Fullname;
-        var question2 = _appDbContext.Questions.FirstOrDefault(p => (p.FormURL == form.FormURL) && (p.Mail == user2.Mail));
+        var question2 = _appDbContext.Questions
+          .FirstOrDefault(p => (p.FormURL == form.FormURL) && (p.Mail == user2.Mail));
         grade = question2.Grade;
       }
       Report report = new Report

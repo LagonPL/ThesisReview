@@ -259,14 +259,14 @@ namespace ThesisReview.Controllers
 
     public bool EmailExist(string mail1, string mail2, string reviewtype)
     {
-      ApplicationUser user1;
-      ApplicationUser user2;
+      UserList user1;
+      UserList user2;
       if (reviewtype.Equals("Praca Podyplomowa"))
       {
         user1 = _formRepository.GetUser(mail2);
         try
         {
-          if (String.IsNullOrEmpty(user1.Email))
+          if (String.IsNullOrEmpty(user1.Mail))
           {
             return false;
           }
@@ -281,7 +281,7 @@ namespace ThesisReview.Controllers
       user2 = _formRepository.GetUser(mail2);
       try
       {
-        if (String.IsNullOrEmpty(user1.Email) || String.IsNullOrEmpty(user2.Email) || user1.Equals(user2))
+        if (String.IsNullOrEmpty(user1.Mail) || String.IsNullOrEmpty(user2.Mail) || user1.Equals(user2))
         {
           return false;
         }

@@ -4,7 +4,7 @@ namespace ThesisReview.Data.Interface
 {
   public interface IFormRepository
   {
-    ApplicationUser GetUser(string mail);
+    UserList GetUser(string mail);
     Form GetForm(string id);
     Form GetFormView(string mail, string password);
     Form GetFormByMail(string id, string mail);

@@ -19,14 +19,16 @@ namespace ThesisReview.Data
     public IEnumerable<Form> GetReviewerForms(string mail)
     {
       _appDbContext.Forms.Load();
-      var form = _appDbContext.Forms.Where(p => (p.ReviewerName == mail) || (p.GuardianName == mail)).Include(b => b.Questions).Include(b => b.QuestionsGuardian);
+      var form = _appDbContext.Forms.Where(p => (p.ReviewerName == mail) || (p.GuardianName == mail))
+        .Include(b => b.Questions).Include(b => b.QuestionsGuardian);
       return form;
     }
 
     public IEnumerable<Form> GetGuardianForms(string mail)
     {
       _appDbContext.Forms.Load();
-      var form = _appDbContext.Forms.Where(p => p.ReviewerName == mail).Include(b => b.Questions).Include(b => b.QuestionsGuardian);
+      var form = _appDbContext.Forms.Where(p => p.ReviewerName == mail).Include(b => b.Questions)
+        .Include(b => b.QuestionsGuardian);
       return form;
     } 
 

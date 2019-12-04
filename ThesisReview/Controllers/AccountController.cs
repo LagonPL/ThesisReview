@@ -42,7 +42,7 @@ namespace ThesisReview.Controllers
         return View(logInViewModel);
 
       var user = await _userManager.FindByEmailAsync(logInViewModel.Email);
-      if (user != null)
+      if (user != null && user.IsActive)
       {
         var result = await _signInManager.PasswordSignInAsync(user, logInViewModel.Password, false, false);
         if (result.Succeeded)
@@ -133,7 +133,15 @@ namespace ThesisReview.Controllers
       string content;
       if (ModelState.IsValid)
       {
-        var user = new ApplicationUser() { UserName = registerViewModel.UserName, Email = registerViewModel.Email, Department = registerViewModel.Department, Fullname = registerViewModel.Fullname, Title = registerViewModel.Title };
+        var user = new ApplicationUser()
+        {
+          UserName = registerViewModel.UserName,
+          Email = registerViewModel.Email,
+          Department = registerViewModel.Department,
+          Fullname = registerViewModel.Fullname,
+          Title = registerViewModel.Title,
+          IsActive = true
+        };
         var result = await _userManager.CreateAsync(user, registerViewModel.Password);
         if (registerViewModel.IsAdmin)
         {
@@ -146,7 +154,9 @@ namespace ThesisReview.Controllers
 
         if (result.Succeeded)
         {
-          content = "Witaj " + registerViewModel.Fullname + "!\nTwój mail: " + registerViewModel.Email + " został pomyślnie zarejestrowany w naszym serwisie. \nTwoj login to: " + registerViewModel.Email + "\nHasło: " + registerViewModel.Password + "\nZmienić hasło możesz w ustawieniach użytkownika po zalogowaniu";
+          content = "Witaj " + registerViewModel.Fullname + "!\nTwój mail: " + registerViewModel.Email 
+            + " został pomyślnie zarejestrowany w naszym serwisie. \nTwoj login to: " + registerViewModel.Email 
+              + "\nHasło: " + registerViewModel.Password + "\nZmienić hasło możesz w ustawieniach użytkownika po zalogowaniu";
           EmailSender.Send(registerViewModel.Email, "ThesisReview - Pomyślna Rejestracja", content);
           
           _accountRepository.AddUserToList(registerViewModel, user);

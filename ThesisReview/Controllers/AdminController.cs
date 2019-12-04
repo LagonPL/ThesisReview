@@ -57,6 +57,18 @@ namespace ThesisReview.Controllers
       return RedirectToAction("Index", "Admin");
     }
 
+    public async Task<IActionResult> Activate(string id)
+    {
+      _adminRepository.ActivateUser(id);
+      string user = await GetCurrentUser();
+      var aVM = new AdminViewModel
+      {
+        UsersList = _adminRepository.GetAllUserNoYou(user),
+        RequestForms = _adminRepository.GetRequest()
+      };
+      return RedirectToAction("Index", "Admin");
+    }
+
     public async Task<IActionResult> DeleteRequest(string email)
     {
       _adminRepository.DeleteRequest(email);

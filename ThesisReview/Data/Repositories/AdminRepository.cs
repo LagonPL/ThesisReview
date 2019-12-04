@@ -18,10 +18,28 @@ namespace ThesisReview.Data.Repositories
       _userManager = userManager;
     }
 
-    public void DeleteUser(string useId)
+    public void DeleteUser(string userId)
     {
-      var deleteduser = _appDbContext.Users.FirstOrDefault(p => p.Email == useId);
-      _appDbContext.Users.Remove(deleteduser);
+      var deleteduser = _appDbContext.Users.FirstOrDefault(p => p.Email == userId);
+      var userlist = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == userId);
+      _appDbContext.UserLists.Remove(userlist);
+      deleteduser.IsActive = false;
+      _appDbContext.SaveChanges();
+    }
+
+    public void ActivateUser(string userId)
+    {
+      var user = _appDbContext.Users.FirstOrDefault(p => p.Email == userId);
+      var userlist = new UserList
+      {
+        ApplicationUser = user,
+        Department = user.Department,
+        Fullname = user.Fullname,
+        Mail = user.Email,
+        Title = user.Title
+      };
+      _appDbContext.UserLists.Add(userlist);
+      user.IsActive = true;
       _appDbContext.SaveChanges();
     }
 
@@ -34,9 +52,11 @@ namespace ThesisReview.Data.Repositories
 
     public IEnumerable<ApplicationUser> GetAllUser() => _appDbContext.Users;
 
-    public IEnumerable<ApplicationUser> GetAllUserNoYou(string user) => _appDbContext.Users.Where(p => (p.Email != user) && (p.Department != "Administrator Główny"));
+    public IEnumerable<ApplicationUser> GetAllUserNoYou(string user) => _appDbContext.Users
+      .Where(p => (p.Email != user) && (p.Department != "Administrator Główny"));
 
-    public IEnumerable<Report> GetReports(DateTime datestart, DateTime datefinish) => _appDbContext.Reports.Where(t => t.Date >= datestart && t.Date <= datefinish);
+    public IEnumerable<Report> GetReports(DateTime datestart, DateTime datefinish) => _appDbContext.Reports
+      .Where(t => t.Date >= datestart && t.Date <= datefinish);
 
     public IEnumerable<RequestForm> GetRequest() => _appDbContext.RequestForms;
     

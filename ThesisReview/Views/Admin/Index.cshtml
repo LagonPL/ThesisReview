@@ -53,13 +53,20 @@
 	<tbody>
 		@foreach (var line in Model.UsersList)
 		{
-			<tr>
-				<td class="text-center">@line.Email</td>
-				<td class="text-right">@line.Department</td>
-				<td class="text-right">@line.Fullname</td>
-				<td class="text-center"><a class="glyphicon glyphicon-edit text-danger remove" asp-controller="Admin" asp-action="Reset" asp-route-id="@line.Email"  onclick="return confirm('Czy na pewno chcesz zresetować hasło tego użytkownika?\n @line.Fullname')"></a></td>
+		<tr>
+			<td class="text-center">@line.Email</td>
+			<td class="text-right">@line.Department</td>
+			<td class="text-right">@line.Fullname</td>
+			@if (line.IsActive)
+			{
+				<td class="text-center"><a class="glyphicon glyphicon-edit text-danger remove" asp-controller="Admin" asp-action="Reset" asp-route-id="@line.Email" onclick="return confirm('Czy na pewno chcesz zresetować hasło tego użytkownika?\n @line.Fullname')"></a></td>
 				<td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" asp-controller="Admin" asp-action="Delete" asp-route-id="@line.Email" onclick="return confirm('Czy na pewno chcesz usunąć użytkownika?\n @line.Fullname')"></a></td>
-			</tr>
+			}
+			else
+			{
+				<td class="text-center"><a class="glyphicon glyphicon-ok text-danger remove" asp-controller="Admin" asp-action="Activate" asp-route-id="@line.Email" onclick="return confirm('Czy na pewno chcesz aktywować tego użytkownika?\n @line.Fullname')"></a></td>
+			}
+		</tr>
 		}
 	</tbody>
 </table>

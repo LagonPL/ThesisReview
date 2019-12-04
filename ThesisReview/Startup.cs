@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using ThesisReview.Data;
 using ThesisReview.Data.Interface;
 using ThesisReview.Data.Models;
@@ -52,8 +53,7 @@ namespace ThesisReview
 
       services.Configure<CookiePolicyOptions>(options =>
       {
-              // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-              options.CheckConsentNeeded = context => true;
+        options.CheckConsentNeeded = context => true;
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
 
@@ -70,7 +70,7 @@ namespace ThesisReview
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IServiceProvider serviceProvider)
     {
       ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
       MailName = Configuration["ConnectionStrings:MailName"];
@@ -101,15 +101,11 @@ namespace ThesisReview
                   name: "UserEdit",
                   template: "Admin/{action}/{id}", defaults: new { Controller = "Admin", action = "Edit", id = ""});
         routes.MapRoute(
-                  name: "OrderList",
+                  name: "List",
                   template: "List/{id}", defaults: new { Controller = "List", id = "" });
-        routes.MapRoute(
-                 name: "MailChange",
-                 template: "Settings/{action}/{mail}/{token}", defaults: new { Controller = "Settings", action = "MailChange", mail = "", token = "" });
-
       });
 
-      DbInitializer.Seed(userManager, roleManager);
+      DbInitializer.Seed(userManager, roleManager, serviceProvider);
 
     }
   }

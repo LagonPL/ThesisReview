@@ -7,5 +7,6 @@ namespace ThesisReview.Data.Models
     public string Department { get; set; }
     public string Fullname { get; set; }
     public string Title { get; set; }
+    public bool IsActive { get; set; }
   }
 }

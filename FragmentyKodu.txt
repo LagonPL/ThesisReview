@@ -70,3 +70,71 @@ public IActionResult Report(string datestart, string datefinish)
   //Aplikacja wysyła ReportViewModel z raportami pracowniczymi do odpowiadającym im strony
   return View(rVM);
 }
+4.
+public class AppDbContext : IdentityDbContext<ApplicationUser>
+{
+
+    public AppDbContext(DbContextOptions<AppDbContext> options) :base(options)
+    {
+
+    }
+
+    public DbSet<Form> Forms { get; set; }
+    public DbSet<Questions> Questions { get; set; }
+    public DbSet<UserList> UserLists { get; set; }
+    public DbSet<Report> Reports { get; set; }
+    public DbSet<RequestForm> RequestForms { get; set; }
+}
+
+5.
+public void ConfigureServices(IServiceCollection services)
+{
+//1
+	services.AddDbContext<AppDbContext>(options =>
+		options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
+//2		
+	services.AddIdentity<ApplicationUser, IdentityRole>()
+		.AddEntityFrameworkStores<AppDbContext>()
+		.AddDefaultTokenProviders();
+}
+
+6.
+public async Task<IActionResult> Login(LogInViewModel logInViewModel)
+    {
+      if (!ModelState.IsValid)
+        return View(logInViewModel);
+	//wyszukanie użytkownika na podstawie maila
+      var user = await _userManager.FindByEmailAsync(logInViewModel.Email);
+      if (user != null && user.IsActive)
+      {
+	  //sprawdzenie poprawności hasła oraz wpisanie użytkownika do przeglądarki w ramach ciasteczek cookies
+        var result = await _signInManager.PasswordSignInAsync(user, logInViewModel.Password, false, false);
+        if (result.Succeeded)
+        {
+          if (string.IsNullOrEmpty(logInViewModel.ReturnUrl))
+            return RedirectToAction("Index", "Home");
+          return Redirect(logInViewModel.ReturnUrl);
+        }
+      }
+      ModelState.AddModelError("wrongform", "Nieprawidłowy email lub hasło");
+      return View(logInViewModel);
+    }
+	
+7.
+public class Program
+  {
+    public static void Main(string[] args)
+    {
+      CreateWebHostBuilder(args).Build().Run();
+    }
+
+    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        WebHost.CreateDefaultBuilder(args)
+            .UseStartup<Startup>().UseSetting("detailedErrors", "true")
+                .CaptureStartupErrors(true);
+  }
+  
+8.
+services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
+		

@@ -72,7 +72,7 @@ namespace ThesisReview.Data.Services
 
     }
     /// <summary>
-    /// Method changes status.
+    /// Deprecated method for changing status.
     /// </summary>
     public static void UpdateStatus(string status, string id)
     {
@@ -98,7 +98,7 @@ namespace ThesisReview.Data.Services
     }
 
     /// <summary>
-    /// Read status of reviews and compares them with reviewer/guardian.
+    /// Deprecated method: Read status of reviews and compares them with reviewer/guardian.
     /// </summary>
     /// <returns>Boolean value whether status are the same or not.</returns>
     public static bool ReadStatus(string id)
@@ -164,7 +164,7 @@ namespace ThesisReview.Data.Services
     }
 
     /// <summary>
-    /// Read form and questions from database to edit them.
+    /// Deprecated method: Read form and questions from database to edit them.
     /// </summary>
     /// <returns>Form with questions.</returns>
     public static Form ReadForm(string id, string mail)
@@ -210,7 +210,7 @@ namespace ThesisReview.Data.Services
       return form;
     }
     /// <summary>
-    /// Read values from databases for studend's reviews form.
+    /// Deprecated method: Read values from databases for studend's reviews form.
     /// </summary>
     /// <returns>Form with questions to display for student.</returns>
     public static Form ReadFormView(string id, string password)

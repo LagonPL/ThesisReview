@@ -34,6 +34,10 @@ namespace ThesisReview.Data.Models
     [DataType(DataType.EmailAddress)]
     public string GuardianName { get; set; }
 
+    public UserList GuardianUser { get; set; }
+
+    public UserList ReviewerUser { get; set; }
+
     [DataType(DataType.EmailAddress)]
     public string ReviewerName { get; set; }
 

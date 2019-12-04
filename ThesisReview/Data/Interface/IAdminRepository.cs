@@ -8,6 +8,7 @@ namespace ThesisReview.Data.Interface
   {
 
     void DeleteUser(string useId);
+    void ActivateUser(string useId);
     void DeleteRequest(string email);
     IEnumerable<ApplicationUser> GetAllUser();
     IEnumerable<ApplicationUser> GetAllUserNoYou(string user);

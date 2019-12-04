@@ -45,7 +45,8 @@ namespace ThesisReview.Controllers
         var user = await _userManager.GetUserAsync(HttpContext.User);
         if (user != null)
         {
-          var results = await _userManager.ChangePasswordAsync(user, settingViewModel.OldPassword, settingViewModel.NewPassword);
+          var results = await _userManager.ChangePasswordAsync(user, settingViewModel.OldPassword,
+            settingViewModel.NewPassword);
 
           if (!results.Succeeded)
           {
