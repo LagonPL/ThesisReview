@@ -21,8 +21,6 @@ namespace ThesisReview.Data.Repositories
     public void DeleteUser(string userId)
     {
       var deleteduser = _appDbContext.Users.FirstOrDefault(p => p.Email == userId);
-      var userlist = _appDbContext.UserLists.FirstOrDefault(p => p.Mail == userId);
-      _appDbContext.UserLists.Remove(userlist);
       deleteduser.IsActive = false;
       _appDbContext.SaveChanges();
     }
@@ -30,15 +28,6 @@ namespace ThesisReview.Data.Repositories
     public void ActivateUser(string userId)
     {
       var user = _appDbContext.Users.FirstOrDefault(p => p.Email == userId);
-      var userlist = new UserList
-      {
-        ApplicationUser = user,
-        Department = user.Department,
-        Fullname = user.Fullname,
-        Mail = user.Email,
-        Title = user.Title
-      };
-      _appDbContext.UserLists.Add(userlist);
       user.IsActive = true;
       _appDbContext.SaveChanges();
     }

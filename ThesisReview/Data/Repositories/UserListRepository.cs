@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using ThesisReview.Data.Interface;
 using ThesisReview.Data.Models;
 
@@ -14,6 +16,12 @@ namespace ThesisReview.Data.Repositories
       _appDbContext = appDbContext;
     }
 
-    public IEnumerable<UserList> GetAllUser() => _appDbContext.UserLists;
+    public IEnumerable<UserList> GetAllUser()
+    {
+      _appDbContext.UserLists.Load();
+      var form = _appDbContext.UserLists
+        .Include(b => b.ApplicationUser).Where(b => b.ApplicationUser.IsActive == true);
+      return form;
+    } 
   }
 }
