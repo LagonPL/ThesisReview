@@ -30,7 +30,8 @@ namespace ThesisReview.Controllers
       var fVM = new FormViewModel
       {
         ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller()),
-        DepartmentList = new SelectList(StringGenerator.DepartmentFiller()),
+        DepartmentList = new SelectList(StringGenerator.DepartmentFillerStudent()),
+        FieldList = new SelectList(StringGenerator.FieldOfStudyFiller()),
         NoError = true,
         StudentMail = mail
       };
@@ -41,6 +42,10 @@ namespace ThesisReview.Controllers
     [HttpPost]
     public async Task<IActionResult> Create(FormViewModel fVM)
     {
+      fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
+      fVM.DepartmentList = new SelectList(StringGenerator.DepartmentFillerWorker());
+      fVM.FieldList = new SelectList(StringGenerator.FieldOfStudyFiller());
+
       Form form = new Form
       {
         Title = fVM.Title,
@@ -51,11 +56,12 @@ namespace ThesisReview.Controllers
         ReviewerName = fVM.ReviewerName,
         GuardianName = fVM.GuardianName,
         Department = fVM.Department,
-        StudentName = fVM.StudentName
+        StudentName = fVM.StudentName,
+        FieldOfStudy = fVM.FieldOfStudy
       };
       using (var memoryStream = new MemoryStream())
       { 
-        if (fVM.FileUpload.FormFile.Length < 5242880 && fVM.FileUpload.FormFile.FileName.Contains(".pdf"))
+        if (fVM.FileUpload.FormFile !=  null && fVM.FileUpload.FormFile.Length < 5242880 && fVM.FileUpload.FormFile.FileName.Contains(".pdf"))
         {
           await fVM.FileUpload.FormFile.CopyToAsync(memoryStream);
           form.ThesisFile = memoryStream.ToArray();
@@ -63,8 +69,7 @@ namespace ThesisReview.Controllers
         else
         {
           fVM.NoError = false;
-          fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
-          fVM.DepartmentList = new SelectList(StringGenerator.DepartmentFiller());
+
           fVM.ErrorMessage = "Niepradłowy plik z pracą";
           return View(fVM);
         }
@@ -75,8 +80,6 @@ namespace ThesisReview.Controllers
         if (!EmailExist(fVM.ReviewerName, fVM.GuardianName, fVM.ReviewType))
         {
           fVM.NoError = false;
-          fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
-          fVM.DepartmentList = new SelectList(StringGenerator.DepartmentFiller());
           fVM.ErrorMessage = "Brakuje maili w bazie lub mail opiekuna i recenzenta jest taki sam";
           return View(fVM);
         }
@@ -101,8 +104,6 @@ namespace ThesisReview.Controllers
         _formRepository.AddFormEntity(form, guid.ToString(), "0", password.ToString(), url);
         return RedirectToAction("Index", "Home", new { @id = form.FormURL });
       }
-      fVM.ReviewTypeList = new SelectList(StringGenerator.ReviewTypesFiller());
-      fVM.DepartmentList = new SelectList(StringGenerator.DepartmentFiller());
       fVM.NoError = false;
       fVM.ErrorMessage = "Źle wypełniony formularz";
       return View(fVM);

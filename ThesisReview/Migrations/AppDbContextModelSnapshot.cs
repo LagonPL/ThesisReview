@@ -201,6 +201,9 @@ namespace ThesisReview.Migrations
                     b.Property<string>("Department")
                         .IsRequired();
 
+                    b.Property<string>("FieldOfStudy")
+                        .IsRequired();
+
                     b.Property<string>("FormURL");
 
                     b.Property<string>("GuardianName")

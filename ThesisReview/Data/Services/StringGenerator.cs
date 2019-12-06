@@ -10,7 +10,7 @@ namespace ThesisReview.Data.Services
     /// Generates list of departments.
     /// </summary>
     /// <returns>List of departments</returns>
-    public static List<string> DepartmentFiller()
+    public static List<string> DepartmentFillerWorker()
     {
       var items = new List<string> {
         "Instytut Inżynierii Materiałowej",
@@ -67,6 +67,86 @@ namespace ThesisReview.Data.Services
         "Katedra Inżynierii Środowiska",
         "Katedra Inżynierii Molekularnej",
         "Brak"
+      };
+      return items;
+    }
+
+    public static List<string> DepartmentFillerStudent()
+    {
+      var items = new List<string> {
+        "Wydział Mechaniczny",
+        "Wydział Elektrotechniki, Elektroniki, Informatyki i Automatyki",
+        "Wydział Chemiczny",
+        "Wydział Technologii Materiałowych i Wzornictwa Tekstyliów",
+        "Wydział Biotechnologii i Nauk o Żywności",
+        "Wydzial Budownictwa, Architektury i Inżynierii Środowiskowej",
+        "Wydział Fizyki Technicznej, Informatyki i Matematyki Stosowanej",
+        "Wydzial Zarządzania i Inżynierii Produkcji",
+        "Wydział Inżynierii Procesowej i Ochrony Środowiska"
+      };
+      return items;
+    }
+
+    public static List<string> FieldOfStudyFiller()
+    {
+      var items = new List<string> {
+        "Advanced Biobased and Bioinspired Materials",
+        "Advanced Mechanical Engineering",
+        "Analityka chemiczna",
+        "Architektura",
+        "Automatyka i robotyka",
+        "Automatyka i sterowanie robotów",
+        "Biogospodarka",
+        "Biomedical Engineering and Technologies",
+        "Biotechnologia",
+        "Budownictwo",
+        "Businnes and Technologies",
+        "Chemia",
+        "Chemia budowlana",
+        "Computer Science",
+        "Computer Science and Information Technology",
+        "Chemia w kryminalistyce",
+        "Electronic and Telecommunication Engineering",
+        "Elektronika i telekomunikacja",
+        "Elektrotechnika",
+        "Energetyka",
+        "Energy Systems in the Built Environment",
+        "Fizyka techniczna",
+        "Gestion et Technology",
+        "Industrial Biotechnology",
+        "Information Technology",
+        "Informatyka",
+        "Informatyka stosowana",
+        "Inżynieria bezpieczeństwa pracy",
+        "Inżynieria biomedyczna",
+        "Inżynieria chemiczna i biochemiczna",
+        "Inżynieria materiałowa",
+        "Inżynieria środowiska",
+        "Inżynieria wzornictwa przemysłowego",
+        "Inżynieria zarządzania",
+        "Logistyka",
+        "Management ",
+        "Matematyka stosowana",
+        "Mechanical Engineering",
+        "Mechanika i budowa maszyn",
+        "Mechatronika",
+        "Menedżer żywności i żywienia",
+        "Nanotechnologia",
+        "Papiernictwo i poligrafia",
+        "Planowanie przestrzenne",
+        "Rewitalizacja miast",
+        "Sieci i instalacje w inżynierii środowiska",
+        "Sport",
+        "Systemy sterowania inteligentnymi budynkami",
+        "Technologia chemiczna",
+        "Technologia kosmetyków",
+        "Technologia żywności i żywienie człowieka",
+        "Transport",
+        "Włókiennictwo",
+        "Włókiennictwo i przemysł mody",
+        "Wzornictwo",
+        "Zarządzanie",
+        "Zarządzanie i inżynieria produkcji"
       };
       return items;
     }

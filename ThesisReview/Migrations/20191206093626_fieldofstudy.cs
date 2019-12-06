@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThesisReview.Migrations
 {
-    public partial class gradeinreport : Migration
+    public partial class fieldofstudy : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,7 +43,8 @@ namespace ThesisReview.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Department = table.Column<string>(nullable: true),
                     Fullname = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,29 +72,12 @@ namespace ThesisReview.Migrations
                     Points = table.Column<int>(nullable: false),
                     LongReview = table.Column<string>(nullable: true),
                     Grade = table.Column<string>(nullable: true),
-                    Finished = table.Column<bool>(nullable: false)
+                    Finished = table.Column<bool>(nullable: false),
+                    Status = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.QuestionsId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reports",
-                columns: table => new
-                {
-                    ReportId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Guardian = table.Column<string>(nullable: true),
-                    Reviewer = table.Column<string>(nullable: true),
-                    Student = table.Column<string>(nullable: true),
-                    GradeGuardian = table.Column<string>(nullable: true),
-                    GradeReviewer = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reports", x => x.ReportId);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,26 +88,12 @@ namespace ThesisReview.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(nullable: true),
                     Fullname = table.Column<string>(nullable: true),
-                    Department = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RequestForms", x => x.RequestFormId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserLists",
-                columns: table => new
-                {
-                    UserListId = table.Column<string>(nullable: false),
-                    Mail = table.Column<string>(nullable: true),
-                    Fullname = table.Column<string>(nullable: true),
                     Department = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserLists", x => x.UserListId);
+                    table.PrimaryKey("PK_RequestForms", x => x.RequestFormId);
                 });
 
             migrationBuilder.CreateTable(
@@ -233,6 +203,28 @@ namespace ThesisReview.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserLists",
+                columns: table => new
+                {
+                    UserListId = table.Column<string>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    Mail = table.Column<string>(nullable: true),
+                    Fullname = table.Column<string>(nullable: true),
+                    Department = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLists", x => x.UserListId);
+                    table.ForeignKey(
+                        name: "FK_UserLists_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Forms",
                 columns: table => new
                 {
@@ -245,7 +237,10 @@ namespace ThesisReview.Migrations
                     StudentMail = table.Column<string>(nullable: false),
                     StudentName = table.Column<string>(nullable: false),
                     Department = table.Column<string>(nullable: false),
+                    FieldOfStudy = table.Column<string>(nullable: false),
                     GuardianName = table.Column<string>(nullable: false),
+                    GuardianUserUserListId = table.Column<string>(nullable: true),
+                    ReviewerUserUserListId = table.Column<string>(nullable: true),
                     ReviewerName = table.Column<string>(nullable: true),
                     FormURL = table.Column<string>(nullable: true),
                     Link = table.Column<string>(nullable: true),
@@ -253,11 +248,18 @@ namespace ThesisReview.Migrations
                     DateTimeStart = table.Column<DateTime>(nullable: false),
                     DateTimeFinish = table.Column<DateTime>(nullable: false),
                     QuestionsId = table.Column<int>(nullable: true),
-                    QuestionsGuardianQuestionsId = table.Column<int>(nullable: true)
+                    QuestionsGuardianQuestionsId = table.Column<int>(nullable: true),
+                    ThesisFile = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Forms", x => x.FormId);
+                    table.ForeignKey(
+                        name: "FK_Forms_UserLists_GuardianUserUserListId",
+                        column: x => x.GuardianUserUserListId,
+                        principalTable: "UserLists",
+                        principalColumn: "UserListId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Forms_Questions_QuestionsGuardianQuestionsId",
                         column: x => x.QuestionsGuardianQuestionsId,
@@ -269,6 +271,37 @@ namespace ThesisReview.Migrations
                         column: x => x.QuestionsId,
                         principalTable: "Questions",
                         principalColumn: "QuestionsId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Forms_UserLists_ReviewerUserUserListId",
+                        column: x => x.ReviewerUserUserListId,
+                        principalTable: "UserLists",
+                        principalColumn: "UserListId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    ReportId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FormId = table.Column<int>(nullable: true),
+                    Guardian = table.Column<string>(nullable: true),
+                    Reviewer = table.Column<string>(nullable: true),
+                    Student = table.Column<string>(nullable: true),
+                    GradeGuardian = table.Column<string>(nullable: true),
+                    GradeReviewer = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.ReportId);
+                    table.ForeignKey(
+                        name: "FK_Reports_Forms_FormId",
+                        column: x => x.FormId,
+                        principalTable: "Forms",
+                        principalColumn: "FormId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -312,6 +345,11 @@ namespace ThesisReview.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Forms_GuardianUserUserListId",
+                table: "Forms",
+                column: "GuardianUserUserListId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Forms_QuestionsGuardianQuestionsId",
                 table: "Forms",
                 column: "QuestionsGuardianQuestionsId");
@@ -320,6 +358,21 @@ namespace ThesisReview.Migrations
                 name: "IX_Forms_QuestionsId",
                 table: "Forms",
                 column: "QuestionsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Forms_ReviewerUserUserListId",
+                table: "Forms",
+                column: "ReviewerUserUserListId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_FormId",
+                table: "Reports",
+                column: "FormId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserLists_ApplicationUserId",
+                table: "UserLists",
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -340,25 +393,25 @@ namespace ThesisReview.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Forms");
-
-            migrationBuilder.DropTable(
                 name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "RequestForms");
 
             migrationBuilder.DropTable(
-                name: "UserLists");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Forms");
+
+            migrationBuilder.DropTable(
+                name: "UserLists");
 
             migrationBuilder.DropTable(
                 name: "Questions");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

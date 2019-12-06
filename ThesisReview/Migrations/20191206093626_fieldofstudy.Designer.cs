@@ -10,8 +10,8 @@ using ThesisReview.Data;
 namespace ThesisReview.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191203145331_statusQuestion")]
-    partial class statusQuestion
+    [Migration("20191206093626_fieldofstudy")]
+    partial class fieldofstudy
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,6 +150,8 @@ namespace ThesisReview.Migrations
 
                     b.Property<string>("Fullname");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -201,10 +203,15 @@ namespace ThesisReview.Migrations
                     b.Property<string>("Department")
                         .IsRequired();
 
+                    b.Property<string>("FieldOfStudy")
+                        .IsRequired();
+
                     b.Property<string>("FormURL");
 
                     b.Property<string>("GuardianName")
                         .IsRequired();
+
+                    b.Property<string>("GuardianUserUserListId");
 
                     b.Property<string>("Link");
 
@@ -219,6 +226,8 @@ namespace ThesisReview.Migrations
 
                     b.Property<string>("ReviewerName");
 
+                    b.Property<string>("ReviewerUserUserListId");
+
                     b.Property<string>("ShortDescription")
                         .IsRequired();
 
@@ -230,15 +239,21 @@ namespace ThesisReview.Migrations
                     b.Property<string>("StudentName")
                         .IsRequired();
 
+                    b.Property<byte[]>("ThesisFile");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200);
 
                     b.HasKey("FormId");
 
+                    b.HasIndex("GuardianUserUserListId");
+
                     b.HasIndex("QuestionsGuardianQuestionsId");
 
                     b.HasIndex("QuestionsId");
+
+                    b.HasIndex("ReviewerUserUserListId");
 
                     b.ToTable("Forms");
                 });
@@ -296,6 +311,8 @@ namespace ThesisReview.Migrations
 
                     b.Property<DateTime>("Date");
 
+                    b.Property<int?>("FormId");
+
                     b.Property<string>("GradeGuardian");
 
                     b.Property<string>("GradeReviewer");
@@ -307,6 +324,8 @@ namespace ThesisReview.Migrations
                     b.Property<string>("Student");
 
                     b.HasKey("ReportId");
+
+                    b.HasIndex("FormId");
 
                     b.ToTable("Reports");
                 });
@@ -335,6 +354,8 @@ namespace ThesisReview.Migrations
                     b.Property<string>("UserListId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<string>("Department");
 
                     b.Property<string>("Fullname");
@@ -344,6 +365,8 @@ namespace ThesisReview.Migrations
                     b.Property<string>("Title");
 
                     b.HasKey("UserListId");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("UserLists");
                 });
@@ -395,6 +418,10 @@ namespace ThesisReview.Migrations
 
             modelBuilder.Entity("ThesisReview.Data.Models.Form", b =>
                 {
+                    b.HasOne("ThesisReview.Data.Models.UserList", "GuardianUser")
+                        .WithMany()
+                        .HasForeignKey("GuardianUserUserListId");
+
                     b.HasOne("ThesisReview.Data.Models.Questions", "QuestionsGuardian")
                         .WithMany()
                         .HasForeignKey("QuestionsGuardianQuestionsId");
@@ -402,6 +429,24 @@ namespace ThesisReview.Migrations
                     b.HasOne("ThesisReview.Data.Models.Questions", "Questions")
                         .WithMany()
                         .HasForeignKey("QuestionsId");
+
+                    b.HasOne("ThesisReview.Data.Models.UserList", "ReviewerUser")
+                        .WithMany()
+                        .HasForeignKey("ReviewerUserUserListId");
+                });
+
+            modelBuilder.Entity("ThesisReview.Data.Models.Report", b =>
+                {
+                    b.HasOne("ThesisReview.Data.Models.Form", "Form")
+                        .WithMany()
+                        .HasForeignKey("FormId");
+                });
+
+            modelBuilder.Entity("ThesisReview.Data.Models.UserList", b =>
+                {
+                    b.HasOne("ThesisReview.Data.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
                 });
 #pragma warning restore 612, 618
         }

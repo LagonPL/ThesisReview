@@ -67,7 +67,7 @@ namespace ThesisReview.Controllers
           Fullname = name,
           UserName = email.Substring(0,position),
           Email = email,
-          Departments = new SelectList(StringGenerator.DepartmentFiller()),
+          Departments = new SelectList(StringGenerator.DepartmentFillerWorker()),
           Titles = new SelectList(StringGenerator.TitlesFiller())
         };
         foreach (var item in registerViewModel.Departments)
@@ -90,7 +90,7 @@ namespace ThesisReview.Controllers
       }
       var rVM = new RegisterViewModel
       {
-        Departments = new SelectList(StringGenerator.DepartmentFiller()),
+        Departments = new SelectList(StringGenerator.DepartmentFillerWorker()),
         Titles = new SelectList(StringGenerator.TitlesFiller())
       };
       return View(rVM);
@@ -100,7 +100,7 @@ namespace ThesisReview.Controllers
     {
       var rVM = new RequestViewModel
       {
-        Departments = new SelectList(StringGenerator.DepartmentFiller()),
+        Departments = new SelectList(StringGenerator.DepartmentFillerWorker()),
         Titles = new SelectList(StringGenerator.TitlesFiller())
       };
       return View(rVM);
@@ -118,7 +118,7 @@ namespace ThesisReview.Controllers
       else
       {
         ModelState.AddModelError("wrongform", "Źle wpisane dane");
-        requestViewModel.Departments = new SelectList(StringGenerator.DepartmentFiller());
+        requestViewModel.Departments = new SelectList(StringGenerator.DepartmentFillerWorker());
         requestViewModel.Titles = new SelectList(StringGenerator.TitlesFiller());
         return View(requestViewModel);
       }
@@ -168,7 +168,7 @@ namespace ThesisReview.Controllers
         }
 
       }
-      registerViewModel.Departments = new SelectList(StringGenerator.DepartmentFiller());
+      registerViewModel.Departments = new SelectList(StringGenerator.DepartmentFillerWorker());
       registerViewModel.Titles = new SelectList(StringGenerator.TitlesFiller());
       ModelState.AddModelError("wrongform", "Źle wprowadzone dane");
       return View(registerViewModel);

@@ -31,6 +31,9 @@ namespace ThesisReview.Data.Models
     public string Department { get; set; }
 
     [Required]
+    public string FieldOfStudy { get; set; }
+
+    [Required]
     [DataType(DataType.EmailAddress)]
     public string GuardianName { get; set; }
 

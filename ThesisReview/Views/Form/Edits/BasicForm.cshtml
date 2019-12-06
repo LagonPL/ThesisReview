@@ -18,11 +18,24 @@
 					<input asp-for="Form.FormURL" class="form-control" readonly />
 					<span asp-validation-for="Form.Title" class="text-danger"></span>
 				</div>
-				<div class="form-group">
-					<label asp-for="Form.StudentMail" class="control-label disabled">Dane Studenta</label>
-					<input asp-for="Form.StudentName" class="form-control " readonly />
-					<input asp-for="Form.StudentMail" class="form-control " readonly />
-				</div>
+				<table class="table table-bordered table-striped table-hover" table id="example">
+					<thead>
+						<tr>
+							<th>Imię i nazwisko</th>
+							<th>Mail</th>
+							<th>Wydział</th>
+							<th>Kierunek</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>@Model.Form.StudentName</td>
+							<td>@Model.Form.StudentMail</td>
+							<td>@Model.Form.Department</td>
+							<td>@Model.Form.FieldOfStudy</td>
+						</tr>
+					</tbody>
+				</table>
 				<div class="form-group">
 					<label asp-for="Form.Title" class="control-label disabled">Tytuł pracy</label>
 					<input asp-for="Form.Title" class="form-control" readonly />

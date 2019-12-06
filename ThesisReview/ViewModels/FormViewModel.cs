@@ -10,6 +10,7 @@ namespace ThesisReview.ViewModels
   {
     public SelectList DepartmentList { get; set; }
     public SelectList ReviewTypeList { get; set; }
+    public SelectList FieldList { get; set; }
     public bool NoError { get; set; }
     public string ErrorMessage { get; set; }
     [BindProperty]
