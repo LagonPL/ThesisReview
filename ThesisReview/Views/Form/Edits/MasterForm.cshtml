@@ -1,197 +1,207 @@
 ﻿@model FormDetailViewModel
 
 <form asp-controller="Form" method="post" class="form-horizontal" role="form">
-	<div class="form-group hidden">
-		<label asp-for="Mail" class="control-label"></label>
-		<input asp-for="Mail" class="form-control" readonly />
-	</div>
-	<div class="form-group hidden">
-		<label asp-for="Form.FormURL" class="control-label"></label>
-		<input asp-for="Form.FormURL" class="form-control" readonly />
-	</div>
-	<table class="table table-bordered table-striped table-hover" table id="example">
-		<thead>
-			<tr>
-				<th>Imię i nazwisko</th>
-				<th>Mail</th>
-				<th>Wydział</th>
-				<th>Kierunek</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>@Model.Form.StudentName</td>
-				<td>@Model.Form.StudentMail</td>
-				<td>@Model.Form.Department</td>
-				<td>@Model.Form.FieldOfStudy</td>
-			</tr>
-		</tbody>
-	</table>
-	<div class="form-group">
-		<label asp-for="Form.Title" class="control-label disabled">Tytuł pracy</label>
-		<input asp-for="Form.Title" class="form-control" readonly />
-	</div>
-	<div class="form-group">
-		<label asp-for="Form.ThesisFile" class="control-label">Pobierz Pracę</label>
-		<input type="submit" asp-controller="Form" asp-action="DownloadFile" class="btn btn-info" value="Pobierz" />
-	</div>
-	<div class="form-group">
-		<label asp-for="Form.ShortDescription" class="control-label disabled">Abstrakt</label>
-		<textarea asp-for="Form.ShortDescription" class="form-control" readonly></textarea>
-	</div>
-	<hr />
-	<div class="col-lg-8 col-lg-offset-2">
-		<table class="table table-bordered table-striped">
+	<div id="section-to-print">
+		<div class="form-group hidden">
+			<label asp-for="Mail" class="control-label"></label>
+			<input asp-for="Mail" class="form-control" readonly />
+		</div>
+		<div class="form-group hidden">
+			<label asp-for="Form.FormURL" class="control-label"></label>
+			<input asp-for="Form.FormURL" class="form-control" readonly />
+		</div>
+		<table class="table table-bordered table-striped table-hover" table id="example">
 			<thead>
 				<tr>
-					<th>I. Ocena Koncepcji Pracy</th>
-					<th>Ocena</th>
+					<th>Imię i nazwisko</th>
+					<th>Mail</th>
+					<th>Wydział</th>
+					<th>Kierunek</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td class="text-left">@Model.QuestionList.Question1</td>
-					<td><input type="number" asp-for="Form.Questions.Question1" class="form-control" id="q1" oninput="Counter()" readonly /></td>
+					<td>@Model.Form.StudentName</td>
+					<td>@Model.Form.StudentMail</td>
+					<td>@Model.Form.Department</td>
+					<td>@Model.Form.FieldOfStudy</td>
 				</tr>
 				<tr>
-					<td class="text-left">@Model.QuestionList.Question2</td>
-					<td><input type="number" asp-for="Form.Questions.Question2" class="form-control" id="q2" oninput="Counter()" readonly /></td>
-				</tr>
-				<tr>
-					<td class="text-left" colspan="1">@Model.QuestionList.Question3</td>
-					<td><input type="number" asp-for="Form.Questions.Question3" class="form-control" id="q3" oninput="Counter()" readonly /></td>
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question4</td>
-					<td><input type="number" asp-for="Form.Questions.Question4" class="form-control" id="q4" oninput="Counter()" readonly /></td>
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question5</td>
-					<td><input type="number" asp-for="Form.Questions.Question5" class="form-control" id="q5" oninput="Counter()" readonly /></td>
+					<td colspan="4"><b>Recenzent: </b>@Model.Fullname</td>
 				</tr>
 			</tbody>
-			<tfoot>
-			<td class="text-right">Suma (Max 40 pkt.):</td>
-			<td class="text-right"><p id="suma1">@Model.Sum.Sum1</p> </td>
-			</tfoot>
 		</table>
-
-		<table class="table table-bordered table-striped">
-			<thead>
-				<tr>
-					<th>II. Ocena Źródeł Informacji</th>
-					<th>Ocena</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question6</td>
-					<td><input type="number" asp-for="Form.Questions.Question6" class="form-control" id="q6" oninput="Counter()" readonly /></td>
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question7</td>
-					<td><input type="number" asp-for="Form.Questions.Question7" class="form-control" id="q7" oninput="Counter()" readonly /></td>
-				</tr>
-			</tbody>
-			<tfoot>
-			<td class="text-right">Suma (Max 35 pkt.):</td>
-			<td class="text-right"><p id="suma2">@Model.Sum.Sum2</p> </td>
-			</tfoot>
-		</table>
-
-		<table class="table table-bordered table-striped">
-			<thead>
-				<tr>
-					<th>III. Ocena Redakcji Pracy</th>
-					<th>Ocena</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question8</td>
-					<td><input type="number" asp-for="Form.Questions.Question8" class="form-control" id="q8" oninput="Counter()" readonly /></td>
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question9</td>
-					<td><input type="number" asp-for="Form.Questions.Question9" class="form-control" id="q9" oninput="Counter()" readonly /></td>
-				</tr>
-				<tr>
-					<td class="text-left">@Model.QuestionList.Question0</td>
-					<td><input type="number" asp-for="Form.Questions.Question0" class="form-control" id="q0" oninput="Counter()" readonly /></td>
-				</tr>
-			</tbody>
-			<tfoot>
-			<td class="text-right">Suma (Max 20 pkt.):</td>
-			<td class="text-right"><p id="suma3">@Model.Sum.Sum3</p></td>
-			</tfoot>
-		</table>
-
-		<div class="col-lg-6 col-lg-offset-6">
-			<table class="table table-condensed table-striped">
+		<div class="form-group">
+			<label asp-for="Form.Title" class="control-label disabled">Tytuł pracy</label>
+			<input asp-for="Form.Title" class="form-control" readonly />
+		</div>
+		<div class="form-group">
+			<label asp-for="Form.ShortDescription" class="control-label disabled">Abstrakt</label>
+			<textarea asp-for="Form.ShortDescription" class="form-control" readonly></textarea>
+		</div>
+		<hr />
+		<div class="col-lg-8 col-lg-offset-2">
+			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>Suma punktów I - III</th>
-						<th><p id="sumaFinal">@Model.Sum.SumFinal</p></th>
+						<th>I. Ocena Koncepcji Pracy</th>
+						<th>Ocena</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td>100-95</td>
-						<td>Cel</td>
+						<td class="text-left">@Model.QuestionList.Question1</td>
+						<td><input type="number" asp-for="Form.Questions.Question1" class="form-control" id="q1" oninput="Counter()" readonly /></td>
 					</tr>
-				<td>94-88</td>
-				<td>Bdb</td>
-				</tr>
-				<tr>
-					<td>87-81</td>
-					<td>Db pl</td>
-				</tr>
-				<tr>
-					<td>80-67</td>
-					<td>Db</td>
-				</tr>
-				<tr>
-					<td>66-61</td>
-					<td>Dst pl</td>
-				</tr>
-				<tr>
-					<td>60-51</td>
-					<td>Dst</td>
-				</tr>
-				<tr>
-					<td>50-0</td>
-					<td>Nd</td>
-				</tr>
+					<tr>
+						<td class="text-left">@Model.QuestionList.Question2</td>
+						<td><input type="number" asp-for="Form.Questions.Question2" class="form-control" id="q2" oninput="Counter()" readonly /></td>
+					</tr>
+					<tr>
+						<td class="text-left" colspan="1">@Model.QuestionList.Question3</td>
+						<td><input type="number" asp-for="Form.Questions.Question3" class="form-control" id="q3" oninput="Counter()" readonly /></td>
+					</tr>
+					<tr>
+						<td class="text-left">@Model.QuestionList.Question4</td>
+						<td><input type="number" asp-for="Form.Questions.Question4" class="form-control" id="q4" oninput="Counter()" readonly /></td>
+					</tr>
+					<tr>
+						<td class="text-left">@Model.QuestionList.Question5</td>
+						<td><input type="number" asp-for="Form.Questions.Question5" class="form-control" id="q5" oninput="Counter()" readonly /></td>
+					</tr>
 				</tbody>
+				<tfoot>
+				<td class="text-right">Suma (Max 40 pkt.):</td>
+				<td class="text-right"><p id="suma1">@Model.Sum.Sum1</p> </td>
+				</tfoot>
 			</table>
+
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>II. Ocena Źródeł Informacji</th>
+						<th>Ocena</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-left">@Model.QuestionList.Question6</td>
+						<td><input type="number" asp-for="Form.Questions.Question6" class="form-control" id="q6" oninput="Counter()" readonly /></td>
+					</tr>
+					<tr>
+						<td class="text-left">@Model.QuestionList.Question7</td>
+						<td><input type="number" asp-for="Form.Questions.Question7" class="form-control" id="q7" oninput="Counter()" readonly /></td>
+					</tr>
+				</tbody>
+				<tfoot>
+				<td class="text-right">Suma (Max 35 pkt.):</td>
+				<td class="text-right"><p id="suma2">@Model.Sum.Sum2</p> </td>
+				</tfoot>
+			</table>
+
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>III. Ocena Redakcji Pracy</th>
+						<th>Ocena</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-left">@Model.QuestionList.Question8</td>
+						<td><input type="number" asp-for="Form.Questions.Question8" class="form-control" id="q8" oninput="Counter()" readonly /></td>
+					</tr>
+					<tr>
+						<td class="text-left">@Model.QuestionList.Question9</td>
+						<td><input type="number" asp-for="Form.Questions.Question9" class="form-control" id="q9" oninput="Counter()" readonly /></td>
+					</tr>
+					<tr>
+						<td class="text-left">@Model.QuestionList.Question0</td>
+						<td><input type="number" asp-for="Form.Questions.Question0" class="form-control" id="q0" oninput="Counter()" readonly /></td>
+					</tr>
+				</tbody>
+				<tfoot>
+				<td class="text-right">Suma (Max 20 pkt.):</td>
+				<td class="text-right"><p id="suma3">@Model.Sum.Sum3</p></td>
+				</tfoot>
+			</table>
+
+			<div class="col-lg-6 col-lg-offset-6">
+				<table class="table table-condensed table-striped">
+					<thead>
+						<tr>
+							<th>Suma punktów I - III</th>
+							<th><p id="sumaFinal">@Model.Sum.SumFinal</p></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>100-95</td>
+							<td>Cel</td>
+						</tr>
+					<td>94-88</td>
+					<td>Bdb</td>
+					</tr>
+					<tr>
+						<td>87-81</td>
+						<td>Db pl</td>
+					</tr>
+					<tr>
+						<td>80-67</td>
+						<td>Db</td>
+					</tr>
+					<tr>
+						<td>66-61</td>
+						<td>Dst pl</td>
+					</tr>
+					<tr>
+						<td>60-51</td>
+						<td>Dst</td>
+					</tr>
+					<tr>
+						<td>50-0</td>
+						<td>Nd</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group col-md-12">
 			<label asp-for="Form.Questions.LongReview" class="control-label">IV. Uzasadnienie i inne uwagi oceniające pracę</label>
 			<textarea asp-for="Form.Questions.LongReview" class="form-control" id="lr" readonly></textarea>
 		</div>
-		<div class="form-group">
+		<div class="form-group col-md-12">
 			<label asp-for="Form.Questions.Grade" class="control-label">V. Ocena Końcowa</label>
 			<input asp-for="Form.Questions.Grade" class="form-control" id="g" readonly>
 			<h6 class="text-info">Należy stosować następującą skalę ocen: 5,0 – pięć, 4,5 – cztery i pół, 4,0 – cztery, 3,5 – trzy i pół, 3,0 – trzy, 2,0 – dwa.</h6>
 		</div>
-		@if (!Model.Form.Questions.Finished)
-		{
-			<div class="form-group">
-				<input type="submit" value="Zapisz" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
-				@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
-				<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
+		</div>
+		<div class="col-lg-8 col-lg-offset-2">
+			<div id="non-printable">
+				<div class="form-group">
+					<label asp-for="Form.ThesisFile" class="control-label">Pobierz Pracę</label>
+					<input type="submit" asp-controller="Form" asp-action="DownloadFile" class="btn btn-info" value="Pobierz" />
+				</div>
 
+				@if (!Model.Form.Questions.Finished)
+				{
+					<div class="form-group">
+						<input type="submit" value="Zapisz" class="btn btn-info" asp-action="UpdateForm" onclick="return confirm('Czy na pewno zaaktualizować oceny?')" />
+						@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
+						<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
+
+					</div>
+					<div class="form-group pull-right">
+						<input type="submit" value="Zakończ ocenianie" class="btn btn-success" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
+					</div>
+				}
+				else
+				{
+					@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
+					<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
+				}
 			</div>
-			<div class="form-group pull-right">
-				<input type="submit" value="Zakończ ocenianie" class="btn btn-success" asp-action="FinishForm" onclick="return confirm('Czy na pewno zakończyć ocenianie?\nZakończenie oceny uniemożliwi jej ponowną edycję.')" />
-			</div>
-		}
-		else
-		{
-			@Html.ActionLink("Cofnij", "Index", "List", null, new { @class = "btn btn-primary btn-large" })
-			<input type="submit" value="Drukuj" class="btn btn-warning" onclick="window.print()" />
-		}
-	</div>
+		</div>
 </form>
 
 

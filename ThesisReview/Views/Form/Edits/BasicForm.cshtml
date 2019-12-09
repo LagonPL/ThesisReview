@@ -34,16 +34,15 @@
 							<td>@Model.Form.Department</td>
 							<td>@Model.Form.FieldOfStudy</td>
 						</tr>
+						<tr>
+							<td colspan="4"><b>Recenzent: </b>@Model.Fullname</td>
+						</tr>
 					</tbody>
 				</table>
 				<div class="form-group">
 					<label asp-for="Form.Title" class="control-label disabled">Tytuł pracy</label>
 					<input asp-for="Form.Title" class="form-control" readonly />
 					<span asp-validation-for="Form.Title" class="text-danger"></span>
-				</div>
-				<div class="form-group">
-					<label asp-for="Form.ThesisFile" class="control-label">Pobierz Pracę</label>
-					<input type="submit" asp-controller="Form" asp-action="DownloadFile" class="btn btn-info" value="Pobierz" />
 				</div>
 				<div class="form-group">
 					<label asp-for="Form.ShortDescription" class="control-label disabled">Abstrakt</label>
@@ -91,6 +90,10 @@
 </div>
 	</div>
 	<div id="non-printable">
+		<div class="form-group">
+			<label asp-for="Form.ThesisFile" class="control-label">Pobierz Pracę</label>
+			<input type="submit" asp-controller="Form" asp-action="DownloadFile" class="btn btn-info" value="Pobierz" />
+		</div>
 		@if (!Model.Form.Questions.Finished)
 		{
 			<div class="form-group">

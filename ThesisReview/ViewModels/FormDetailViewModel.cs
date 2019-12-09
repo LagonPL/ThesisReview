@@ -7,6 +7,7 @@ namespace ThesisReview.ViewModels
   {
     public Form Form { get; set; }
     public string Mail { get; set; }
+    public string Fullname { get; set; }
     public string ReviewType { get; set; }
     public bool Archive { get; set; }
     public Questions QuestionList { get; set; }

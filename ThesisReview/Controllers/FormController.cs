@@ -115,6 +115,7 @@ namespace ThesisReview.Controllers
       Form form = new Form();
       var mail = await GetCurrentUser();
       form = _formRepository.GetFormByMail(id, mail);
+      
       var suma = new Sum();
       
       var questions = StringGenerator.GetQuestions(form.ReviewType);
@@ -128,7 +129,8 @@ namespace ThesisReview.Controllers
         QuestionList = questions,
         Answers = StringGenerator.AnswersGenerator(),
         Sum = suma,
-        Archive = false
+        Archive = false,
+        Fullname = _formRepository.GetUser(mail).Fullname
       };
        var span = DateTime.Now.Subtract(form.DateTimeStart);
       if ((int)span.TotalDays > 60 && form.Status != "Oceniono")
