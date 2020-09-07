@@ -5,7 +5,7 @@
 <form asp-action="Index" method="get">
 	<div class="form-actions col-md-4">
 		<p>
-			<input type="text" class="form-control" name="SearchString" placeholder="Znajdź po wartości w tablicy" value="@ViewData["currentFilter"]"/>
+			<input type="text" class="form-control" name="SearchString" placeholder="Znajdź po wartości w tablicy" value="@ViewData["currentFilter"]" />
 			<input type="submit" value="Szukaj" class="btn btn-default" /> |
 			<a asp-action="Index">Wróc</a>
 		</p>
@@ -23,12 +23,17 @@
 	<tbody>
 		@foreach (var line in Model.UsersList)
 		{
-		<tr>
-			<td class="text-left">@line.Title</td>
-			<td class="text-left">@line.Fullname</td>
-			<td class="text-left">@line.Department</td>
-			<td class="text-left">@line.Mail</td>
-		</tr>
+			<tr>
+				<td class="text-left">@line.Title</td>
+				<td class="text-left">@line.Fullname</td>
+				<td class="text-left">@line.Department</td>
+				<td class="text-left">@line.Mail</td>
+			</tr>
 		}
 	</tbody>
 </table>
+@foreach (var line in Model.Photos)
+{
+		<p><img src="@line" width="200" height="200"/>@Model.Photos.IndexOf(line)</p>
+}
+

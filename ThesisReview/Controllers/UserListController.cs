@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ThesisReview.Data.Interface;
+using ThesisReview.Data.Services;
 using ThesisReview.ViewModels;
 
 namespace ThesisReview.Controllers
@@ -21,8 +23,11 @@ namespace ThesisReview.Controllers
       ViewData["CurrentFilter"] = searchString;
       var list = _userListRepository.GetAllUser();
       var temp = list;
+      var items = StringGenerator.saveME();
+      for(int i = 1; i < items.Count; i++)
+      {
 
-
+      }
 
       if (!String.IsNullOrEmpty(searchString))
       {
@@ -35,7 +40,8 @@ namespace ThesisReview.Controllers
 
       var uLVM = new UserListViewModel
       {
-        UsersList = temp.Distinct()
+        UsersList = temp.Distinct(),
+        Photos = items
       };
       return View(uLVM);
     }
